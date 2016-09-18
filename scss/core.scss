@@ -1,0 +1,98 @@
+/* Include Bootstrap default and override variables */
+@import "custom";
+@import "variables";
+$email:		#8c158b;
+$facebook:	#3b5998;
+$print:		#F3B606;
+$twitter:	#00aced;
+body{
+	font-family: 'Titillium Web', sans-serif;
+}
+.carousel{
+	.carousel-thumbnails{
+		text-align:center;
+		> *{
+			display:inline-block;
+			margin-top:5px;
+		}
+	}
+}
+.iteractions{
+	.catalog{
+		button.true,button:hover{
+			color:#fff;
+			&.catalog_had{
+				background:$brand-primary;
+			}
+			&.catalog_got{
+				background:$brand-success;
+			}
+			&.catalog_want{
+				background:$brand-danger;
+			}
+		}
+	}
+	.social{
+		button:hover{
+			color:#fff;
+			&.email{
+				background:$email;
+			}
+			&.facebook{
+				background:$facebook;
+			}
+			&.print{
+				background:$print;
+			}
+			&.twitter{
+				background:$twitter;
+			}
+		}
+	}
+}
+nav+*{
+	margin-top:54px;
+}
+.home_product{
+	background-image:url('http://placehold.it/640x360');
+	background-position: center;
+	background-size:cover;
+	border:2px solid #fff;
+	min-height:300px;
+	*{
+		margin-bottom:0;
+	}
+	a{
+		&:hover{
+			text-decoration: none;
+		}
+	}
+	.meta{
+		bottom:0;
+		padding:5px;
+		position:absolute;
+		right:0;
+		text-align:right;
+	}
+}
+#latest_banner{
+	border-bottom:1px solid #fff;
+	sup{
+		font-size:50%;
+	}
+}
+/* Produxt */
+#product{
+	.jumbotron{
+		background-position: center;
+		background-size: cover;
+		height:250px;
+		.jumbotron-data{
+			background-color:rgba(255,255,255,0.5);
+			border-radius: $border-radius;
+			display:inline-block;
+			margin-left:$spacer;
+			padding:($spacer / 2);
+		}
+	}
+}
