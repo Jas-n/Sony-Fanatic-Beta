@@ -11,6 +11,7 @@
 		<link href="css/bootstrap-grid.css" rel="stylesheet">
 		<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 		<link href="css/core.css" rel="stylesheet">
+		<link href="css/<?=basename($_SERVER['PHP_SELF'],'.php')?>.css" rel="stylesheet">
 		<title><?=SITE_NAME?></title>
 	</head>
 	<body id="<?=basename($_SERVER['PHP_SELF'],'.php')?>">
@@ -27,3 +28,4 @@
 				</ul>
 			</div>
 		</nav>
+		<main>

@@ -1,0 +1,28 @@
+/* Include Bootstrap default and override variables */
+@import "custom";
+@import "variables";
+// Product.php
+.carousel{
+	.carousel-thumbnails{
+		text-align:center;
+		> *{
+			display:inline-block;
+			margin-top:5px;
+		}
+	}
+}
+.jumbotron{
+	background-position: center;
+	background-size: cover;
+	height:250px;
+	.jumbotron-data{
+		background-color:rgba(255,255,255,0.5);
+		border-radius: $border-radius;
+		display:inline-block;
+		margin-left:$spacer;
+		padding:($spacer / 2);
+	}
+}
+.product_extras{
+	border-left:1px solid $gray-lighter;
+}
