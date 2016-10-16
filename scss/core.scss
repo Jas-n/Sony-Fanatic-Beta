@@ -1,9 +1,39 @@
-/* Include Bootstrap default and override variables */
+// Include Bootstrap default and override variables
 @import "custom";
 @import "variables";
 // Common
+/* Bootstrap 4 */
+.alert p:last-of-type{
+	margin-bottom:0;
+}
+b, strong, th{
+	font-weight:700 !important;
+}
 body{
-	font-family: 'Titillium Web', sans-serif;
+	font-family: 'Heebo', sans-serif;
+	font-weight:300;
+	min-height:100%;
+	overflow-x: hidden;
+	position:relative;
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+	font-weight:400 !important;
+}
+dt, optgroup, strong{
+	font-weight:500 !important;
+}
+footer{
+	bottom:0;
+	position:absolute;
+}
+.hidden{
+	display:none !important;
+}
+html{
+	height:100%;
+}
+img{
+	max-width:100%;
 }
 .interactions{
 	.catalog{
@@ -38,12 +68,105 @@ body{
 		}
 	}
 }
+ol,ol ol ol ol{
+	list-style-type:decimal;
+	list-style-position:outside;
+}
+ol ol{
+	list-style-type:lower-alpha;
+}
+ol ol ol{
+	list-style-type:lower-roman;
+}
+ol ol ol ol ol{
+	list-style-type:upper-alpha;
+}
+ol ol ol ol ol ol{
+	list-style-type:upper-roman;
+}
+.overflow{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.overflow:hover{
+	overflow:visible;
+	white-space:normal;
+}
 .tab-content{
 	border-bottom:1px solid #ddd;
 	border-left:1px solid #ddd;
 	border-right:1px solid #ddd;
+	margin-bottom:$spacer;
 	padding:$spacer;
 }
-main{
-	margin:54px 0 $spacer;
+textarea{
+	resize:vertical;
 }
+table>thead>tr>th[colspan]{
+	text-align:center;
+}
+table>thead>tr>th[rowspan]{
+	vertical-align:middle;
+}
+td p{margin-bottom:0.5rem}
+td .print_pre{
+	max-width:1000px;
+	word-wrap:break-word;
+}
+.table-fixed{
+	table-layout:fixed;
+}
+main{margin:$spacer*5 auto $spacer;}
+#index,
+#product{
+	main{
+		margin:54px auto $spacer;
+	}
+}
+.table{font-size: 0.95rem;}
+.table pre{max-height:500px;}
+.tab-pane{padding:.9375rem;}
+
+
+#loading{
+	background:rgba(0,0,0,0.25);
+	position:fixed;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	z-index:9999;
+	height:100%;
+}
+.loading_svg{
+	margin:auto;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	z-index:200;
+	position:absolute;
+}
+.rect {
+	fill:none;
+	stroke-width:8px;
+	stroke:#fff;
+	stroke-dasharray:40;
+	stroke-dashoffset:50%;
+	
+	-webkit-animation:movedash 1.5s forwards 0s infinite;
+	animation:movedash 1.5s forwards 0s infinite;
+}
+@-webkit-keyframes movedash{to{stroke-dashoffset:250%;}}
+@keyframes movedash{to{stroke-dashoffset:250%;}}
+// Login
+#login_drop{
+	background-color:$brand-primary;
+	padding: $spacer;
+	position: absolute;
+	right: 0;
+	top:54px;
+}
+#login_drop.active{display: block;}
+#login_link{cursor:pointer;}
