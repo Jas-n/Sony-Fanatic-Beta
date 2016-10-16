@@ -9,7 +9,6 @@
 				$user->new_password_fields($this);
 			parent::add_html('</div>
 			<div class="col-md-6">');
-				$addresses->address_fields($this,$user->address);
 			parent::add_html('</div>
 		</div>
 		<p class="text-xs-center">');

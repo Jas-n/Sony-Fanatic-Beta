@@ -60,16 +60,10 @@ foreach($db->query("SELECT `name`,`value` FROM `settings`") as $setting){
 	define(strtoupper($setting['name']),nl2br($setting['value']));
 }
 define('SQL_LIMIT',' LIMIT '.(($_GET['page']?(($_GET['page']-1)*ITEMS_PER_PAGE):0).','.ITEMS_PER_PAGE).' ');
-$addresses=new addresses;
 $app=new app;
 $encryption=new encryption();
 $user=new user();
-if(is_logged_in()){
-	$notifications=new notifications;
-	$app_require[]='php.clients';
-}
-$page=new page_permissions();
-$app_require[]='form.error_report';
+$page=new page();
 if($app_require){
 	$app->require=$app_require;
 	$require=array_map('strtolower',$app->require);
@@ -85,7 +79,7 @@ if($app_require){
 		}elseif(strpos($app_require,'php.')===0){
 			$name=substr($app_require,4);
 			# If class exists		&& we don't want it auto-creating
-			if(class_exists($name)	&& !in_array($name,array('form'))){
+			if(class_exists($name)	&& !in_array($name,array('form','product'))){
 				$$name=new $name;
 			}
 		}elseif(strpos($app_require,'form.')===0){

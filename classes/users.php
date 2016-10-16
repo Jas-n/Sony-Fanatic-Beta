@@ -62,10 +62,7 @@
 		if($datas=$db->query("SELECT CONCAT(`first_name`,' ',`last_name`) as `name`,`email`,`address_id` FROM `users` WHERE `id` IN(".$user_ids.")",$users)){
 			$addresses=array_column($datas,'address_id');
 			$address_ids=implode(',',array_pad([],sizeof($addresses),'?'));
-			$db->query("DELETE FROM `addresses` WHERE `id` IN(".$address_ids.")",$addresses);
 			$db->query("DELETE FROM `users` WHERE `id` IN(".$user_ids.")",$users);
-			$db->query("DELETE FROM `notification_users` WHERE `id` IN(".$user_ids.")",$users);
-			$db->query("DELETE FROM `user_roles` WHERE `user_id` IN(".$user_ids.")",$users);
 			$app->set_message('success','Successfully deleted <em>'.implode(', ',array_column($datas,'name')).'</em> from users',$datas);
 			$app->log_message(3,'Deleted users','Deleted '.$db->rows_updated().' users');
 		}

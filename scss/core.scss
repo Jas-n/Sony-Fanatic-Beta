@@ -6,9 +6,6 @@
 .alert p:last-of-type{
 	margin-bottom:0;
 }
-b, strong, th{
-	font-weight:700 !important;
-}
 body{
 	font-family: 'Heebo', sans-serif;
 	font-weight:300;
@@ -19,7 +16,7 @@ body{
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
 	font-weight:400 !important;
 }
-dt, optgroup, strong{
+b, dt, optgroup, strong, th{
 	font-weight:500 !important;
 }
 footer{

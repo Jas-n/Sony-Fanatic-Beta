@@ -1,14 +1,13 @@
 <?php require('../init.php');
 require('header.php');
 $logs=$db->get_logs();?>
-<div class="page-header">
-	<h1>Logs <small class="text-muted"><?=number_format($logs['count'])?></small></h1>
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
-		<li class="breadcrumb-item">Management</li>
-		<li class="breadcrumb-item active">Logs</li>
-	</ol>
-</div>
+<h1>Logs <small class="text-muted"><?=number_format($logs['count'])?></small></h1>
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="../">Home</a></li>
+	<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
+	<li class="breadcrumb-item">Management</li>
+	<li class="breadcrumb-item active">Logs</li>
+</ol>
 <table class="table table-hover table-sm table-striped">
 	<thead>
 		<tr>

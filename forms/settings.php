@@ -364,25 +364,6 @@
 							$db->query("UPDATE `settings` SET `value`=? WHERE `name`=?",array($value,$setting));
 						}
 					}
-					$colour=$results['data']['colour'];
-					$ligher=colour_lighten($results['data']['colour'],15);
-					$darker=colour_lighten($results['data']['colour'],-15);
-					file_put_contents(
-						ROOT.'css/colours.css',
-						str_replace(
-							array(
-								'[[[COLOR]]]',
-								'[[[LIGHTER]]]',
-								'[[[DARKER]]]'
-							),
-							array(
-								$colour,
-								$colour,
-								$colour
-							),
-							file_get_contents(ROOT.'users/colours.css')
-						)
-					);
 					$app->set_message('success','Settings Updated');
 					$app->log_message(3,'Settings Updated','Updated the settings');
 					$this->reload();

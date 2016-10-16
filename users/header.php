@@ -28,14 +28,15 @@
 		<?php }*/ ?>
    		<nav>
    			<div class="nav_head">
-				<a href="./">Sony Fanatic</a>
+				<a href="../">Sony Fanatic</a>
 			</div>
 			<ul>
+				<li><a href="./"><span class="fa fa-fw fa-dashboard"></span> Dashboard</a></li>
 				<li class="has_children">
 					<a><span class="fa fa-fw fa-television"></span> Products</a>
 					<ul>
 						<li><a href="products"><span class="fa fa-fw fa-list"></span> Products</a></li>
-						<li><a href="add"><span class="fa fa-fw fa-plus"></span> Add</a></li>
+						<li><a href="add_product"><span class="fa fa-fw fa-plus"></span> Add</a></li>
 						<li class="has_children">
 							<a><span class="fa fa-fw fa-th"></span> Sorting</a>
 							<ul>

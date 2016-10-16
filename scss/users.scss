@@ -2,6 +2,11 @@
 @import "custom";
 @import "variables";
 // Common
+body{
+	> .print_pre{
+		margin-left:200px;
+	}
+}
 /* Menu */
 nav{
 	background:#444;
@@ -45,7 +50,7 @@ nav{
 		&.active{
 			background:#444;
 			position: absolute;
-			top:0;
+			top:34px;
 			z-index:1;
 			&::before{
 				transform: rotate(90deg);
@@ -89,6 +94,14 @@ nav{
 	a:hover{
 		background:$brand-primary;
 		color:#fff;
+	}
+}
+table{
+	.form-group{
+		display:block !important;
+		.input-group{
+			display:flex;
+		}
 	}
 }
 /* Media Queries */

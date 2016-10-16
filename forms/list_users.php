@@ -58,26 +58,24 @@
 				'type'	=>'submit',
 				'value'	=>'Reset Password'
 			));
-			if($page->has_feature_permission('users','delete')){
-				parent::add_button(array(
-					'class'	=>'btn-success',
-					'name'	=>'enable',
-					'type'	=>'submit',
-					'value'	=>'Enable'
-				));
-				parent::add_button(array(
-					'class'	=>'btn-warning',
-					'name'	=>'disable',
-					'type'	=>'submit',
-					'value'	=>'Disable'
-				));
-				parent::add_button(array(
-					'class'	=>'btn-danger delete',
-					'name'	=>'delete',
-					'type'	=>'submit',
-					'value'	=>'Delete'
-				));
-			}
+			parent::add_button(array(
+				'class'	=>'btn-success',
+				'name'	=>'enable',
+				'type'	=>'submit',
+				'value'	=>'Enable'
+			));
+			parent::add_button(array(
+				'class'	=>'btn-warning',
+				'name'	=>'disable',
+				'type'	=>'submit',
+				'value'	=>'Disable'
+			));
+			parent::add_button(array(
+				'class'	=>'btn-danger delete',
+				'name'	=>'delete',
+				'type'	=>'submit',
+				'value'	=>'Delete'
+			));
 		parent::add_html('</p>');
 	}
 	public function process(){
