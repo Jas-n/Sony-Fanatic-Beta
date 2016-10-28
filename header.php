@@ -9,7 +9,7 @@
 		$app->get_icons();?>
 		<title><?=$app->page_title()?></title>
     </head>
-    <body id="<?=$page->slug?>">
+    <body id="<?=basename($_SERVER['PHP_SELF'],'.php')?>">
 		<nav class="navbar navbar-fixed-top navbar-dark bg-primary">
 			<button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">
  				&#9776;

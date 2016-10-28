@@ -1045,7 +1045,7 @@ class form{
 									$out.=' disabled';
 								}
 								$out.=' id="'.$id.'"';
-								if($field['maxlength'] && in_array($field['type'],array('text','email','search','password','tel'))){
+								if($field['maxlength']){
 									$out.=' maxlength="'.$field['maxlength'].'"';
 								}
 								if($field['minlength'] && in_array($field['type'],array('text','email','search','password','tel'))){

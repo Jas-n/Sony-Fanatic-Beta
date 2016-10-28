@@ -16,11 +16,18 @@
 		);
 		parent::add_fields(array(
 			array(
-				'label'			=>'Model ID',
-				'name'			=>'model',
-				'placeholder'	=>'Model ID',
+				'label'			=>'Name',
+				'name'			=>'name',
+				'placeholder'	=>'Name',
 				'type'			=>'text',
-				'value'			=>$this->product->model
+				'value'			=>$this->product->name
+			),
+			array(
+				'label'		=>'Excerpt',
+				'maxlength'	=>160,
+				'name'		=>'excerpt',
+				'type'		=>'textarea',
+				'value'		=>$this->product->excerpt
 			),
 			array(
 				'class'	=>'tinymce',
@@ -58,13 +65,15 @@
 					"UPDATE `products`
 					SET
 						`brand_id`=?,
-						`model`=?,
+						`name`=?,
+						`excerpt`=?,
 						`description`=?,
 						`updated`=?
 					WHERE `id`=?",
 					array(
 						$results['data']['brand'],
-						$results['data']['model'],
+						$results['data']['name'],
+						$results['data']['excerpt'],
 						$results['data']['description'],
 						DATE_TIME,
 						$_GET['id']
@@ -89,7 +98,7 @@
 						}
 					}
 				}
-				$app->log_message(3,'Updated Product','Updated <strong>'.$results['data']['model'].'</strong>.');
+				$app->log_message(3,'Updated Product','Updated <strong>'.$results['data']['name'].'</strong>.');
 				header('Location: '.$_SERVER['REQUEST_URI']);
 				exit;
 			}

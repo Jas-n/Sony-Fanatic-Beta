@@ -1,6 +1,7 @@
 <?php $app_require[]='php.products';
 require('../init.php');
-require('header.php');?>
+require('header.php');
+$products=$products->get_products();?>
 <a class="btn btn-success pull-right" href="add_product">Add</a>
 <h1>Products</h1>
 <ol class="breadcrumb">
@@ -17,8 +18,8 @@ require('header.php');?>
 		</tr>
 	</thead>
 	<tbody>
-		<?php if($products=$products->get_products()){
-			foreach($products as $product){?>
+		<?php if($products['count']){
+			foreach($products['data'] as $product){?>
 				<tr>
 					<td><?=$product['brand']?></td>
 					<td><?=$product['model']?></td>
@@ -31,4 +32,5 @@ require('header.php');?>
 		} ?>
 	</tbody>
 </table>
-<?php require('footer.php');
+<?php pagination($products['count']);
+require('footer.php');

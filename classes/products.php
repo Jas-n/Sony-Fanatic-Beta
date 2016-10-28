@@ -10,6 +10,28 @@
 		}
 		return false;
 	}
+	public function get_latest($count=NULL){
+		global $db;
+		if(!is_numeric($count)){
+			$count=ITEMS_PER_PAGE;
+		}
+		if($products=$db->query(
+			"SELECT
+				`brands`.`brand`,
+				`products`.*
+			FROM `products`
+			INNER JOIN `brands`
+			ON `products`.`brand_id`=`brands`.`id`
+			ORDER BY `added` ASC
+			LIMIT ".$count
+		)){
+			return array(
+				'count'	=>$db->result_count("FROM `products`"),
+				'data'	=>array_combine(array_column($products,'id'),$products)
+			);
+		}
+		return false;
+	}
 	public function get_product($id){
 		global $db;
 		if($product=$db->get_row(
@@ -38,7 +60,10 @@
 			ORDER BY `brands`.`brand` ASC, `products`.`model` ASC".
 			SQL_LIMIT
 		)){
-			return array_combine(array_column($products,'id'),$products);
+			return array(
+				'count'	=>$db->result_count("FROM `products`"),
+				'data'	=>array_combine(array_column($products,'id'),$products)
+			);
 		}
 		return false;
 	}

@@ -1,5 +1,8 @@
-<?php include('init.php');
-include('header.php'); ?>
+<?php $app_require[]='php.products';
+include('init.php');
+include('header.php');
+$latest=$products->get_latest(9);
+$latest_rows=array_chunk($latest['data'],3);?>
 <div class="container-fluid">
 	<div class="row">
 		<div id="latest_banner" class="carousel slide" data-ride="carousel">
@@ -50,15 +53,17 @@ include('header.php'); ?>
 		</div>
 	</div>
 	<div class="row">
-		<?php for($i=0;$i<9;$i++){
-			$product=mt_rand(1000,9999)?>
-			<div class="col-xs-12 col-sm-6 col-md-4 home_product">
-				<div class="meta">
-					<h2><a href="/p/<?=$product?>"><?=$product?></a></h2>
-					<p class="excerpt"><a href="/p/<?=$product?>">This is the excerpt for this product</a></p>
+		<?php foreach($latest_rows as $latest_row){
+			foreach($latest_row as $latest_product){
+				$link='/p/'.$latest_product['id'].'-'.$latest_product['slug'];?>
+				<div class="col-xs-12 col-sm-6 col-md-4 home_product">
+					<div class="meta">
+						<h2><a href="<?=$link?>"><?=$latest_product['name']?></a></h2>
+						<p class="excerpt"><a href="<?=$link?>"><?=$latest_product['excerpt']?></a></p>
+					</div>
 				</div>
-			</div>
-		<?php } ?>
+			<?php }
+		} ?>
 	</div>
 </div>
 <?php include('footer.php');
