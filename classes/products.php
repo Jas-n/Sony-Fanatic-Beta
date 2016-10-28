@@ -6,7 +6,7 @@
 			FROM `brands`
 			ORDER BY `brand` ASC"
 		)){
-			return array_combine(array_column($brands,'id'),array_column($brands,'brand'));
+			return array_combine(array_column($brands,'id'),$brands);
 		}
 		return false;
 	}
@@ -15,6 +15,7 @@
 		if($product=$db->get_row(
 			"SELECT
 				`brands`.`brand`,
+				`brands`.`slug` as `brand_slug`,
 				`products`.*
 			FROM `products`
 			INNER JOIN `brands`

@@ -152,6 +152,19 @@ class database{
 			)
 		);
 	}
+	public function next_hex_id($table,$column='id'){
+		$cols=array_keys($this->get_columns($table));
+		if(
+			!$cols ||
+			!in_array($column,$cols)
+		){
+			return false;
+		}	$hex=str_pad(base_convert(mt_rand(0,1048576),10,32),4,0,STR_PAD_LEFT);
+		while($this->get_value("SELECT `".$column."` FROM `".$table."` WHERE `".$column."`=?",$hex)){
+			$hex=str_pad(base_convert(mt_rand(0,1048576),10,32),4,0,STR_PAD_LEFT);
+		}
+		return strtoupper($hex);
+	}
 	# Perform Query
 	public function query($sql,$values=NULL,$clense=true,$echo=NULL){
 		$this->last_id=0;

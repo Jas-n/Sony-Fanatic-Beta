@@ -22,7 +22,7 @@
 					</li>
 					<?php if(!is_logged_in()){ ?>
 						<li class="nav-item pull-xs-right">
-							<a class="nav-link" href="login" id="login_link">Login</a>
+							<a class="nav-link" href="/login" id="login_link">Login</a>
 						</li>
 					<?php }else{ ?>
 						<li class="nav-item pull-xs-right">

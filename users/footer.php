@@ -31,9 +31,7 @@
 		<?php } ?>
 		<?php $app->get_foot_js();?>
 		<footer class="text-xs-center">
-			<div class="col-xs-4">Build: <span class="build_number"><?=software_version()?></span></div>
-			<div class="col-xs-4 error_report">Report Issue</div>
-			<div class="col-xs-4"><span class="hidden" id="render_time"><?=microtime(true)-$render_start?></span></div>
+			<div class="col-xs-12"><span class="hidden" id="render_time"><?=microtime(true)-$render_start?></span></div>
 		</footer>
 	</body>
 </html>

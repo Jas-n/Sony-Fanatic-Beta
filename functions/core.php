@@ -21,46 +21,6 @@ function log_errors($severity,$message,$file,$line,array $context=NULL){
 	}
 	return true;
 }
-# Recursively add files in $dir to $zip
-# $zip must be declared and opened before and closed after.
-# http://php.net/manual/en/book.zip.php
-# Updated 13-05-2016 09:31
-function add_to_zip($dir,$zip){
-	if(strpos($dir,'/')!==false && strlen($dir)!=(strpos($dir,'/')+1)){
-		$dir=$dir.'/';
-	}
-	if(is_dir($dir)){
-		foreach(scandir($dir) as $file){
-			if(!in_array($file,array('.','..','backups','error_log','error_log.txt'))){
-				if(is_dir($dir.$file)){
-					add_to_zip($dir.$file,$zip);
-				}else{
-					$zip->addFile($dir.$file,str_replace('../','',$dir.$file));
-				}
-			}
-		}
-	}
-}
-# Base64url encode
-# Updated 13-05-2016 09:31
-function base64url_encode($string){
-	return rtrim(strtr(base64_encode($string),'+/','-_'),'=');
-}
-# Base64url decode
-# Updated 13-05-2016 09:31
-function base64url_decode($string){
-	return base64_decode(str_pad(strtr($string,'-_','+/'),strlen($string)%4,'=',STR_PAD_RIGHT));
-}
-# <br> to \r\n
-# Updated 13-05-2016 09:31
-function br2nl($text){
-	return preg_replace('/<br\\s*?\/??>/i','',$text);
-}
-# Cleans new lines between html tags
-# Updated 23-06-2016 15:47
-function clean_html($html){
-	return preg_replace('/\n?<(.*?)>\n/','<$1>',str_replace("\r\n","\n",$html));
-}
 # Limit $text to $length (Default 50)
 # Updated 13-05-2016 09:31
 function crop($text,$length=50){
@@ -260,149 +220,12 @@ function email($to,$title,$description,$content,$attachments=NULL,$from=NULL){
 		);
 	}
 }
-# Font Awesome File icon (requires font awesome: http://fontawesome.io/)
-# Updated 13-05-2016 09:31
-function font_awesome_file_icon($ext){
-	switch($ext){
-		case 'doc':
-		case 'docx':
-			$fa='fa fa-file-word-o';
-			break;
-		case 'flac':
-		case 'mp3':
-		case 'wav':
-			$fa='fa fa-file-audio-o';
-			break;
-		case 'pdf':
-			$fa='fa fa-file-pdf-o';
-			break;
-		case 'xls':
-		case 'xlsx':
-			$fa='fa fa-file-excel-o';
-			break;
-		case 'png':
-			$fa='fa fa-file-image-o';
-			break;
-		case 'zip':
-			$fa='fa fa-file-archive-o';
-			break;
-		default:
-			$fa='fa fa-file-o';
-			break;
-	}
-	return $fa;
-}
-# Combines PHP's floor function with the precision functionality of PHP's round function
-# Updated 13-05-2016 09:31
-function floor_precision($value,$precision=NULL){
-	if($precision<0){
-		$precision=$precision*-1;
-		return floor($value/pow(10,$precision))*pow(10,$precision);
-	}elseif($precision==0 || $precision==NULL){
-		return floor($value);
-	}else{
-		$dec=strpos($value,'.');
-		$poi=substr($value,$dec+1,$precision);
-		if($precision>=strlen(substr($value,strpos($value,'.')))){
-			return floor($value).'.'.$poi.substr(pow(10,$precision-strlen(substr($value,strpos($value,'.')))+1),1);
-		}else{
-			return floor($value).'.'.$poi;
-		}
-	}
-}
-# Get browser
-# Updated 13-05-2016 09:31
-function getBrowser(){
-	$u_agent=$_SERVER['HTTP_USER_AGENT'];
-	$bname='Unknown';
-	$platform='Unknown';
-	$version="";
-	if(preg_match('/linux/i',$u_agent)){
-		$platform='linux';
-	}elseif(preg_match('/macintosh|mac os x/i',$u_agent)){
-		$platform='mac';
-	}elseif(preg_match('/windows|win32/i',$u_agent)){
-		$platform='windows';
-	}
-	if(preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent)){
-		$bname='Internet Explorer';
-		$ub="MSIE";
-	}elseif(preg_match('/Edge/i',$u_agent)){
-		$bname='Edge';
-		$ub="Edge";
-	}elseif(preg_match('/Firefox/i',$u_agent)){
-		$bname='Mozilla Firefox';
-		$ub="Firefox";
-	}elseif(preg_match('/Chrome/i',$u_agent)){
-		$bname='Google Chrome';
-		$ub="Chrome";
-	}elseif(preg_match('/Safari/i',$u_agent)){
-		$bname='Apple Safari';$ub="Safari";
-	}elseif(preg_match('/Opera/i',$u_agent)){
-		$bname='Opera';
-		$ub="Opera";
-	}elseif(preg_match('/Netscape/i',$u_agent)){
-		$bname='Netscape';
-		$ub="Netscape";
-	}
-	$known=array('Version',$ub,'other');
-	$pattern='#(?<browser>'.join('|',$known).')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
-	if(!preg_match_all($pattern,$u_agent,$matches)){
-	}
-	$i=count($matches['browser']);
-	if($i!=1){
-		if(strripos($u_agent,"Version") < strripos($u_agent,$ub)){
-			$version=$matches['version'][0];
-		}else{
-			$version=$matches['version'][1];
-		}
-	}else{
-		$version=$matches['version'][0];
-	}
-	if($version==null || $version==""){
-		$version="?";
-	}
-	return array(
-		'userAgent'=>$u_agent,
-		'name'=>$bname,
-		'version'=>$version,
-		'platform'=>$platform,
-		'pattern'=>$pattern
-	);
-}
 # Current Directory
 # Updated 13-05-2016 09:31
 function get_dir($level=0){
 	$dir=explode('/',str_replace(ROOT,'',getcwd().'/'));
 	array_pop($dir);
 	return $dir[sizeof($dir)-1-$level];
-}
-# Convert a Hex colour to RGB
-# Updated 23-06-2016 14:35
-function hex2rgb($hex){
-	$hex=str_replace("#","",$hex);
-	if(strlen($hex)==3){
-		$r=hexdec(substr($hex,0,1).substr($hex,0,1));
-		$g=hexdec(substr($hex,1,1).substr($hex,1,1));
-		$b=hexdec(substr($hex,2,1).substr($hex,2,1));
-	}else{
-		$r=hexdec(substr($hex,0,2));
-		$g=hexdec(substr($hex,2,2));
-		$b=hexdec(substr($hex,4,2));
-	}
-	$rgb=array('r'=>$r,'g'=>$g,'b'=>$b);
-	return $rgb;
-}
-# Checks whether is formation IP
-# Updated 13-05-2016 09:31
-function is_formation(){
-	return (bool) $_SERVER['REMOTE_ADDR']=='81.149.227.245';
-}
-# Is JSON
-# Updated 13-05-2016 09:31
-function is_json($string){
-	@json_decode($string);
-	return (json_last_error()==JSON_ERROR_NONE);
 }
 # Checks if a user is logged in
 # Updated 13-05-2016 09:31
@@ -412,129 +235,11 @@ function is_logged_in(){
 	}
 	return false;
 }
-# Checks if $postcode is a valid UK one
-# Updated 13-05-2016 09:31
-function is_postcode($postcode){
-	$postcode=strtoupper(str_replace(' ','',$postcode));
-	if(preg_match("/^[A-Z]{1,2}[0-9]{2,3}[A-Z]{2}$/",$postcode) || preg_match("/^[A-Z]{1,2}[0-9]{1}[A-Z]{1}[0-9]{1}[A-Z]{2}$/",$postcode) || preg_match("/^GIR0[A-Z]{2}$/",$postcode)){
-		return true;
-	}
-	return false;
-}
 # Return formatted __LINE__
 # Updated 13-05-2016 09:31
 function line(){
 	$stack=debug_backtrace();
 	echo $stack[0]['line'].'<br>';
-}
-# log level
-# Updated 13-05-2016 09:31
-function log_level($level){
-	$l=array(
-		1=>'Error',
-		2=>'Warning',
-		3=>'Information'
-	);
-	return $l[$level];
-}
-# Returns the textual represenation for $number
-# Updated 13-05-2016 09:31
-function number_to_words($number){
-	$hyphen='-';
-	$conjunction=' and ';
-	$separator=', ';
-	$negative='negative ';
-	$decimal=' point ';
-	$dictionary=array(
-		0	=>'zero',
-		1	=>'one',
-		2	=>'two',
-		3	=>'three',
-		4	=>'four',
-		5	=>'five',
-		6	=>'six',
-		7	=>'seven',
-		8	=>'eight',
-		9	=>'nine',
-		10	=>'ten',
-		11	=>'eleven',
-		12	=>'twelve',
-		13	=>'thirteen',
-		14	=>'fourteen',
-		15	=>'fifteen',
-		16	=>'sixteen',
-		17	=>'seventeen',
-		18	=>'eighteen',
-		19	=>'nineteen',
-		20	=>'twenty',
-		30	=>'thirty',
-		40	=>'fourty',
-		50	=>'fifty',
-		60	=>'sixty',
-		70	=>'seventy',
-		80	=>'eighty',
-		90	=>'ninety',
-		100	=>'hundred',
-		1000=>'thousand',
-		1000000=>'million',
-		1000000000=>'billion',
-		1000000000000=>'trillion',
-		1000000000000000=>'quadrillion'
-	);
-	if(!is_numeric($number)){
-		return false;
-	}
-	if(($number>=0&&(int)$number<0)||(int)$number<0-PHP_INT_MAX){
-		trigger_error('convert_number_to_words only accepts numbers between -'.PHP_INT_MAX.' and '.PHP_INT_MAX,E_USER_WARNING);
-		return false;
-	}
-	if($number<0){
-		return $negative.number_to_words(abs($number));
-	}
-	$string=$fraction=null;
-	if(strpos($number,'.')!==false){
-		list($number,$fraction)=explode('.',$number);
-	}
-	switch(true){
-		case $number<21:
-			$string=$dictionary[$number];
-			break;
-		case $number<100:
-			$tens=((int)($number/10))*10;
-			$units=$number%10;
-			$string=$dictionary[$tens];
-			if($units){
-				$string.=$hyphen.$dictionary[$units];
-			}
-			break;
-		case $number<1000:
-			$hundreds=$number/100;
-			$remainder=$number%100;
-			$string=$dictionary[$hundreds].' '.$dictionary[100];
-			if($remainder){
-				$string.=$conjunction.number_to_words($remainder);
-			}
-			break;
-		default:
-			$baseUnit=pow(1000,floor(log($number,1000)));
-			$numBaseUnits=(int)($number/$baseUnit);
-			$remainder=$number%$baseUnit;
-			$string=number_to_words($numBaseUnits).' '.$dictionary[$baseUnit];
-			if($remainder){
-				$string.=$remainder<100?$conjunction:$separator;
-				$string.=number_to_words($remainder);
-			}
-			break;
-	}
-	if(null!==$fraction&&is_numeric($fraction)){
-		$string.=$decimal;
-		$words=array();
-		foreach(str_split((string)$fraction) as $number){
-			$words[]=$dictionary[$number];
-		}
-		$string.=implode(' ',$words);
-	}
-	return $string;
 }
 # Pagination
 # Updated 02-08-2016 08:45
@@ -634,11 +339,6 @@ function print_pre($expression,$return=false){
 	}else{
 		echo $out;
 	}
-}
-# Generates Randon text
-# Updated 13-05-2016 09:31
-function random_text($length=10){
-	return substr(str_shuffle(md5(microtime())),0,(int)$length);
 }
 # Recursively remove directory
 # Updated 20/09/2016 13:00
@@ -798,7 +498,7 @@ function seconds_to_time($seconds){
 # Removes all the bad from a string
 # Updated 13-05-2016 09:31
 function slug($text){
-	return strtolower(str_replace(' ','_',str_replace(array("<",">","#","%","'",'"',"{","}","|","\\","^","[","]","`",";","/","?",":","@","&","=","+","$",",","(",")"),'',$text)));
+	return strtolower(str_replace(' ','-',str_replace(array("<",">","#","%","'",'"',"{","}","|","\\","^","[","]","`",";","/","?",":","@","&","=","+","$",",","(",")"),'',$text)));
 }
 # Smart Image resize
 # Updated 13-05-2016 09:31
@@ -923,82 +623,6 @@ function smart_resize_image($file,$string=NULL,$width=0,$height=0,$proportional=
 	}
 	return true;
 }
-# Software Info
-# Updated 30-08-2016 09:28
-function software_info(){
-	if(is_file(ROOT.'build.txt')){
-		if($build=@file_get_contents(ROOT.'build.txt')){
-			$info['build']=$build;
-		}
-	}elseif(is_file(ROOT.'version.txt')){
-		if($version=@file_get_contents(ROOT.'version.txt')){
-			$info['version']=$version;
-		}
-	}
-	return $info;
-}
-# Software version
-# Updated 30-08-2016 09:28
-function software_version(){
-	$temp=software_info();
-	if($temp['build']){
-		return $temp['build'];
-	}
-	return $temp['version'];
-}
-# Strpos of needle array
-# Updated 13-05-2016 09:31
-function strposa($haystack,$needle,$offset=0) {
-    if(!is_array($needle)){
-		$needle=array($needle);
-	}
-	foreach($needle as $query){
-		if(strpos($haystack,$query,$offset)!==false){
-			return true;
-		}
-	}
-    return false;
-}
-# Get Template
-# Updated 13-05-2016 09:31
-function get_template($template_name,$args=array()){
-	if($args && is_array($args)){
-		extract($args);
-	}
-	$template=ROOT."themes/".THEME."/".$template_name.".php";
-	if(!is_file($template)){
-		if(DEBUG){
-			echo "Template (".$template.") does not exist.";
-		}
-		return false;
-	}else{
-		include($template);
-	}
-}
-# Template exists or not
-# Updated 13-05-2016 09:31
-function template_exists($template){
-	$template=ROOT."themes/".THEME."/".$template.".php";
-	if(is_file($template)){
-		return true;
-	}
-	return false;
-}
-# Converts string to an array of RGB values
-# Updated 13-05-2016 09:31
-function text2rgba($text,$opacity=1){
-	$hex=substr(md5($text),0,6);
-	list($r,$g,$b)=array($hex[0].$hex[1],$hex[2].$hex[3],$hex[4].$hex[5]);
-	$r=hexdec($r);
-	$g=hexdec($g);
-	$b=hexdec($b);
-	return array(
-		'r'=>$r,
-		'g'=>$g,
-		'b'=>$b,
-		'a'=>min(array($opacity,1))
-	);
-}
 # Time ago
 # Updated 13-05-2016 09:31
 function time_ago($sql_date){
@@ -1079,25 +703,4 @@ function upload_folders($folders){
 # Updated 09/09/2016 16:01
 function validate_email($email){
 	return preg_match('/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/',$email)===1;
-}
-# Make a hex colour lighter or darker
-# If a positive integer is passed, the returning RGB will be lighter.
-# If a positive number is passed, the returning RGB will be darker
-# Updated 27/09/2016 15:52
-function colour_lighten($hex_colour,$percent=0){
-	$colour=hex2rgb($hex_colour);
-	if($percent>1 || $percent<-1){
-		$percent=$percent/100;
-	}
-	if($percent>0){
-		$colour['r']=floor($colour['r']+(255-$colour['r'])*$percent);
-		$colour['g']=floor($colour['g']+(255-$colour['g'])*$percent);
-		$colour['b']=floor($colour['b']+(255-$colour['b'])*$percent);
-	}elseif($percent<0){
-		$percent=$percent*-1;
-		$colour['r']=floor($colour['r']*(1-$percent));
-		$colour['g']=floor($colour['g']*(1-$percent));
-		$colour['b']=floor($colour['b']*(1-$percent));
-	}
-	return $colour;
 }

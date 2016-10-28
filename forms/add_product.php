@@ -12,9 +12,16 @@
 		);
 		parent::add_fields(array(
 			array(
-				'label'	=>'Model ID',
-				'name'	=>'model',
-				'type'	=>'text'
+				'label'			=>'Model ID',
+				'name'			=>'model',
+				'placeholder'	=>'Model ID',
+				'type'			=>'text'
+			),
+			array(
+				'class'	=>'tinymce',
+				'label'	=>'Description',
+				'name'	=>'description',
+				'type'	=>'textarea'
 			)
 		));
 		parent::add_html('<p class="text-xs-center">');
@@ -35,13 +42,19 @@
 				$results['files']=parent::unname($results['files']);
 				$db->query(
 					"INSERT INTO `products` (
-						`brand_id`,`model`,`slug`
-					) VALUES (?,?,?)",
+						`id`,`brand_id`,`model`,`slug`,`description`,
+						`added`,`updated`
+					) VALUES (?,?,?,?,?,	?,?)",
 					array(
+						$db->next_hex_id('products','id'),
 						$results['data']['brand'],
 						$results['data']['model'],
-						slug($results['data']['model'])
-					)
+						slug($results['data']['model']),
+						$results['data']['description'],
+					
+						DATE_TIME,
+						DATE_TIME
+					),0
 				);
 				$app->log_message(3,'Added Product','Added <strong>'.$results['data']['model'].'</strong> to products.');
 				header('Location: ./products');

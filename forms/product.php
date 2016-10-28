@@ -2,6 +2,8 @@
 	public function __construct($data=NULL){
 		global $products;
 		$this->product=new product($_GET['id']);
+		$brands=$products->get_brands();
+		$brands=array_combine(array_keys($brands),array_column($brands,'brand'));
 		parent::__construct("name=".__CLASS__);
 		parent::add_select(
 			array(
@@ -9,15 +11,30 @@
 				'name'	=>'brand',
 				'value'	=>$this->product->brand_id
 			),
-			$products->get_brands(),
+			$brands,
 			'Select&hellip;'
 		);
 		parent::add_fields(array(
 			array(
-				'label'	=>'Model',
-				'name'	=>'model',
-				'type'	=>'text',
-				'value'	=>$this->product->model
+				'label'			=>'Model ID',
+				'name'			=>'model',
+				'placeholder'	=>'Model ID',
+				'type'			=>'text',
+				'value'			=>$this->product->model
+			),
+			array(
+				'class'	=>'tinymce',
+				'label'	=>'Description',
+				'name'	=>'description',
+				'type'	=>'textarea',
+				'value'	=>$this->product->description
+			),
+			array(
+				'accept'	=>'jpeg,jpg,png',
+				'label'		=>'Images',
+				'multiple'	=>1,
+				'name'		=>'images[]',
+				'type'		=>'file'
 			)
 		));
 		parent::add_html(print_pre($this->product,1).
@@ -37,9 +54,44 @@
 			if($results['status']!='error'){
 				$results['data']=parent::unname($results['data']);
 				$results['files']=parent::unname($results['files']);
-				
+				$db->query(
+					"UPDATE `products`
+					SET
+						`brand_id`=?,
+						`model`=?,
+						`description`=?,
+						`updated`=?
+					WHERE `id`=?",
+					array(
+						$results['data']['brand'],
+						$results['data']['model'],
+						$results['data']['description'],
+						DATE_TIME,
+						$_GET['id']
+					),0
+				);
+				if($results['stats']['uploaded_files']){
+					$images=$results['files']['images'];
+					if(!is_dir(ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id)){
+						mkdir(ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id,0777,1);
+					}
+					foreach($images['name'] as $i=>$name){
+						$j=0;
+						list($width,$height)=getimagesize($images['tmp_name'][$i]);
+						while(is_file(ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id.'/'.$j.'_thumb.png')){
+							$j++;
+						}
+						smart_resize_image($images['tmp_name'][$i],NULL,150,0,1,ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id.'/'.$j.'_thumb.png',0,'png');
+						if($width > 1000 || $height > 1000){
+							smart_resize_image($images['tmp_name'][$i],NULL,$width,$height>=1000?1000:$height,1,ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id.'/'.$j.'_full.png',0,'png');
+						}else{
+							smart_resize_image($images['tmp_name'][$i],NULL,$width,$height,1,ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id.'/'.$j.'_full.png',0,'png');
+						}
+					}
+				}
 				$app->log_message(3,'Updated Product','Updated <strong>'.$results['data']['model'].'</strong>.');
-				$this->reload();
+				header('Location: '.$_SERVER['REQUEST_URI']);
+				exit;
 			}
 		}
 	}

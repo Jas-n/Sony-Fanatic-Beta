@@ -11,7 +11,7 @@ body{
 nav{
 	background:#444;
 	bottom:0;
-	color:#888;
+	color:#999;
 	overflow:hidden;
 	position:absolute;
 	top:0;
@@ -74,14 +74,15 @@ nav{
 			display: block;
 			left:230px;
 			overflow:hidden;
+			padding-left:0;
 			position:absolute;
 			right:0;
-			transition:left .5s;
+			transition:all .5s;
 			white-space:nowrap;
 		}
 		li.active>ul{
-			border-left:1px solid #555;
-			left:30px;
+			left:0;
+			padding-left:30px;
 		}
 	}
 }

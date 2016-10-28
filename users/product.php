@@ -1,5 +1,7 @@
 <?php $app_require=array(
 	'form.product',
+	'js.lightbox',
+	'js.tinymce',
 	'php.product',
 	'php.products'
 );
@@ -17,4 +19,13 @@ require('header.php');?>
 </ol>
 <?php $app->get_messages();
 $edit_product->get_form();
+if($images=glob(ROOT.'uploads/products/'.$edit_product->product->brand_slug.'/'.$edit_product->product->id.'/*_thumb.png')){?>
+	<h2>Media</h2>
+	<div class="product_images">
+		<?php foreach($images as $image){
+			$image=str_replace(ROOT,'',$image);?>
+			<a href="/<?=str_replace('_thumb','_full',$image)?>" target="_blank"><img class="img-thumbnail" src="/<?=$image?>"></a>
+		<?php }?>
+	</div>
+<?php }
 require('footer.php');

@@ -14,7 +14,8 @@
 							'value'	=>1
 						));
 					parent::add_html('</th>
-					<th>Type</th>
+					<th>Name</th>
+					<th>Slug</th>
 				</tr>
 			</thead>
 			<tbody>');
@@ -23,26 +24,19 @@
 						parent::add_html('<tr>
 							<td>');
 								parent::add_field(array(
-									'class'		=>'check',
-									'name'		=>'check[]',
-									'type'		=>'checkbox',
-									'value'		=>$id
+									'class'	=>'check',
+									'name'	=>'check[]',
+									'type'	=>'checkbox',
+									'value'	=>$id
 								));
 							parent::add_html('</td>
-							<td>');
-								parent::add_field(array(
-									'name'			=>'brand['.$id.']',
-									'placeholder'	=>'Brand',
-									'required'		=>1,
-									'type'			=>'text',
-									'value'			=>$brand
-								));
-							parent::add_html('</td>
+							<td>'.$brand['brand'].'</td>
+							<td>'.$brand['slug'].'</td>
 						</tr>');
 					}
 				}
 				parent::add_html('<tr>
-					<th class="text-xs-center" colspan="2">Add Brand</th>
+					<th class="text-xs-center" colspan="3">Add Brand</th>
 				</tr>
 				<tr>
 					<td></td>
@@ -54,6 +48,7 @@
 							'type'			=>'text'
 						));
 					parent::add_html('</td>
+					<td></td>
 				</tr>
 			</tbody>
 		</table>
@@ -79,22 +74,16 @@
 			if($results['status']!='error'){
 				$results=parent::unname($results['data']);
 				if($results['update']){
-					if($results['brand']){
-						foreach($results['brand'] as $id=>$brand){
-							$db->query(
-								"UPDATE `brands`
-								SET `brand`=?
-								WHERE `id`=?",
-								array(
-									$brand,
-									$id
-								)
-							);
-						}
-						$app->log_message(3,'Updated Brands','Updated brands');
-					}
 					if($results['new_brand']){
-						$db->query("INSERT INTO `brands` (`brand`) VALUES (?)",$results['new_brand']);
+						$db->query(
+							"INSERT INTO `brands` (
+								`brand`,`slug`
+							) VALUES (?,?)",
+							array(
+								$results['new_brand'],
+								slug($results['new_brand'])
+							)
+						);
 						$app->log_message(3,'New Brand','Added '.$results['new_brand'].' to brands');
 					}
 				}elseif($results['delete']){

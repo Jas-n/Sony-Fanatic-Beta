@@ -6,10 +6,10 @@ var adsize,
 $(document).ready(function() {
 	'use strict';
 	var render_time=$('#render_time')[0];
-	if(render_time){
+	/*if(render_time){
 		var js_process=((Date.now ? Date.now() : new Date().getTime())-render_start)/1000+Number(render_time.innerHTML);
 		$('#render_time').html('Rendered in '+js_process.toFixed(2)+'s').removeClass('hidden');
-	}
+	}*/
 });
 // Make all tables responsive
 function responsiveTables(){
@@ -56,7 +56,7 @@ $(window).focus(function(){
 	focused=false;
 });
 // Start notifications
-if(window.innerWidth>560 && user_id!=0){
+/*if(window.innerWidth>560 && user_id!=0){
 	if(!("Notification" in window)){
 		console.log('Notifications not supported');
 	}else if(Notification.permission==="granted"){
@@ -90,7 +90,7 @@ if(window.innerWidth>560 && user_id!=0){
 			process_notifications(JSON.parse(e.data));
 		}
 	}
-}
+}*/
 function process_notifications(data){
 	var notified='';
 	if(localStorage.getItem('notified')){

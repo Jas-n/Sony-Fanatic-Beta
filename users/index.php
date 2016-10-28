@@ -11,6 +11,5 @@ require('header.php');?>
 	<li>Finish menu tree</li>
 	<li>Replace font awesome icons with icons from Metro Studio</li>
 	<li>Tidy up un-needed files</li>
-	<li>Hide siblings in menu (E.g. the plus under <strong>Products > Sorting</strong>)</li>
 </ol>
 <?php require('footer.php');

@@ -82,11 +82,9 @@ class app{
 		global $db,$form_included,$page,$user,$render_start;
 		$require=array_map('strtolower',$this->require);
 		$out='<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>';
-		if(in_array('js.tooltip',$require) || in_array('php.calendar',$require)){
-			$out.='<script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"></script>';
-		}
-		$out.='<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.4/js/bootstrap.min.js"></script>';
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.4/js/bootstrap.min.js"></script>';
 		if($require && in_array('js.lightbox',$require)){
 			$out.='<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.7.0/bootstrap-lightbox.min.js"></script>';
 		}
@@ -95,12 +93,6 @@ class app{
 		}
 		if(in_array('js.tinymce',$require)){
 			$out.='<script src="//cdnjs.cloudflare.com/ajax/libs/tinymce/4.4.3/tinymce.min.js"></script>';
-		}
-		if(in_array('php.calendar',$require)){
-			$out.='<script src="/js/calendar.js"></script>';
-		}
-		if(in_array('php.clients',$require)){
-			$out.='<script src="/js/clients.js"></script>';
 		}
 		$out.='<script>';
 			$out.='var _GET={';
@@ -170,7 +162,6 @@ class app{
 		if($GLOBALS['form_included']){
 			$out.='<script src="/js/form.js"></script>';
 		}
-		$out.='<script src="/js/locations.js"></script>';
 		if(in_array('js.searcher',$require)){
 			$out.='<script src="/js/searcher.js"></script>';
 		}
