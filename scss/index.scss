@@ -3,7 +3,6 @@
 @import "variables";
 // Index.php
 .home_product{
-	background-image:url('http://placehold.it/640x360');
 	background-position: center;
 	background-size:cover;
 	border:2px solid #fff;
@@ -17,7 +16,9 @@
 		}
 	}
 	.meta{
+		background:rgba(255,255,255,0.5);
 		bottom:0;
+		left:0;
 		padding:5px;
 		position:absolute;
 		right:0;

@@ -14,8 +14,9 @@ $product=new product($_GET['id']);
 		'twitter'	=>mt_rand(1,100)
 	)
 );*/
-include('header.php');?>
-<div class="jumbotron jumbotron-fluid" style="background-image:url('/images/p/original.jpg')">
+include('header.php');
+#print_pre($product);?>
+<div class="jumbotron jumbotron-fluid"<?=$product->banner?' style="background-image:url('.$product->banner.')"':''?>>
 	<div class="container">
 		<div class="jumbotron-data">
 			<h1 class="m-b-0"><?=$product->name?></h1>
@@ -66,36 +67,24 @@ include('header.php');?>
 			<button type="button" class="btn btn-sm btn-secondary print" data-toggle="tooltip" data-placement="top" title="<?=$product->social['print']?>"><span class="fa fa-fw fa-print"></span></button>
 		</div>
 	</div>
-	<div id="latest_banner" class="carousel slide m-y-1" data-ride="carousel">
-		<div class="carousel-inner" role="listbox">
-			<div class="carousel-item active">
-				<img src="http://placehold.it/1920x1080?text=Slide+1">
+	<?php if($product->images){ ?>
+		<div id="latest_banner" class="carousel slide m-y-1" data-ride="carousel">
+			<div class="carousel-inner" role="listbox">
+				<?php foreach($product->images['full'] as $i=>$image){ ?>
+					<div class="carousel-item<?=$i==0?' active':''?>">
+						<img src="<?=$image?>">
+					</div>
+				<?php } ?>
 			</div>
-			<div class="carousel-item">
-				<img src="http://placehold.it/1920x1080?text=Slide+2">
-			</div>
-			<div class="carousel-item">
-				<img src="http://placehold.it/1920x1080?text=Slide+3">
-			</div>
-			<div class="carousel-item">
-				<img src="http://placehold.it/1920x1080?text=Slide+4">
-			</div>
-		</div>
-		<div class="carousel-thumbnails">
-			<div data-target="#latest_banner" data-slide-to="0" class="active">
-				<img src="http://placehold.it/1920x1080?text=Slide+1" width="80" height="45">
-			</div>
-			<div data-target="#latest_banner" data-slide-to="1">
-				<img src="http://placehold.it/1920x1080?text=Slide+2" width="80" height="45">
-			</div>
-			<div data-target="#latest_banner" data-slide-to="2">
-				<img src="http://placehold.it/1920x1080?text=Slide+3" width="80" height="45">
-			</div>
-			<div data-target="#latest_banner" data-slide-to="3">
-				<img src="http://placehold.it/1920x1080?text=Slide+4" width="80" height="45">
+			<div class="carousel-thumbnails">
+				<?php foreach($product->images['thumbnail'] as $i=>$image){ ?>
+					<div data-target="#latest_banner" data-slide-to="<?=$i?>"<?=$i==0?'class="active"':''?>>
+						<img src="<?=$image?>" width="75">
+					</div>
+				<?php } ?>
 			</div>
 		</div>
-	</div>
+	<?php } ?>
 	<ul class="nav nav-tabs" role="tablist">
 		<li class="nav-item">
 			<a class="nav-link active" data-toggle="tab" href="#comments" role="tab">Comments</a>

@@ -44,8 +44,7 @@
 				'type'		=>'file'
 			)
 		));
-		parent::add_html(print_pre($this->product,1).
-			'<p class="text-xs-center">');
+		parent::add_html('<p class="text-xs-center">');
 			parent::add_button(array(
 				'class' =>'btn-primary',
 				'name'  =>'update',
@@ -91,11 +90,8 @@
 							$j++;
 						}
 						smart_resize_image($images['tmp_name'][$i],NULL,150,0,1,ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id.'/'.$j.'_thumb.png',0,'png');
-						if($width > 1000 || $height > 1000){
-							smart_resize_image($images['tmp_name'][$i],NULL,$width,$height>=1000?1000:$height,1,ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id.'/'.$j.'_full.png',0,'png');
-						}else{
-							smart_resize_image($images['tmp_name'][$i],NULL,$width,$height,1,ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id.'/'.$j.'_full.png',0,'png');
-						}
+						smart_resize_image($images['tmp_name'][$i],NULL,640,360,0,ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id.'/'.$j.'_medium.png',0,'png');
+						smart_resize_image($images['tmp_name'][$i],NULL,1920,1080,0,ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id.'/'.$j.'_full.png',0,'png');
 					}
 				}
 				$app->log_message(3,'Updated Product','Updated <strong>'.$results['data']['name'].'</strong>.');

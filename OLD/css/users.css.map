@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAIA,eAAe,CACd,WAAW,CCgED,IAAI",
-"sources": ["../scss/users.scss","../scss/_variables.scss"],
-"names": [],
-"file": "users.css"
-}

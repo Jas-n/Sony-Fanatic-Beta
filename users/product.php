@@ -10,21 +10,31 @@ $edit_product=new edit_product();
 $edit_product->process();
 require('header.php');?>
 <a class="btn btn-info pull-right" href="../p/<?=$edit_product->product->id?>-<?=$edit_product->product->slug?>">View</a>
-<h1><?=$edit_product->product->model?></h1>
+<h1><?=$edit_product->product->name?></h1>
 <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="../">Home</a></li>
 	<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
 	<li class="breadcrumb-item"><a href="products">Products</a></li>
-	<li class="breadcrumb-item active"><?=$edit_product->product->model?></li>
+	<li class="breadcrumb-item active"><?=$edit_product->product->name?></li>
 </ol>
+<div class="card card-block card-details">
+	<div class="row">
+		<div class="col-md-6">
+			<p><strong class="tab-10">Brand</strong><?=$edit_product->product->brand?></p>
+		</div>
+		<div class="col-md-6">
+			<p><strong class="tab-10">Added</strong><?=sql_datetime($edit_product->product->added)?></p>
+			<p><strong class="tab-10">Updated</strong><?=sql_datetime($edit_product->product->updated)?></p>
+		</div>
+	</div>
+</div>
 <?php $app->get_messages();
 $edit_product->get_form();
-if($images=glob(ROOT.'uploads/products/'.$edit_product->product->brand_slug.'/'.$edit_product->product->id.'/*_thumb.png')){?>
+if($edit_product->product->images['thumbnail']){?>
 	<h2>Media</h2>
 	<div class="product_images">
-		<?php foreach($images as $image){
-			$image=str_replace(ROOT,'',$image);?>
-			<a href="/<?=str_replace('_thumb','_full',$image)?>" target="_blank"><img class="img-thumbnail" src="/<?=$image?>"></a>
+		<?php foreach($edit_product->product->images['thumbnail'] as $thumbnail){?>
+			<a href="<?=$thumbnail?>" target="_blank"><img class="img-thumbnail" src="<?=$thumbnail?>"></a>
 		<?php }?>
 	</div>
 <?php }

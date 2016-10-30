@@ -7,13 +7,16 @@ body{
 		margin-left:200px;
 	}
 }
+.card-details p{
+	margin-bottom:$spacer*0.25;
+}
 /* Menu */
 nav{
 	background:#444;
 	bottom:0;
 	color:#999;
 	overflow:hidden;
-	position:absolute;
+	position:fixed;
 	top:0;
 	width:200px;
 	a{
@@ -96,6 +99,14 @@ nav{
 		background:$brand-primary;
 		color:#fff;
 	}
+}
+.tab-5{
+	display:inline-block;
+	width:$spacer*5;
+}
+.tab-10{
+	display:inline-block;
+	width:$spacer*10;
 }
 table{
 	.form-group{

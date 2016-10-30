@@ -18,6 +18,7 @@
 		if($products=$db->query(
 			"SELECT
 				`brands`.`brand`,
+				`brands`.`slug` as `brand_slug`,
 				`products`.*
 			FROM `products`
 			INNER JOIN `brands`
@@ -25,6 +26,11 @@
 			ORDER BY `added` ASC
 			LIMIT ".$count
 		)){
+			foreach($products as &$product){
+				if($mediums=glob(ROOT.'uploads/products/'.$product['brand_slug'].'/'.$product['id'].'/*_medium.png')){
+					$product['image']=str_replace(ROOT,'/',$mediums[0]);
+				}
+			}
 			return array(
 				'count'	=>$db->result_count("FROM `products`"),
 				'data'	=>array_combine(array_column($products,'id'),$products)
@@ -57,7 +63,7 @@
 			FROM `products`
 			INNER JOIN `brands`
 			ON `products`.`brand_id`=`brands`.`id`
-			ORDER BY `brands`.`brand` ASC, `products`.`model` ASC".
+			ORDER BY `brands`.`brand` ASC, `products`.`name` ASC".
 			SQL_LIMIT
 		)){
 			return array(

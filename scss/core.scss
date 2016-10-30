@@ -9,9 +9,9 @@
 body{
 	font-family: 'Heebo', sans-serif;
 	font-weight:300;
-	min-height:100%;
+	//min-height:100%;
 	overflow-x: hidden;
-	position:relative;
+	//position:relative;
 }
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
 	font-weight:400 !important;
@@ -20,14 +20,14 @@ b, dt, optgroup, strong, th{
 	font-weight:500 !important;
 }
 footer{
-	bottom:0;
-	position:absolute;
+	//bottom:0;
+	//position:absolute;
 }
 .hidden{
 	display:none !important;
 }
 html{
-	height:100%;
+	//height:100%;
 }
 img{
 	max-width:100%;
@@ -118,7 +118,7 @@ main{margin:$spacer*5 auto $spacer;}
 #index,
 #product{
 	main{
-		margin:54px auto $spacer;
+		margin:54px auto 0;
 	}
 }
 .table{font-size: 0.95rem;}
@@ -155,15 +155,13 @@ main{margin:$spacer*5 auto $spacer;}
 	-webkit-animation:movedash 1.5s forwards 0s infinite;
 	animation:movedash 1.5s forwards 0s infinite;
 }
-@-webkit-keyframes movedash{to{stroke-dashoffset:250%;}}
-@keyframes movedash{to{stroke-dashoffset:250%;}}
-// Login
-#login_drop{
-	background-color:$brand-primary;
-	padding: $spacer;
-	position: absolute;
-	right: 0;
-	top:54px;
+@-webkit-keyframes movedash{
+	to{
+		stroke-dashoffset:250%;
+	}
 }
-#login_drop.active{display: block;}
-#login_link{cursor:pointer;}
+@keyframes movedash{
+	to{
+		stroke-dashoffset:250%;
+	}
+}
