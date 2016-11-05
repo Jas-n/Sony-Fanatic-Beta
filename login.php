@@ -14,11 +14,15 @@ if($_GET['reset']){
 	$app->set_message('success','You have been successfully registered. Your login details have been sent to the supplied email address.');
 }
 require('header.php');?>
-<div class="card">
-	<div class="card-block">
-		<h1 class="h2">Login</h1>
-		<?php $app->get_messages();
-		$login->get_form();?>
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			<div class="card card-block">
+				<h1 class="h2">Login</h1>
+				<?php $app->get_messages();
+				$login->get_form();?>
+			</div>
+		</div>
 	</div>
 </div>
 <?php require('footer.php');

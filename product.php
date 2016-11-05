@@ -59,7 +59,7 @@ include('header.php');
 			</ul>
 		</div>
 	</div>
-	<div class="text-xs-center interactions">
+	<div class="text-xs-center interactions mt-1">
 		<div class="btn-group social" role="group" aria-label="Social">
 			<button type="button" class="btn btn-sm btn-secondary facebook" data-toggle="tooltip" data-placement="top" title="<?=$product->social['facebook']?>"><span class="fa fa-fw fa-facebook"></span></button>
 			<button type="button" class="btn btn-sm btn-secondary twitter" data-toggle="tooltip" data-placement="top" title="<?=$product->social['twitter']?>"><span class="fa fa-fw fa-twitter"></span></button>
@@ -68,7 +68,7 @@ include('header.php');
 		</div>
 	</div>
 	<?php if($product->images){ ?>
-		<div id="latest_banner" class="carousel slide m-y-1" data-ride="carousel">
+		<div id="latest_banner" class="carousel slide" data-ride="carousel">
 			<div class="carousel-inner" role="listbox">
 				<?php foreach($product->images['full'] as $i=>$image){ ?>
 					<div class="carousel-item<?=$i==0?' active':''?>">
@@ -93,7 +93,7 @@ include('header.php');
 			<a class="nav-link" data-toggle="tab" href="#forum" role="tab">Forum</a>
 		</li>
 	</ul>
-	<div class="tab-content">
+	<div class="tab-content mb-1">
 		<div class="tab-pane active" id="comments" role="tabpanel">
 			I made a comment
 		</div>

@@ -19,6 +19,13 @@ body{
 b, dt, optgroup, strong, th{
 	font-weight:500 !important;
 }
+.carousel{
+	margin-bottom:$spacer;
+	margin-top:$spacer;
+	.carousel-thumbnails>*{
+		cursor: pointer;
+	}
+}
 footer{
 	//bottom:0;
 	//position:absolute;
