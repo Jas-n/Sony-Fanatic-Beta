@@ -4,9 +4,44 @@
 // Common
 footer{
 	background:$gray-dark;
-	//bottom:0;
 	color:#fff;
 	padding:1.5rem 15px;
-	//position:absolute;
-	//width:100%;
+}
+img.cover{
+	object-fit:cover;
+	width:100%;
+}
+.interactions{
+	&.catalog{
+		button.true,
+		button:hover{
+			color:#fff;
+			&.catalog_had{
+				background:$brand-primary;
+			}
+			&.catalog_got{
+				background:$brand-success;
+			}
+			&.catalog_want{
+				background:$brand-danger;
+			}
+		}
+	}
+	&.social{
+		button:hover{
+			color:#fff;
+			&.email{
+				background:$email;
+			}
+			&.facebook{
+				background:$facebook;
+			}
+			&.print{
+				background:$print;
+			}
+			&.twitter{
+				background:$twitter;
+			}
+		}
+	}
 }

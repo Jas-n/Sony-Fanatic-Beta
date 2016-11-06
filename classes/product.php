@@ -5,6 +5,9 @@
 				$this->$key=$value;
 			}
 			$this->get_images();
+			if($this->images && !$this->banner){
+				$this->banner=$this->images['full'][0];
+			}
 		}
 		return $this;
 	}

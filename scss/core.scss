@@ -19,12 +19,8 @@ body{
 b, dt, optgroup, strong, th{
 	font-weight:500 !important;
 }
-.carousel{
-	margin-bottom:$spacer;
-	margin-top:$spacer;
-	.carousel-thumbnails>*{
-		cursor: pointer;
-	}
+.carousel .carousel-thumbnails>*{
+	cursor: pointer;
 }
 footer{
 	//bottom:0;
@@ -38,39 +34,6 @@ html{
 }
 img{
 	max-width:100%;
-}
-.interactions{
-	.catalog{
-		button.true,button:hover{
-			color:#fff;
-			&.catalog_had{
-				background:$brand-primary;
-			}
-			&.catalog_got{
-				background:$brand-success;
-			}
-			&.catalog_want{
-				background:$brand-danger;
-			}
-		}
-	}
-	.social{
-		button:hover{
-			color:#fff;
-			&.email{
-				background:$email;
-			}
-			&.facebook{
-				background:$facebook;
-			}
-			&.print{
-				background:$print;
-			}
-			&.twitter{
-				background:$twitter;
-			}
-		}
-	}
 }
 ol,ol ol ol ol{
 	list-style-type:decimal;
@@ -121,7 +84,9 @@ td .print_pre{
 .table-fixed{
 	table-layout:fixed;
 }
-main{margin:$spacer*5 auto $spacer;}
+main{
+	margin:$spacer*5 auto $spacer;
+}
 #index,
 #product{
 	main{
@@ -130,9 +95,6 @@ main{margin:$spacer*5 auto $spacer;}
 }
 .table{font-size: 0.95rem;}
 .table pre{max-height:500px;}
-.tab-pane{padding:.9375rem;}
-
-
 #loading{
 	background:rgba(0,0,0,0.25);
 	position:fixed;

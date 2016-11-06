@@ -21,11 +21,11 @@
 						<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
 					</li>
 					<?php if(!is_logged_in()){ ?>
-						<li class="nav-item pull-xs-right">
+						<li class="nav-item float-xs-right">
 							<a class="nav-link" href="/login" id="login_link">Login</a>
 						</li>
 					<?php }else{ ?>
-						<li class="nav-item pull-xs-right">
+						<li class="nav-item float-xs-right">
 							<a class="nav-link" href="/users">Account</a>
 						</li>
 					<?php } ?>

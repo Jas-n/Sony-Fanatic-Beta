@@ -22,16 +22,14 @@ class app{
 			$require=array_map('strtolower',$this->require);
 		}
 		$css_files[]='//fonts.googleapis.com/css?family=Heebo:300,400,500';
-		$css_files[]='/css/bootstrap-reboot.css" rel="stylesheet';
-		$css_files[]='/css/bootstrap-flex.css" rel="stylesheet';
-		$css_files[]='/css/bootstrap-grid.css" rel="stylesheet';
+		$css_files[]='//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css';
+		$css_files[]='/css/bootstrap-reboot.css';
+		$css_files[]='/css/bootstrap-flex.css';
+		$css_files[]='/css/bootstrap-grid.css';
 		if($form_included){
 			$css_files[]='//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css';
 		}
 		$css_files[]='/css/core.css';
-		if($require && in_array('js.lightbox',$require)){
-			$css_files[]='//cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.7.0/bootstrap-lightbox.min.css';
-		}
 		#Include folder specific CSS
 		if(get_dir() && is_file(ROOT.'css/'.get_dir().'.css')){
 			$css_files[]='/css/'.get_dir().'.css';
@@ -47,7 +45,6 @@ class app{
 		foreach($css_files as $css_file){
 			$out.='<link rel="stylesheet" href="'.$css_file.'">';
 		}
-		$out.='<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">';
 		echo $out;
 	}
 	public function get_head_js(){

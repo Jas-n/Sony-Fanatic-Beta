@@ -12,9 +12,11 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule	^users/([A-Zaz0-9\-_]+)/([A-Z0-9]+)?$	users/$1\.php?id=$2			[NC,L]
+RewriteRule	^a/([A-Z0-9]+)?$						article\.php?id=$1			[NC,L]
+RewriteRule	^a/([A-Z0-9]+)-([A-Zaz0-9\-_]+)/?$		article\.php?id=$1&slug=$2	[NC,L]
+RewriteRule	^b/([A-Za-z0-9\-_]+)/?$					brand\.php?slug=$1			[NC,L]
 RewriteRule	^c/([A-Za-z0-9\-_]+)/?$					category\.php?slug=$1		[NC,L]
-RewriteRule	^f/([0-9]+)/?$							forum\.php?id=$1			[NC,L]
-RewriteRule	^p/([A-Z0-9]+)?$						product\.php?id=$1	[NC,L]
+RewriteRule	^p/([A-Z0-9]+)?$						product\.php?id=$1			[NC,L]
 RewriteRule	^p/([A-Z0-9]+)-([A-Zaz0-9\-_]+)/?$		product\.php?id=$1&slug=$2	[NC,L]
 RewriteRule	^u/([A-Za-z0-9\-_]+)/?$					user\.php?username=$1		[NC,L]
 
