@@ -31,47 +31,54 @@
 				<a href="../">Sony Fanatic</a>
 			</div>
 			<ul>
-				<li><a href="./"><span class="fa fa-fw fa-dashboard"></span> Dashboard</a></li>
+				<li><a href="./"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a></li>
 				<li class="has_children">
-					<a><span class="fa fa-fw fa-television"></span> Products</a>
+					<a><i class="fa fa-fw fa-television"></i> Products</a>
 					<ul>
-						<li><a href="products"><span class="fa fa-fw fa-list"></span> Products</a></li>
-						<li><a href="add_product"><span class="fa fa-fw fa-plus"></span> Add</a></li>
+						<li><a href="products"><i class="fa fa-fw fa-list"></i> Products</a></li>
+						<li><a href="add_product"><i class="fa fa-fw fa-plus"></i> Add</a></li>
 						<li class="has_children">
-							<a><span class="fa fa-fw fa-th"></span> Sorting</a>
+							<a><i class="fa fa-fw fa-th"></i> Sorting</a>
 							<ul>
-								<li><a href="brands"><span class="fa fa-fw fa-list"></span> Brands</a></li>
-								<li><a href="brands"><span class="fa fa-fw fa-th"></span> Categories</a></li>
-								<li><a href="features"><span class="fa fa-fw fa-th"></span> Features</a></li>
-								<li><a href="tags"><span class="fa fa-fw fa-th"></span> Tags</a></li>
+								<li><a href="brands"><i class="fa fa-fw fa-list"></i> Brands</a></li>
+								<li><a href="brands"><i class="fa fa-fw fa-th"></i> Categories</a></li>
+								<li><a href="features"><i class="fa fa-fw fa-th"></i> Features</a></li>
+								<li><a href="tags"><i class="fa fa-fw fa-th"></i> Tags</a></li>
 							</ul>
 						</li>
 					</ul>
 				</li>
 				<li class="has_children">
+					<a><i class="fa fa-fw fa-newspaper-o"></i> News</a>
+					<ul>
+						<li><a href="news"><i class="fa fa-fw fa-newspaper-o"></i> View</a></li>
+						<li><a href="add_news"><i class="fa fa-fw fa-pencil"></i> Add</a></li>
+					</ul>
+				</li>
+				<li class="has_children">
 					<a><span class="fa fa-fw fa-users"></span> Users</a>
 					<ul>
-						<li><a href="users"><span class="fa fa-fw fa-list"></span> View</a></li>
+						<li><a href="users"><i class="fa fa-fw fa-list"></i> View</a></li>
 					</ul>
 				</li>
 				<li class="has_children">
-					<a><span class="fa fa-fw fa-wrench"></span> Management</a>
+					<a><i class="fa fa-fw fa-wrench"></i> Management</a>
 					<ul>
-						<li><a href="logs"><span class="fa fa-fw fa-list"></span> Logs</a></li>
-						<li><a href="statistics"><span class="fa fa-fw fa-bar-chart"></span> Statistics</a></li>
+						<li><a href="logs"><i class="fa fa-fw fa-list"></i> Logs</a></li>
+						<li><a href="statistics"><i class="fa fa-fw fa-bar-chart"></i> Statistics</a></li>
 					</ul>
 				</li>
 				<li class="has_children">
-					<a><span class="fa fa-fw fa-cogs"></span> Administration</a>
+					<a><i class="fa fa-fw fa-cogs"></i> Administration</a>
 					<ul>
-						<li><a href="settings"><span class="fa fa-fw fa-cogs"></span> Settings</a></li>
+						<li><a href="settings"><i class="fa fa-fw fa-cogs"></i> Settings</a></li>
 					</ul>
 				</li>
 				<li class="has_children">
-					<a><span class="fa fa-fw fa-user"></span> <?=$user->first_name?></a>
+					<a><i class="fa fa-fw fa-user"></i> <?=$user->first_name?></a>
 					<ul>
-						<li><a href="profile"><span class="fa fa-fw fa-user"></span> Profile</a></li>
-						<li><a href="../logout"><span class="fa fa-fw fa-sign-out"></span> Logout</a></li>
+						<li><a href="profile"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+						<li><a href="../logout"><i class="fa fa-fw fa-sign-out"></i> Logout</a></li>
 					</ul>
 				</li>
 			</ul>

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="index.php" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131222507567963837" remote="131222507400000000" Dst="2" />
+<file name="index.php" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131232836382017670" remote="131232871800000000" Dst="1" />
 <file name=".gitattributes" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131199728900000000" remote="131204250600000000" Dst="2" />
-<file name=".htaccess" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131229399449884354" remote="131229435000000000" Dst="1" />
 <file name="init.php" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131211274133396514" remote="131211273600000000" Dst="2" />
 <file name="header.php" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131229420132290040" remote="131229456000000000" Dst="1" />
 <file name="footer.php" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131229354892993612" remote="131229390600000000" Dst="1" />
@@ -12,5 +11,7 @@
 <file name="error.php" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131200601380000000" remote="131211067800000000" Dst="2" />
 <file name="forgot.php" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131200523320000000" remote="131211067800000000" Dst="2" />
 <file name="login.php" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131222972044164181" remote="131223007800000000" Dst="1" />
-<file name="product.php" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131229391525325932" remote="131229427200000000" Dst="1" />
+<file name="product.php" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131232851102186489" remote="131232886800000000" Dst="1" />
+<file name="index.php" server="//192.168.0.2/Web/Websites/sony_fanatic_beta/" local="131232836653482756" remote="131232836650000000" Dst="1" />
+<file name="init.php" server="//192.168.0.2/Web/Websites/sony_fanatic_beta/" local="131232838062016100" remote="131232838060000000" Dst="1" />
 </dwsync>

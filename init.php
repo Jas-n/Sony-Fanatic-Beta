@@ -5,7 +5,7 @@ if(basename($_SERVER['PHP_SELF'])==basename(__FILE__)){
 	exit;
 }
 # If the site is not in a root directory
-$document_root=$_SERVER['DOCUMENT_ROOT']?$_SERVER['DOCUMENT_ROOT']:__DIR__;
+$document_root=__DIR__;
 define("ROOT",$document_root.'/');
 # Set PHP Variables
 ini_set('memory_limit','256M');

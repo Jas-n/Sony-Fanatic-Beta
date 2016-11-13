@@ -31,7 +31,7 @@ function crop($text,$length=50){
 }
 # Easy cURL integration
 # Updated 13-05-2016 09:31
-function curl($url, $method = 'GET', $data = false, $headers = false, $returnInfo = false){
+function curl($url,$method='GET',$data=false,$headers=false,$returnInfo=false){
     $ch = curl_init();
     if($method == 'POST') {
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -76,11 +76,17 @@ function curl($url, $method = 'GET', $data = false, $headers = false, $returnInf
 # Returns a date reformated fron SQL
 # Updated 13-05-2016 09:31
 function sql_date($date_from_sql){
+	if(strtotime($date_from_sql)<=0){
+		return 'N/a';
+	}
 	return date(DATE_FORMAT,strtotime($date_from_sql));
 }
 # Returns a date and time reformated fron SQL
 # Updated 13-05-2016 09:31
 function sql_datetime($datetime_from_sql){
+	if(strtotime($datetime_from_sql)<=0){
+		return 'N/a';
+	}
 	return sql_date($datetime_from_sql).' at '.date(TIME_FORMAT,strtotime($datetime_from_sql));
 }
 # Trim backtrace

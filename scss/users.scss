@@ -10,6 +10,9 @@ body{
 .card-details p{
 	margin-bottom:$spacer*0.25;
 }
+.input-group-addon{
+	background-color:$gray-lighter !important;
+}
 /* Menu */
 nav{
 	background:#444;
@@ -115,6 +118,34 @@ table{
 			display:flex;
 		}
 	}
+}
+.ui-autocomplete{
+	position:absolute;
+	z-index:1200;
+}
+.ui-menu{
+	list-style:none;
+	margin:0;
+	padding:0;
+	a{
+		background:#444;
+		color:#fff;
+		cursor:pointer;
+		display:block;
+		padding:5px;
+		&:hover{
+			background:$brand-primary;
+			color:#fff;
+			text-decoration:none;
+		}
+	}
+	li{
+		margin:0;
+	}
+}
+.ui-helper-hidden-accessible{
+	left:-999em;
+	position: absolute;
 }
 /* Media Queries */
 	/* XS */
@@ -271,10 +302,7 @@ table{
 	}
 }
 /* jQuery UI
-.ui-helper-hidden-accessible{
-	left:-999em;
-	position: absolute;
-}
+
 /* Responsive tables
 @media (max-width: 33em){
 	.table thead th{

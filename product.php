@@ -44,28 +44,40 @@ include('header.php');
 				<button type="button" class="btn btn-sm btn-secondary print" data-toggle="tooltip" data-placement="top" title="<?=$product->social['print']?>"><span class="fa fa-fw fa-print"></span></button>
 			</div>
 		</div>
-		<div class="col-md-4 product_reviews">
+		<div class="col-md-3 product_reviews">
+			<h3 class="m-b-0">News</h3>
+			<ul class="list-unstyled m-b-1">
+				<li>Cras justo odio</li>
+				<li>Dapibus ac facilisis in</li>
+				<li>Vestibulum at eros</li>
+				<li><a href="#">View More&hellip;</a></li>
+			</ul>
+		</div>
+		<div class="col-md-3 product_reviews">
 			<h3 class="m-b-0">Reviews</h3>
 			<ul class="list-unstyled m-b-1">
 				<li>Cras justo odio<sup>SF</sup></li>
 				<li>Dapibus ac facilisis in</li>
 				<li>Vestibulum at eros</li>
+				<li><a href="#">View More&hellip;</a></li>
 			</ul>
 		</div>
-		<div class="col-md-4 product_comments">
+		<div class="col-md-3 product_comments">
 			<h3 class="m-b-0">Comments</h3>
 			<ul class="list-unstyled m-b-1">
 				<li>Cras justo odio</li>
 				<li>Dapibus ac facilisis in</li>
 				<li>Vestibulum at eros</li>
+				<li><a href="#">View More&hellip;</a></li>
 			</ul>
 		</div>
-		<div class="col-md-4 product_replies">
+		<div class="col-md-3 product_replies">
 			<h3 class="m-b-0">Forum Replies</h3>
 			<ul class="list-unstyled m-b-1">
 				<li>Cras justo odio</li>
 				<li>Dapibus ac facilisis in</li>
 				<li>Vestibulum at eros</li>
+				<li><a href="#">View More&hellip;</a></li>
 			</ul>
 		</div>
 	</div>
