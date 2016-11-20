@@ -1,6 +1,6 @@
-<?php class add_news extends form{
+<?php class item_article extends form{
 	public function __construct($data=NULL){
-		global $news,$products;
+		global $articles,$products;
 		parent::__construct("name=".__CLASS__);
 		$brands=$products->get_brands();
 		$brands=array_combine(array_column($brands,'id'),array_column($brands,'brand'));
@@ -32,46 +32,52 @@
 				'value'		=>$data?$data['product_id']:''
 			)
 		));
-		parent::add_html('<div class="content hidden">');
-			parent::add_select(
-				array(
-					'label'	=>'Type',
-					'name'	=>'type'
-				),
-				$news->types(),'Select&hellip;'
-			);
-			parent::add_select(
-				array(
-					'label'	=>'Status',
-					'name'	=>'status'
-				),
-				$news->statuses()
-			);
-			parent::add_fields(array(
-				array(
-					'label'		=>'Excerpt',
-					'maxlength'	=>160,
-					'name'		=>'excerpt',
-					'placeholder'=>'Excerpt',
-					'rows'		=>3,
-					'type'		=>'textarea'
-				),
-				array(
-					'class'	=>'tinymce',
-					'label'	=>'Content',
-					'name'	=>'content',
-					'type'	=>'textarea'
-				)
+		parent::add_select(
+			array(
+				'label'	=>'Type',
+				'name'	=>'type'
+			),
+			$articles->types(),'Select&hellip;'
+		);
+		parent::add_select(
+			array(
+				'label'	=>'Status',
+				'name'	=>'status'
+			),
+			$articles->statuses()
+		);
+		parent::add_fields(array(
+			array(
+				'label'		=>'Title',
+				'maxlength'	=>70,
+				'name'		=>'title',
+				'placeholder'=>'Title',
+				'rows'		=>3,
+				'type'		=>'text'
+			),
+			array(
+				'label'		=>'Excerpt',
+				'maxlength'	=>160,
+				'name'		=>'excerpt',
+				'placeholder'=>'Excerpt',
+				'rows'		=>3,
+				'type'		=>'textarea'
+			),
+			array(
+				'class'	=>'tinymce',
+				'label'	=>'Content',
+				'name'	=>'content',
+				'type'	=>'textarea'
+			)
+		));
+		parent::add_html('<p class="text-xs-center">');
+			parent::add_button(array(
+				'class' =>'btn-success',
+				'name'  =>'add',
+				'type'  =>'submit',
+				'value' =>'Add'
 			));
-			parent::add_html('<p class="text-xs-center">');
-				parent::add_button(array(
-					'class' =>'btn-success',
-					'name'  =>'add',
-					'type'  =>'submit',
-					'value' =>'Add'
-				));
-			parent::add_html('</p>
-		</div>');
+		parent::add_html('</p>');
 	}
 	public function process(){
 		if($_POST['form_name']==$this->data['name']){
@@ -81,44 +87,28 @@
 				$results['data']=parent::unname($results['data']);
 				$results['files']=parent::unname($results['files']);
 				print_pre($results);
-				$id=$db->next_hex_id('products');
+				/*$id=$db->next_hex_id('products');
 				$db->query(
 					"INSERT INTO `news` (
-						`id`,		`product_id`,	`type`,		`status`,	`excerpt`,
-						`content`,	`added`,		`updated`,	`published`
+						`id`,		`product_id`,	`type`,	`status`,	`title`,
+						`excerpt`,	`content`,		`added`,`updated`,	`published`
 					) VALUES (?,?,?,?,?,	?,?,?,?)",
 					array(
 						$id,
 						$results['data']['product_id'],
 						$results['data']['type'],
 						$results['data']['status'],
-						$results['data']['excerpt'],
+						$results['data']['title'],
 					
+						$results['data']['excerpt'],
 						$results['data']['content'],
 						DATE_TIME,
 						DATE_TIME,
 						$results['data']['status']==2?DATE_TIME:'0000-00-00 00:00:00'
 					),0
 				);
-				/*$db->query(
-					"INSERT INTO `products` (
-						`id`,			`brand_id`,	`name`,`slug`,`excerpt`,
-						`description`,	`added`,	`updated`
-					) VALUES (?,?,?,?,?,	?,?,?)",
-					array(
-						$db->next_hex_id('products','id'),
-						$results['data']['brand'],
-						$results['data']['name'],
-						slug($results['data']['name']),
-						$results['data']['excerpt'],
-					
-						$results['data']['description'],
-						DATE_TIME,
-						DATE_TIME
-					),0
-				);
 				$app->log_message(3,'Added Product','Added <strong>'.$results['data']['name'].'</strong> to products.');
-				header('Location: ./products');
+				header('Location: ./product/'.$id);
 				exit;*/
 			}
 		}

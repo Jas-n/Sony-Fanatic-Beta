@@ -1,6 +1,7 @@
 /* Include Bootstrap default and override variables */
 @import "custom";
 @import "variables";
+@import "mixins";
 // Product.php
 .carousel{
 	.carousel-thumbnails{
@@ -11,65 +12,6 @@
 		}
 	}
 }
-footer{
-    position: relative;
-	top: 65vh;
-}
-.interactions{
-	&.catalog{
-		float:right;
-	}
-	&.social{
-		margin-bottom:$spacer/2;
-		margin-top:$spacer;
-		padding:$spacer/4;
-		text-align:center;
-	}
-}
-.product_banner{
-	background-position:center;
-	background-size:cover;
-	box-shadow:inset 0 -5px 50px 0 #fff;
-	height:75vh;
-	position: fixed;
-	top:54px;
-	width:100%;
-}
-.product_comments,
-.product_replies,
-.product_reviews{
-	color:#fff;
-	a{
-		color:inherit;
-	}
-}
-.product_content{
-	background-color:rgba(255,255,255,0.75);
-	box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
-	margin-bottom:$spacer*3;
-	position:relative;
-	top:65vh;
-	> .nav-tabs{
-		border:0;
-		.nav-item{
-			margin-left:0;
-			width:50%;
-			.nav-link{
-				border:0;
-				&.active{
-					background:$brand-primary;
-					color:#fff;
-				}
-			}
-		}
-	}
-	.tab-content{
-		border:0;
-	}
-}
-.product_description > p:last-of-type{
+#about > p:last-of-type{
 	margin-bottom:0;
-}
-.product_extras{
-	border-left:1px solid $gray-lighter;
 }

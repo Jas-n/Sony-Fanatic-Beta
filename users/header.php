@@ -49,10 +49,10 @@
 					</ul>
 				</li>
 				<li class="has_children">
-					<a><i class="fa fa-fw fa-newspaper-o"></i> News</a>
+					<a><i class="fa fa-fw fa-newspaper-o"></i> Articles</a>
 					<ul>
-						<li><a href="news"><i class="fa fa-fw fa-newspaper-o"></i> View</a></li>
-						<li><a href="add_news"><i class="fa fa-fw fa-pencil"></i> Add</a></li>
+						<li><a href="articles"><i class="fa fa-fw fa-newspaper-o"></i> View</a></li>
+						<li><a href="add_article"><i class="fa fa-fw fa-pencil"></i> Add</a></li>
 					</ul>
 				</li>
 				<li class="has_children">

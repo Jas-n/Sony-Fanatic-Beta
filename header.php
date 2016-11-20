@@ -10,26 +10,39 @@
 		<title><?=$app->page_title()?></title>
     </head>
     <body id="<?=basename($_SERVER['PHP_SELF'],'.php')?>">
-		<nav class="navbar navbar-fixed-top navbar-dark bg-primary">
-			<button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">
- 				&#9776;
-  			</button>
-  			<div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
-				<a class="navbar-brand" href="/"><?=SITE_NAME?></a>
-				<ul class="nav navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-					</li>
+		<header class="cd-auto-hide-header">
+			<div class="logo"><a href="/">Sony Fanatic</a></div>
+			<nav class="cd-primary-nav">
+				<a href="#cd-navigation" class="nav-trigger">
+					<span>
+						<em aria-hidden="true"></em>
+						Menu
+					</span>
+				</a> <!-- .nav-trigger -->
+				<ul id="cd-navigation">
+					<li><a href="/">Home</a></li>
 					<?php if(!is_logged_in()){ ?>
-						<li class="nav-item float-xs-right">
-							<a class="nav-link" href="/login" id="login_link">Login</a>
-						</li>
+						<li><a href="/login">Login</a></li>
 					<?php }else{ ?>
-						<li class="nav-item float-xs-right">
-							<a class="nav-link" href="/users">Account</a>
-						</li>
+						<li><a href="/users">Account</a></li>
 					<?php } ?>
 				</ul>
-			</div>
-		</nav>
-		<main>
+			</nav> <!-- .cd-primary-nav -->
+		</header>
+		<?php if($hero){ ?>
+			<section class="cd-hero" style="background-image:url(<?=$hero['image']?>);">
+				<div class="cd-hero-content">
+					<?=$hero['content']?>
+				</div>
+			</section>
+		<?php }
+		if($page_nav){ ?>
+			<nav class="cd-secondary-nav">
+				<ul>
+					<?php foreach($page_nav as $i=>$nav_item){ ?>
+						<li><a<?=$i==0?' class="active"':''?> href="<?=$nav_item['link']?>" title="<?=$nav_item['name']?>"><?=$nav_item['name']?><?=$nav_item['count']?' <span class="tag tag-primary">'.$nav_item['count'].'</span>':''?></a></li>
+					<?php } ?>
+				</ul>
+			</nav>
+		<?php }?>
+		<main class="cd-main-content<?=($hero?' sub-nav-hero':'').(basename($_SERVER['PHP_SELF'],'.php')!='index'?' container':'')?>" <?=$spy?' data-spy="scroll"':''?>>

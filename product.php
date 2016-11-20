@@ -1,4 +1,7 @@
-<?php $app_require[]='php.product';
+<?php $app_require=array(
+	'js.tooltip',
+	'php.product'
+);
 include('init.php');
 $product=new product($_GET['id']);
 /*$product=array(
@@ -14,76 +17,64 @@ $product=new product($_GET['id']);
 		'twitter'	=>mt_rand(1,100)
 	)
 );*/
+if($product->banner){
+	$hero['image']=$product->banner;
+	if($product->slogan){
+		$hero['content']='<p><em>'.$product->slogan.'</em></p>';
+	}
+}
+$page_nav=array(
+	array(
+		'link'=>'#about',
+		'name'=>'About'
+	),
+	array(
+		'link'=>'#features',
+		'name'=>'Features'
+	)
+);
+if($product->images){
+	$page_nav[]=array(
+		'link'=>'#media',
+		'name'=>'Media'
+	);
+}
+$page_nav=array_merge($page_nav,array(
+	array(
+		'link'=>'#news-reviews',
+		'name'=>'News/Reviews',
+		'count'=>mt_rand(1,100)
+	),
+	array(
+		'link'=>'#discuss',
+		'name'=>'Discuss',
+		'count'=>mt_rand(1,100)
+	)
+));
 include('header.php');
 #print_pre($product);?>
-<div class="product_banner"<?=$product->banner?' style="background-image:url('.$product->banner.')"':''?>>
-</div>
-<div class="container product_content py-1">
-	<div class="interactions catalog">
-		<div class="btn-group" role="group" aria-label="My Catalog">
-			<button type="button" class="btn btn-sm btn-secondary catalog_had" data-toggle="tooltip" data-placement="top" title="<?=$product->catalog['had']?> Others">Had It</button>
-			<button type="button" class="btn btn-sm btn-secondary catalog_got true" data-toggle="tooltip" data-placement="top" title="You and <?=$product->catalog['got']?> Others">Got It</button>
-			<button type="button" class="btn btn-sm btn-secondary catalog_want" data-toggle="tooltip" data-placement="top" title="<?=$product->catalog['want']?> Others">Want It</button>
-		</div>
+<h1 class="mb-0"><?=$product->name?></h1>
+<div class="btn-toolbar text-xs-center interactions" role="toolbar" aria-label="Interactions">
+	<div class="btn-group catalog" role="group" aria-label="My Catalog">
+		<button type="button" class="btn btn-sm btn-secondary catalog_had" data-toggle="tooltip" data-placement="top" title="<?=$product->catalog['had']?> Others">Had It</button>
+		<button type="button" class="btn btn-sm btn-secondary catalog_got true" data-toggle="tooltip" data-placement="top" title="You and <?=$product->catalog['got']?> Others">Got It</button>
+		<button type="button" class="btn btn-sm btn-secondary catalog_want" data-toggle="tooltip" data-placement="top" title="<?=$product->catalog['want']?> Others">Want It</button>
 	</div>
-	<h1 class="mb-0"><?=$product->name?></h1>
-	<?php if($product->slogan){ ?>
-		<p><em><?=$product->slogan?></em></p>
-	<?php } ?>
-	<div class="product_description">
-		<?=$product->description?>
+	<div class="btn-group social" role="group" aria-label="Social">
+		<button type="button" class="btn btn-sm btn-secondary facebook" data-toggle="tooltip" data-placement="top" title="<?=$product->social['facebook']?>"><span class="fa fa-fw fa-facebook"></span></button>
+		<button type="button" class="btn btn-sm btn-secondary twitter" data-toggle="tooltip" data-placement="top" title="<?=$product->social['twitter']?>"><span class="fa fa-fw fa-twitter"></span></button>
+		<button type="button" class="btn btn-sm btn-secondary email" data-toggle="tooltip" data-placement="top" title="<?=$product->social['email']?>"><span class="fa fa-fw fa-envelope"></span></button>
+		<button type="button" class="btn btn-sm btn-secondary print" data-toggle="tooltip" data-placement="top" title="<?=$product->social['print']?>"><span class="fa fa-fw fa-print"></span></button>
 	</div>
 </div>
-<div class="container product_content">
-	<div class="bg-primary row">
-		<div class="interactions social col-md-12">
-			<div class="btn-group" role="group" aria-label="Social">
-				<button type="button" class="btn btn-sm btn-secondary facebook" data-toggle="tooltip" data-placement="top" title="<?=$product->social['facebook']?>"><span class="fa fa-fw fa-facebook"></span></button>
-				<button type="button" class="btn btn-sm btn-secondary twitter" data-toggle="tooltip" data-placement="top" title="<?=$product->social['twitter']?>"><span class="fa fa-fw fa-twitter"></span></button>
-				<button type="button" class="btn btn-sm btn-secondary email" data-toggle="tooltip" data-placement="top" title="<?=$product->social['email']?>"><span class="fa fa-fw fa-envelope"></span></button>
-				<button type="button" class="btn btn-sm btn-secondary print" data-toggle="tooltip" data-placement="top" title="<?=$product->social['print']?>"><span class="fa fa-fw fa-print"></span></button>
-			</div>
-		</div>
-		<div class="col-md-3 product_reviews">
-			<h3 class="m-b-0">News</h3>
-			<ul class="list-unstyled m-b-1">
-				<li>Cras justo odio</li>
-				<li>Dapibus ac facilisis in</li>
-				<li>Vestibulum at eros</li>
-				<li><a href="#">View More&hellip;</a></li>
-			</ul>
-		</div>
-		<div class="col-md-3 product_reviews">
-			<h3 class="m-b-0">Reviews</h3>
-			<ul class="list-unstyled m-b-1">
-				<li>Cras justo odio<sup>SF</sup></li>
-				<li>Dapibus ac facilisis in</li>
-				<li>Vestibulum at eros</li>
-				<li><a href="#">View More&hellip;</a></li>
-			</ul>
-		</div>
-		<div class="col-md-3 product_comments">
-			<h3 class="m-b-0">Comments</h3>
-			<ul class="list-unstyled m-b-1">
-				<li>Cras justo odio</li>
-				<li>Dapibus ac facilisis in</li>
-				<li>Vestibulum at eros</li>
-				<li><a href="#">View More&hellip;</a></li>
-			</ul>
-		</div>
-		<div class="col-md-3 product_replies">
-			<h3 class="m-b-0">Forum Replies</h3>
-			<ul class="list-unstyled m-b-1">
-				<li>Cras justo odio</li>
-				<li>Dapibus ac facilisis in</li>
-				<li>Vestibulum at eros</li>
-				<li><a href="#">View More&hellip;</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
-<div class="container product_content py-1">
-	<?php if($product->images){ ?>
+<section id="about">
+	<?=$product->description?>
+</section>
+<section class="hidden" id="features">
+	// Features and specifications
+</section>
+<?php if($product->images){ ?>
+	<section class="hidden" id="media">
 		<div id="latest_banner" class="carousel slide" data-ride="carousel">
 			<div class="carousel-inner" role="listbox">
 				<?php foreach($product->images['full'] as $i=>$image){ ?>
@@ -100,24 +91,12 @@ include('header.php');
 				<?php } ?>
 			</div>
 		</div>
-	<?php } ?>
-</div>
-<div class="container product_content px-0">
-	<ul class="nav nav-tabs" role="tablist">
-		<li class="nav-item">
-			<a class="nav-link active" data-toggle="tab" href="#comments" role="tab">Comments</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" data-toggle="tab" href="#forum" role="tab">Forum</a>
-		</li>
-	</ul>
-	<div class="tab-content">
-		<div class="tab-pane active" id="comments" role="tabpanel">
-			I made a comment
-		</div>
-		<div class="tab-pane" id="forum" role="tabpanel">
-			IN conclusion
-		</div>
-	</div>
-</div>
+	</section>
+<?php } ?>
+<section class="hidden" id="news-reviews">
+	// News and reviews
+</section>
+<section class="hidden" id="discuss">
+	// Comments
+</section>
 <?php include('footer.php');

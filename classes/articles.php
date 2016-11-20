@@ -1,14 +1,31 @@
-<?php class news{
+<?php class articles{
+	public function get_article($id){
+		# Get articles
+		global $db;
+		if($article=$db->get_row(
+			"SELECT
+				`articles`.*,
+				`products`.`name` as `product`
+			FROM `articles`
+			LEFT JOIN `products`
+			ON `articles`.`product_id`=`products`.`id`
+			WHERE `articles`.`id`=?",
+			$id
+		)){
+			$article['status']=$this->statuses($article['status']);
+			return $article;
+		}
+	}
 	public function get_articles(){
 		# Get articles
 		global $db;
 		if($datas=$db->query(
 			"SELECT
-				`news`.*,
+				`articles`.*,
 				`products`.`name` as `product`
-			FROM `news`
+			FROM `articles`
 			LEFT JOIN `products`
-			ON `news`.`product_id`=`products`.`id`
+			ON `articles`.`product_id`=`products`.`id`
 			ORDER BY
 				`status` ASC,
 				`published` DESC,
@@ -19,7 +36,7 @@
 				$data['status']=$this->statuses($data['status']);
 			}
 			return array(
-				'count'	=>$db->result_count("FROM `news`"),
+				'count'	=>$db->result_count("FROM `articles`"),
 				'data'	=>$datas
 			);
 		}

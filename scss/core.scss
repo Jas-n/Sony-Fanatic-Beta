@@ -1,8 +1,8 @@
 // Include Bootstrap default and override variables
 @import "custom";
 @import "variables";
+@import "mixins";
 // Common
-/* Bootstrap 4 */
 .alert p:last-of-type{
 	margin-bottom:0;
 }
@@ -83,15 +83,6 @@ td .print_pre{
 }
 .table-fixed{
 	table-layout:fixed;
-}
-main{
-	margin:$spacer*5 auto $spacer;
-}
-#index,
-#product{
-	main{
-		margin:54px auto 0;
-	}
 }
 .table{font-size: 0.95rem;}
 .table pre{max-height:500px;}

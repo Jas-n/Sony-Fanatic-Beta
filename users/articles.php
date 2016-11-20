@@ -1,12 +1,12 @@
-<?php $app_require[]='php.news';
+<?php $app_require[]='php.articles';
 require('../init.php');
 require('header.php');
-$articles=$news->get_articles();?>
-<h1>News</h1>
+$article_list=$articles->get_articles();?>
+<h1>Articles</h1>
 <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="../">Home</a></li>
 	<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
-	<li class="breadcrumb-item active">News</li>
+	<li class="breadcrumb-item active">Articles</li>
 </ol>
 <table class="table table-hover table-sm table-striped">
 	<thead>
@@ -20,8 +20,8 @@ $articles=$news->get_articles();?>
 		</tr>
 	</thead>
 	<tbody>
-		<?php if($articles['count']){
-			foreach($articles['data'] as $article){?>
+		<?php if($article_list['count']){
+			foreach($article_list['data'] as $article){?>
 				<tr>
 					<td><?=$article['title']?></td>
 					<td><?=$article['product']?></td>
@@ -36,5 +36,5 @@ $articles=$news->get_articles();?>
 		<?php }?>
 	</tbody>
 </table>
-<?php pagination($logs['count']);
+<?php pagination($article_list['count']);
 require('footer.php');
