@@ -6,8 +6,9 @@
 		$brands=array_combine(array_column($brands,'id'),array_column($brands,'brand'));
 		parent::add_select(
 			array(
-				'label'	=>'Brand',
-				'name'	=>'brand'
+				'label'		=>'Brand',
+				'name'		=>'brand',
+				'required'	=>1
 			),
 			$brands,
 			'Select&hellip;'
@@ -35,8 +36,9 @@
 		parent::add_html('<div class="content hidden">');
 			parent::add_select(
 				array(
-					'label'	=>'Type',
-					'name'	=>'type'
+					'label'		=>'Type',
+					'name'		=>'type',
+					'required'	=>1
 				),
 				$articles->types(),'Select&hellip;'
 			);
@@ -53,6 +55,7 @@
 					'maxlength'	=>70,
 					'name'		=>'title',
 					'placeholder'=>'Title',
+					'required'	=>1,
 					'rows'		=>3,
 					'type'		=>'text'
 				),
@@ -61,14 +64,16 @@
 					'maxlength'	=>160,
 					'name'		=>'excerpt',
 					'placeholder'=>'Excerpt',
+					'required'	=>1,
 					'rows'		=>3,
 					'type'		=>'textarea'
 				),
 				array(
-					'class'	=>'tinymce',
-					'label'	=>'Content',
-					'name'	=>'content',
-					'type'	=>'textarea'
+					'class'		=>'tinymce',
+					'label'		=>'Content',
+					'name'		=>'content',
+					'required'	=>1,
+					'type'		=>'textarea'
 				)
 			));
 			parent::add_html('<p class="text-xs-center">');

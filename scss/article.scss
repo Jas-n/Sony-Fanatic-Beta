@@ -1,0 +1,22 @@
+/* Include Bootstrap default and override variables */
+@import "custom";
+@import "variables";
+@import "mixins";
+// article.php
+.article-details{
+	margin-bottom:$spacer;
+	p{
+		margin-bottom:0;
+	}
+}
+.author-details{
+	border:none;
+	color:#fff;
+	padding:$spacer;
+	a{
+		color:inherit;
+	}
+	p{
+		margin-bottom:0;
+	}
+}

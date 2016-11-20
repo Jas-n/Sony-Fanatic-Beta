@@ -19,6 +19,12 @@ body{
 b, dt, optgroup, strong, th{
 	font-weight:500 !important;
 }
+.card-details{
+	padding:$spacer;
+	p{
+		margin-bottom:$spacer*0.25;
+	}
+}
 .carousel .carousel-thumbnails>*{
 	cursor: pointer;
 }
@@ -80,6 +86,14 @@ td p{margin-bottom:0.5rem}
 td .print_pre{
 	max-width:1000px;
 	word-wrap:break-word;
+}
+.tab-5{
+	display:inline-block;
+	width:$spacer*5;
+}
+.tab-10{
+	display:inline-block;
+	width:$spacer*10;
 }
 .table-fixed{
 	table-layout:fixed;

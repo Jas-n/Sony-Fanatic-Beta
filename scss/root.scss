@@ -379,7 +379,8 @@ Main content
 
 .cd-main-content {
 	overflow: hidden;
-	padding-top: $nav-height-small;
+	padding-bottom:$spacer;
+	padding-top: $nav-height-small + $spacer;
 	&.sub-nav {
 		/* to be used if there is sub nav */
 		padding-top: $nav-height-small + $nav2-height-small;

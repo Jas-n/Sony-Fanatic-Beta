@@ -1,13 +1,15 @@
 <?php class item_article extends form{
 	public function __construct($data=NULL){
-		global $articles,$products;
+		global $article,$articles,$products;
 		parent::__construct("name=".__CLASS__);
 		$brands=$products->get_brands();
 		$brands=array_combine(array_column($brands,'id'),array_column($brands,'brand'));
 		parent::add_select(
 			array(
-				'label'	=>'Brand',
-				'name'	=>'brand'
+				'label'		=>'Brand',
+				'name'		=>'brand',
+				'required'	=>1,
+				'value'		=>$article['product']['brand_id']
 			),
 			$brands,
 			'Select&hellip;'
@@ -22,27 +24,29 @@
 				'required'		=>2,
 				'type'			=>'text',
 				'postfield'		=>"<i class='fa fa-refresh'></i>",
-				'value'			=>$data?$data['product']:'',
-				'wrapclass'		=>'hidden'
+				'value'			=>$article['product']['name']
 			),
 			array(
 				'class'		=>'ajax_product_id',
 				'name'		=>'product_id',
 				'type'		=>'hidden',
-				'value'		=>$data?$data['product_id']:''
+				'value'		=>$article['product']['id']
 			)
 		));
 		parent::add_select(
 			array(
-				'label'	=>'Type',
-				'name'	=>'type'
+				'label'		=>'Type',
+				'name'		=>'type',
+				'required'	=>1,
+				'value'		=>$article['type']
 			),
 			$articles->types(),'Select&hellip;'
 		);
 		parent::add_select(
 			array(
 				'label'	=>'Status',
-				'name'	=>'status'
+				'name'	=>'status',
+				'value'	=>$article['status_id']
 			),
 			$articles->statuses()
 		);
@@ -52,64 +56,82 @@
 				'maxlength'	=>70,
 				'name'		=>'title',
 				'placeholder'=>'Title',
+				'required'	=>1,
 				'rows'		=>3,
-				'type'		=>'text'
+				'type'		=>'text',
+				'value'		=>$article['title']
 			),
 			array(
 				'label'		=>'Excerpt',
 				'maxlength'	=>160,
 				'name'		=>'excerpt',
 				'placeholder'=>'Excerpt',
+				'required'	=>1,
 				'rows'		=>3,
-				'type'		=>'textarea'
+				'type'		=>'textarea',
+				'value'		=>$article['excerpt']
 			),
 			array(
-				'class'	=>'tinymce',
-				'label'	=>'Content',
-				'name'	=>'content',
-				'type'	=>'textarea'
+				'class'		=>'tinymce',
+				'label'		=>'Content',
+				'name'		=>'content',
+				'required'	=>1,
+				'type'		=>'textarea',
+				'value'		=>$article['content']
 			)
 		));
 		parent::add_html('<p class="text-xs-center">');
 			parent::add_button(array(
-				'class' =>'btn-success',
-				'name'  =>'add',
+				'class' =>'btn-primary',
+				'name'  =>'save',
 				'type'  =>'submit',
-				'value' =>'Add'
+				'value' =>'Save'
 			));
 		parent::add_html('</p>');
 	}
 	public function process(){
 		if($_POST['form_name']==$this->data['name']){
-			global $app,$db;
+			global $article,$app,$db;
 			$results=parent::process();
 			if($results['status']!='error'){
 				$results['data']=parent::unname($results['data']);
 				$results['files']=parent::unname($results['files']);
-				print_pre($results);
-				/*$id=$db->next_hex_id('products');
-				$db->query(
-					"INSERT INTO `news` (
-						`id`,		`product_id`,	`type`,	`status`,	`title`,
-						`excerpt`,	`content`,		`added`,`updated`,	`published`
-					) VALUES (?,?,?,?,?,	?,?,?,?)",
-					array(
-						$id,
-						$results['data']['product_id'],
-						$results['data']['type'],
-						$results['data']['status'],
-						$results['data']['title'],
+				$sets=array(
+					'product_id',
+					'type',
+					'status',
+					'title',
+					'excerpt',
 					
-						$results['data']['excerpt'],
-						$results['data']['content'],
-						DATE_TIME,
-						DATE_TIME,
-						$results['data']['status']==2?DATE_TIME:'0000-00-00 00:00:00'
-					),0
+					'content',
+					'updated'
 				);
-				$app->log_message(3,'Added Product','Added <strong>'.$results['data']['name'].'</strong> to products.');
-				header('Location: ./product/'.$id);
-				exit;*/
+				$options=array(
+					$results['data']['product_id'],
+					$results['data']['type'],
+					$results['data']['status'],
+					$results['data']['title'],
+					$results['data']['excerpt'],
+					
+					$results['data']['content'],
+					DATE_TIME
+				);
+				if($results['data']['status']==2 && $article['published']=='0000-00-00 00:00:00'){
+					$sets[]='published';
+					$options[]=DATE_TIME;
+				}
+				$options[]=$_GET['id'];
+				$db->query(
+					"UPDATE `articles`
+					SET `".implode("`=?,`",$sets)."`=?
+					WHERE `id`=?",
+					$options,
+					0
+				);
+				$app->set_message('success','Successfully updated article.');
+				$app->log_message(3,'Article Updated','Updated <strong>'.$results['data']['title'].'</strong>.');
+				header('Location: '.$_GET['id']);
+				exit;
 			}
 		}
 	}

@@ -8,9 +8,6 @@ body{
 		margin-left:200px;
 	}
 }
-.card-details p{
-	margin-bottom:$spacer*0.25;
-}
 .input-group-addon{
 	background-color:$gray-lighter !important;
 }
@@ -103,14 +100,6 @@ nav{
 		background:$brand-primary;
 		color:#fff;
 	}
-}
-.tab-5{
-	display:inline-block;
-	width:$spacer*5;
-}
-.tab-10{
-	display:inline-block;
-	width:$spacer*10;
 }
 table{
 	.form-group{

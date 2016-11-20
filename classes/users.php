@@ -136,17 +136,26 @@
 			FROM `users`
 			LEFT JOIN `roles`
 			ON `users`.`role_id`=`roles`.`id`
-			WHERE `users`.`id`=?',
-			$user_id
+			WHERE
+				`users`.`role_id`<>5 AND
+				(
+					`users`.`id`=? OR
+					`users`.`username`=?
+				)',
+			array(
+				$user_id,
+				$user_id
+			)
 		)){
 			if(!$temp['role']){
-				$this->update_user(array('role_id'=>4),$user_id);
+				$this->update_user(array('role_id'=>4),$temp['id']);
 			}
+			$temp['slug']=$temp['id'].'-'.slug($temp['first_name'].' '.$temp['last_name'][0]);
 			if(class_exists('addresses',0)){
 				$temp['address']=$addresses->get_address($temp['address_id']);
 			}
-			if(is_file(ROOT.'uploads/users/'.$user_id.'/cover.html')){
-				$temp['cover']=file_get_contents(ROOT.'uploads/users/'.$user_id.'/cover.html');
+			if(is_file(ROOT.'uploads/users/'.$temp['id'].'/cover.html')){
+				$temp['cover']=file_get_contents(ROOT.'uploads/users/'.$temp['id'].'/cover.html');
 			}
 			if($loaders){
 				if(!is_array($loaders)){
@@ -160,7 +169,7 @@
 				WHERE `user_id`=?
 				ORDER BY
 					`key` ASC",
-				$user_id
+				$temp['id']
 			)){
 				foreach($metas as $meta){
 					$temp[$meta['key']]=$meta['value'];

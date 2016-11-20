@@ -1,7 +1,7 @@
 <?php class articles{
 	public function get_article($id){
 		# Get articles
-		global $db;
+		global $db,$products,$user;
 		if($article=$db->get_row(
 			"SELECT
 				`articles`.*,
@@ -12,11 +12,14 @@
 			WHERE `articles`.`id`=?",
 			$id
 		)){
+			$article['author']=$user->get_user($article['author']);
+			$article['product']=$products->get_product($article['product_id']);
+			$article['status_id']=$article['status'];
 			$article['status']=$this->statuses($article['status']);
 			return $article;
 		}
 	}
-	public function get_articles(){
+	public function get_articles($status=2){
 		# Get articles
 		global $db;
 		if($datas=$db->query(
@@ -29,8 +32,10 @@
 			ORDER BY
 				`status` ASC,
 				`published` DESC,
-				`updated` DESC".
-			SQL_LIMIT
+				`updated` DESC
+			WHERE `status`=?".
+			SQL_LIMIT,
+			$status
 		)){
 			foreach($datas as &$data){
 				$data['status']=$this->statuses($data['status']);
@@ -40,9 +45,6 @@
 				'data'	=>$datas
 			);
 		}
-	}
-	public function get_product_articles($product,$limit=NULL){
-		# Return number and results
 	}
 	public function statuses($id=NULL){
 		$statuses=array(

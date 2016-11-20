@@ -3,6 +3,10 @@
 @import "variables";
 @import "mixins";
 // Product.php
+.article{
+	border-top:1px solid $gray-lighter;
+	padding:1rem 0;
+}
 .carousel{
 	.carousel-thumbnails{
 		text-align:center;

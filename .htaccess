@@ -1,0 +1,26 @@
+#ErrorDocument 403 /error.php
+#ErrorDocument 404 /error.php
+#ErrorDocument 405 /error.php
+#ErrorDocument 408 /error.php
+#ErrorDocument 500 /error.php
+#ErrorDocument 502 /error.php
+#ErrorDocument 504 /error.php
+
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule	^users/([A-Zaz0-9\-_]+)/([A-Za-z0-9\-_]+)?$	users/$1\.php?username=$2 [NC,L]
+RewriteRule	^a/([A-Z0-9]+)?$						article\.php?id=$1			[NC,L]
+RewriteRule	^a/([A-Z0-9]+)-([A-Zaz0-9\-_]+)/?$		article\.php?id=$1&slug=$2	[NC,L]
+RewriteRule	^b/([A-Za-z0-9\-_]+)/?$					brand\.php?slug=$1			[NC,L]
+RewriteRule	^c/([A-Za-z0-9\-_]+)/?$					category\.php?slug=$1		[NC,L]
+RewriteRule	^p/([A-Z0-9]+)?$						product\.php?id=$1			[NC,L]
+RewriteRule	^p/([A-Z0-9]+)-([A-Zaz0-9\-_]+)/?$		product\.php?id=$1&slug=$2	[NC,L]
+RewriteRule	^u/([A-Za-z0-9\-_]+)/?$					user\.php?username=$1		[NC,L]
+
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule	^users/([A-Za-z\-_]+)/?$	users/$1\.php		[NC,L]
+RewriteRule	^users/?$					users/index\.php	[NC,L]
+RewriteRule	^([A-Za-z\-_]+)/?$			$1\.php				[NC,L]

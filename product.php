@@ -1,22 +1,14 @@
 <?php $app_require=array(
 	'js.tooltip',
+	'php.articles',
 	'php.product'
 );
 include('init.php');
 $product=new product($_GET['id']);
-/*$product=array(
-	'catalog'	=>array(
-		'had'		=>mt_rand(1,100),
-		'got'		=>mt_rand(1,100),
-		'want'		=>mt_rand(1,100)
-	),
-	'social'	=>array(
-		'email'		=>mt_rand(1,100),
-		'facebook'	=>mt_rand(1,100),
-		'print'		=>mt_rand(1,100),
-		'twitter'	=>mt_rand(1,100)
-	)
-);*/
+if(!$product->id){
+	header('Location: /');
+	exit;
+}
 if($product->banner){
 	$hero['image']=$product->banner;
 	if($product->slogan){
@@ -43,7 +35,7 @@ $page_nav=array_merge($page_nav,array(
 	array(
 		'link'=>'#news-reviews',
 		'name'=>'News/Reviews',
-		'count'=>mt_rand(1,100)
+		'count'=>$product->articles['count']
 	),
 	array(
 		'link'=>'#discuss',
@@ -61,10 +53,10 @@ include('header.php');
 		<button type="button" class="btn btn-sm btn-secondary catalog_want" data-toggle="tooltip" data-placement="top" title="<?=$product->catalog['want']?> Others">Want It</button>
 	</div>
 	<div class="btn-group social" role="group" aria-label="Social">
-		<button type="button" class="btn btn-sm btn-secondary facebook" data-toggle="tooltip" data-placement="top" title="<?=$product->social['facebook']?>"><span class="fa fa-fw fa-facebook"></span></button>
-		<button type="button" class="btn btn-sm btn-secondary twitter" data-toggle="tooltip" data-placement="top" title="<?=$product->social['twitter']?>"><span class="fa fa-fw fa-twitter"></span></button>
-		<button type="button" class="btn btn-sm btn-secondary email" data-toggle="tooltip" data-placement="top" title="<?=$product->social['email']?>"><span class="fa fa-fw fa-envelope"></span></button>
-		<button type="button" class="btn btn-sm btn-secondary print" data-toggle="tooltip" data-placement="top" title="<?=$product->social['print']?>"><span class="fa fa-fw fa-print"></span></button>
+		<button type="button" class="btn btn-sm btn-secondary facebook" data-toggle="tooltip" data-placement="top" title="<?=$product->facebooks?> Shares"><span class="fa fa-fw fa-facebook"></span></button>
+		<button type="button" class="btn btn-sm btn-secondary twitter" data-toggle="tooltip" data-placement="top" title="<?=$product->twitters?> Tweets"><span class="fa fa-fw fa-twitter"></span></button>
+		<button type="button" class="btn btn-sm btn-secondary email" data-toggle="tooltip" data-placement="top" title="<?=$product->emails?> Emails"><span class="fa fa-fw fa-envelope"></span></button>
+		<button type="button" class="btn btn-sm btn-secondary print" data-toggle="tooltip" data-placement="top" title="<?=$product->prints?> Prints"><span class="fa fa-fw fa-print"></span></button>
 	</div>
 </div>
 <section id="about">
@@ -94,7 +86,22 @@ include('header.php');
 	</section>
 <?php } ?>
 <section class="hidden" id="news-reviews">
-	// News and reviews
+	<?php if($product->articles['count']){
+		foreach($product->articles['data'] as $i=>$article){ ?>
+			<div class="article media">
+				<?php if($article['featured_image']){ ?>
+					<a class="media-left" href="/a/<?=$article['id']?>-<?=slug($article['title'])?>" title="<?=$article['title']?>">
+						<img class="media-object" src="..." alt="<?=$article['title']?>">
+					</a>
+				<?php } ?>
+				<div class="media-body">
+					<h4 class="media-heading"><a href="/a/<?=$article['id']?>-<?=slug($article['title'])?>" title="<?=$article['title']?>"><?=$article['title']?></a></h4>
+					<?=$article['excerpt']?>
+					<p><em>Published: <?=sql_datetime($article['published'])?> by <a href="/u/<?=$article['author_username']?>"><?=$article['author_username']?></a></em></p>
+				</div>
+			</div>
+		<?php }
+	} ?>
 </section>
 <section class="hidden" id="discuss">
 	// Comments
