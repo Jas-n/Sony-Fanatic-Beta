@@ -31,17 +31,16 @@
 		global $app,$db,$user;
 		if($_POST['form_name']==$this->data['name']){
 			$results=parent::process();
-			if($results['status']!='error'){
-				$results=parent::unname($results['data']);
-				if($results['test_email']){
-					$status=email($results['test_email_to'],'Test Email','This is a test email','<p>This is some content for the test email.');
-					if($status['status']){
-						$app->set_message('success','Email sent successfully');
-					}else{
-						$app->set_message('error','Email did not send.<br>'.print_pre($status['data'],1));
-					}
+			$results=parent::unname($results['data']);
+			if($results['test_email']){
+				$status=email($results['test_email_to'],'Test Email','This is a test email','<p>This is some content for the test email.');
+				if($status['status']){
+					$app->set_message('success','Email sent successfully');
+				}else{
+					$app->set_message('error','Email did not send.<br>'.print_pre($status['data'],1));
 				}
 			}
+			$this->redirect();
 		}
 	}
 }

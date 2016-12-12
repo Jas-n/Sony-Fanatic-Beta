@@ -2,9 +2,11 @@
 require('../init.php');
 require('header.php');
 $products=$products->get_products();?>
-<a class="btn btn-success pull-right" href="add_product">Add</a>
 <h1>Products</h1>
 <ol class="breadcrumb">
+	<li class="pull-right">
+		<a class="btn btn-success" data-toggle="tooltip" href="add_product" title="Add Product"><i class="fa fa-fw fa-plus"></i></a>
+	</li>
 	<li class="breadcrumb-item"><a href="../">Home</a></li>
 	<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
 	<li class="breadcrumb-item active">Products</li>
@@ -13,7 +15,8 @@ $products=$products->get_products();?>
 	<thead>
 		<tr>
 			<th>Brand</th>
-			<th>Model</th>
+			<th>Name</th>
+			<th>Updated</th>
 			<th>Actions</th>
 		</tr>
 	</thead>
@@ -22,7 +25,8 @@ $products=$products->get_products();?>
 			foreach($products['data'] as $product){?>
 				<tr>
 					<td><?=$product['brand']?></td>
-					<td><?=$product['model']?></td>
+					<td><?=$product['name']?></td>
+					<td><?=sql_datetime($product['updated'])?></td>
 					<td>
 						<a class="btn btn-sm btn-primary" href="product/<?=$product['id']?>">Edit</a>
 						<a class="btn btn-sm btn-info" href="../p/<?=$product['id']?>-<?=$product['slug']?>">View</a>

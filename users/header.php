@@ -37,15 +37,16 @@
 					<ul>
 						<li><a href="products"><i class="fa fa-fw fa-list"></i> Products</a></li>
 						<li><a href="add_product"><i class="fa fa-fw fa-plus"></i> Add</a></li>
+						<li><a href="brands"><i class="fa fa-fw fa-list"></i> Brands</a></li>
+						<li><a href="categories"><i class="fa fa-fw fa-th"></i> Categories</a></li>
 						<li class="has_children">
-							<a><i class="fa fa-fw fa-th"></i> Sorting</a>
+							<a><i class="fa fa-fw fa-th"></i> Features</a>
 							<ul>
-								<li><a href="brands"><i class="fa fa-fw fa-list"></i> Brands</a></li>
-								<li><a href="brands"><i class="fa fa-fw fa-th"></i> Categories</a></li>
-								<li><a href="features"><i class="fa fa-fw fa-th"></i> Features</a></li>
-								<li><a href="tags"><i class="fa fa-fw fa-th"></i> Tags</a></li>
+								<li><a href="feature_categories"><i class="fa fa-fw fa-th"></i> Categories</a></li>
+								<li><a href="feature_options"><i class="fa fa-fw fa-th"></i> Options</a></li>
 							</ul>
 						</li>
+						<li><a href="tags"><i class="fa fa-fw fa-th"></i> Tags</a></li>
 					</ul>
 				</li>
 				<li class="has_children">

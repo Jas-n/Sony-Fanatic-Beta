@@ -90,34 +90,32 @@
 		if($_POST['form_name']==$this->data['name']){
 			global $app,$db;
 			$results=parent::process();
-			if($results['status']!='error'){
-				$results['data']=parent::unname($results['data']);
-				$results['files']=parent::unname($results['files']);
-				print_pre($results);
-				$id=$db->next_hex_id('products');
-				$db->query(
-					"INSERT INTO `news` (
-						`id`,		`product_id`,	`type`,	`status`,	`title`,
-						`excerpt`,	`content`,		`added`,`updated`,	`published`
-					) VALUES (?,?,?,?,?,	?,?,?,?)",
-					array(
-						$id,
-						$results['data']['product_id'],
-						$results['data']['type'],
-						$results['data']['status'],
-						$results['data']['title'],
-					
-						$results['data']['excerpt'],
-						$results['data']['content'],
-						DATE_TIME,
-						DATE_TIME,
-						$results['data']['status']==2?DATE_TIME:'0000-00-00 00:00:00'
-					),0
-				);
-				$app->log_message(3,'Added Product','Added <strong>'.$results['data']['name'].'</strong> to products.');
-				header('Location: ./product/'.$id);
-				exit;
-			}
+			$results['data']=parent::unname($results['data']);
+			$results['files']=parent::unname($results['files']);
+			print_pre($results);
+			$id=$db->next_hex_id('products');
+			$db->query(
+				"INSERT INTO `news` (
+					`id`,		`product_id`,	`type`,	`status`,	`title`,
+					`excerpt`,	`content`,		`added`,`updated`,	`published`
+				) VALUES (?,?,?,?,?,	?,?,?,?)",
+				array(
+					$id,
+					$results['data']['product_id'],
+					$results['data']['type'],
+					$results['data']['status'],
+					$results['data']['title'],
+
+					$results['data']['excerpt'],
+					$results['data']['content'],
+					DATE_TIME,
+					DATE_TIME,
+					$results['data']['status']==2?DATE_TIME:'0000-00-00 00:00:00'
+				),0
+			);
+			$app->log_message(3,'Added Product','Added <strong>'.$results['data']['name'].'</strong> to products.');
+			header('Location: ./product/'.$id);
+			exit;
 		}
 	}
 }

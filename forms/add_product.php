@@ -43,30 +43,28 @@
 		if($_POST['form_name']==$this->data['name']){
 			global $app,$db;
 			$results=parent::process();
-			if($results['status']!='error'){
-				$results['data']=parent::unname($results['data']);
-				$results['files']=parent::unname($results['files']);
-				$db->query(
-					"INSERT INTO `products` (
-						`id`,			`brand_id`,	`name`,`slug`,`excerpt`,
-						`description`,	`added`,	`updated`
-					) VALUES (?,?,?,?,?,	?,?,?)",
-					array(
-						$db->next_hex_id('products','id'),
-						$results['data']['brand'],
-						$results['data']['name'],
-						slug($results['data']['name']),
-						$results['data']['excerpt'],
-					
-						$results['data']['description'],
-						DATE_TIME,
-						DATE_TIME
-					),0
-				);
-				$app->log_message(3,'Added Product','Added <strong>'.$results['data']['name'].'</strong> to products.');
-				header('Location: ./products');
-				exit;
-			}
+			$results['data']=parent::unname($results['data']);
+			$results['files']=parent::unname($results['files']);
+			$db->query(
+				"INSERT INTO `products` (
+					`id`,			`brand_id`,	`name`,`slug`,`excerpt`,
+					`description`,	`added`,	`updated`
+				) VALUES (?,?,?,?,?,	?,?,?)",
+				array(
+					$db->next_hex_id('products','id'),
+					$results['data']['brand'],
+					$results['data']['name'],
+					slug($results['data']['name']),
+					$results['data']['excerpt'],
+
+					$results['data']['description'],
+					DATE_TIME,
+					DATE_TIME
+				),0
+			);
+			$app->log_message(3,'Added Product','Added <strong>'.$results['data']['name'].'</strong> to products.');
+			header('Location: ./products');
+			exit;
 		}
 	}
 }

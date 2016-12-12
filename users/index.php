@@ -10,7 +10,8 @@ require('header.php');?>
 <h2>To Do</h2>
 <ol>
 	<li>Finish menu tree</li>
-	<li>Replace font awesome icons with icons from Metro Studio</li>
+	<li>Menu using <a href="https://tympanus.net/codrops/2015/11/17/multi-level-menu/" target="_blank">this</a>
+	<li>Product feature categories - custom order</li>
 	<li>Tidy up un-needed files</li>
 	<li>Product - Featured Image
 		<ul>

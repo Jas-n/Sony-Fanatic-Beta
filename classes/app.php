@@ -2,10 +2,6 @@
 class app{
 	protected $addtofoot=array();
 	protected $addtohead=array();
-	protected $errors=array();
-	protected $information=array();
-	protected $success=array();
-	protected $warnings=array();
 	
 	public $page_title;
 	public $require=array();
@@ -98,12 +94,10 @@ class app{
 			$out.='};
 			var is_logged_in='.(is_logged_in()?'true':'false').';
 			var page="'.$page->slug.'";
-			var user_id='.($user->id?$user->id:0).';';
-			if(in_array('js.sortable',$require) || in_array('js.tinymce',$require) || in_array('js.tooltip',$require) || $form_included){
+			var user_id='.($user->id?$user->id:0).';
+			$("[data-toggle=tooltip]").tooltip();';
+			if(in_array('js.sortable',$require) || in_array('js.tinymce',$require)){
 				$out.='$(document).ready(function(){';
-					if(in_array('js.tooltip',$require)){
-						$out.='$("[data-toggle=tooltip]").tooltip();';
-					}
 					if(in_array('js.tinymce',$require)){
 						$out.='tinymce.init({
 							browser_spellcheck:true,
@@ -170,32 +164,36 @@ class app{
 		echo $out;
 	}
 	public function get_messages(){
-		if($this->errors){
+		if($_SESSION['errors']){
 			$out='<div class="alert alert-danger" role="alert">';
-				foreach($this->errors as $error){
+				foreach($_SESSION['errors'] as $error){
 					$out.='<p>'.$error.'</p>';
 				}
+				unset($_SESSION['errors']);
 			$out.='</div>';
 		}
-		if($this->warnings){
+		if($_SESSION['warnings']){
 			$out.='<div class="alert alert-warning" role="alert">';
-				foreach($this->warnings as $warning){
+				foreach($_SESSION['warnings'] as $warning){
 					$out.='<p>'.$warning.'</p>';
 				}
+				unset($_SESSION['warnings']);
 			$out.='</div>';
 		}
-		if($this->information){
+		if($_SESSION['information']){
 			$out.='<div class="alert alert-info" role="alert">';
-				foreach($this->information as $information){
+				foreach($_SESSION['information'] as $information){
 					$out.='<p>'.$information.'</p>';
 				}
+				unset($_SESSION['information']);
 			$out.='</div>';
 		}
-		if($this->success){
+		if($_SESSION['success']){
 			$out.='<div class="alert alert-success" role="alert">';
-				foreach($this->success as $success){
+				foreach($_SESSION['success'] as $success){
 					$out.='<p>'.$success.'</p>';
 				}
+				unset($_SESSION['success']);
 			$out.='</div>';
 		}
 		echo $out;
@@ -277,17 +275,17 @@ class app{
 	public function set_message($type,$message){
 		switch(strtolower($type)){
 			case 'error':
-				$this->errors[]=$message;
+				$_SESSION['errors'][]=$message;
 				break;
 			case 'info':
 			case 'information':
-				$this->information[]=$message;
+				$_SESSION['information'][]=$message;
 				break;
 			case 'success':
-				$this->success[]=$message;
+				$_SESSION['success'][]=$message;
 				break;
 			case 'warning':
-				$this->warnings[]=$message;
+				$_SESSION['warnings'][]=$message;
 				break;
 		}
 	}

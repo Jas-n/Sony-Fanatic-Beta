@@ -10,7 +10,7 @@ $nav2-height:4rem;
 footer{
 	background:$gray-dark;
 	color:#fff;
-	padding:1.5rem 15px;
+	padding:1rem;
 }
 img.cover{
 	object-fit:cover;
@@ -240,6 +240,7 @@ img.cover{
 }
 
 .nav-open .cd-primary-nav ul{
+	display:block;
 	@include media-breakpoint-up(lg) {
 		display: table-cell;
 	}
@@ -262,7 +263,6 @@ img.cover{
 	transform: translateZ(0);
 	will-change: transform;
 	transition: transform .5s;
-
 	&::after {
 		/* gradient on the right - to indicate it's possible to scroll */
 		content: '';
@@ -277,11 +277,12 @@ img.cover{
 		pointer-events: none;
 		transition: opacity .2s;
 	}
-
 	&.nav-end::after {
 		opacity: 0;
 	}
-
+	+ main{
+		
+	}
 	ul, li, a {
 		height: 100%;
 	}
@@ -305,7 +306,6 @@ img.cover{
 			padding-right: 20px;
 		}
 	}
-
 	a {
 		display: block;
 		color:$gray-lightest;
@@ -315,7 +315,7 @@ img.cover{
 
 		&:hover, &.active {
 			opacity: 1;
-			box-shadow: inset 0 -3px $brand-primary;
+			box-shadow: inset 0 -4px $brand-primary;
 			text-decoration: none;
 		}
 	}
@@ -379,7 +379,6 @@ Main content
 
 .cd-main-content {
 	overflow: hidden;
-	padding-bottom:$spacer;
 	padding-top: $nav-height-small + $spacer;
 	&.sub-nav {
 		/* to be used if there is sub nav */
@@ -388,7 +387,7 @@ Main content
 
 	&.sub-nav-hero {
 		/* to be used if there is hero image + subnav */
-		padding: $spacer 0;
+		padding-top:$spacer;
 
 		&.secondary-nav-fixed {
 			margin-top: $nav2-height-small;

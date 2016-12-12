@@ -1,7 +1,7 @@
-<?php class brands extends form{
+<?php class feature_categories extends form{
 	public function __construct($data=NULL){
 		global $products;
-		$brands=$products->get_child_brands($_GET['id']);
+		$feature_categories=$products->get_feature_categories($_GET['id']);
 		parent::__construct("name=".__CLASS__."&class=form-inline");
 		parent::add_html('<table class="table table-hover table-striped table-sm">
 			<thead>
@@ -15,13 +15,11 @@
 						));
 					parent::add_html('</th>
 					<th>Name</th>
-					<th>Slug</th>
-					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>');
-				if($brands){
-					foreach($brands as $id=>$brand){
+				if($feature_categories){
+					foreach($feature_categories as $id=>$feature_category){
 						parent::add_html('<tr>
 							<td>');
 								parent::add_field(array(
@@ -31,26 +29,23 @@
 									'value'	=>$id
 								));
 							parent::add_html('</td>
-							<td>'.$brand['brand'].'</td>
-							<td>'.$brand['slug'].'</td>
-							<td>'.(!$_GET['id']?'<a class="btn btn-sm btn-primary" href="brands/'.$id.'">Sub-brands</a>':'').'</td>
+							<td>'.$feature_category['name'].'</td>
 						</tr>');
 					}
 				}
-				parent::add_html('<tr>
-					<th class="text-xs-center" colspan="4">Add Brand</th>
+				parent::add_html('<tr class="thead-default">
+					<th class="text-xs-center" colspan="2">Add Feature Category</th>
 				</tr>
 				<tr>
 					<td></td>
 					<td>');
 						parent::add_field(array(
-							'name'			=>'new_brand',
-							'placeholder'	=>'Brand',
+							'name'			=>'new_category',
+							'placeholder'	=>'Category',
 							'required'		=>2,
 							'type'			=>'text'
 						));
 					parent::add_html('</td>
-					<td colspan="2"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -75,24 +70,15 @@
 			$results=parent::process();
 			$results=parent::unname($results['data']);
 			if($results['update']){
-				if($results['new_brand']){
-					$db->query(
-						"INSERT INTO `brands` (
-							`parent_id`,`brand`,`slug`
-						) VALUES (?,?,?)",
-						array(
-							$_GET['id'],
-							$results['new_brand'],
-							slug($results['new_brand'])
-						)
-					);
-					$app->set_message('success','Added '.$results['new_brand'].' to brands');
-					$app->log_message(3,'New Brand','Added '.$results['new_brand'].' to brands');
+				if($results['new_category']){
+					$db->query("INSERT INTO `feature_categories` (`name`) VALUES (?)",$results['new_category']);
+					$app->set_message('success','Added '.$results['new_category'].' to feature categories');
+					$app->log_message(3,'New Feature Categories','Added '.$results['new_category'].' to feature categories');
 				}
 			}elseif($results['delete'] && $results['check']){
-				$db->query("DELETE FROM `brands` WHERE `id` IN(".implode(',',$results['check']).")");
-				$app->set_message('success','Deleted '.$db->rows_updated().' from brands');
-				$app->log_message(2,'Deleted Brands','Deleted '.$db->rows_updated().' from brands');
+				$db->query("DELETE FROM `feature_categories` WHERE `id` IN(".implode(',',$results['check']).")");
+				$app->set_message('success','Deleted '.$db->rows_updated().' from feature categories');
+				$app->log_message(2,'Deleted Feature Categories','Deleted '.$db->rows_updated().' from feature categories');
 			}
 			$this->redirect();
 		}

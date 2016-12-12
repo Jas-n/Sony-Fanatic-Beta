@@ -7,6 +7,9 @@
 	border-top:1px solid $gray-lighter;
 	padding:1rem 0;
 }
+body{
+	min-height:calc(100% - 3.75rem);
+}
 .carousel{
 	.carousel-thumbnails{
 		text-align:center;

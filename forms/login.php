@@ -34,34 +34,34 @@
 				exit;
 			}else{
 				$results=parent::process();
-				if($results['status']!='error'){
-					$results=parent::unname($results['data']);
-					if($password=$db->get_row(
-						"SELECT `users`.`id`,`users`.`role_id`,`users`.`first_name`,`users`.`last_name`,`users`.`password`
-						FROM `users`
-						WHERE `email`=?",
-						$results['email']
-					)){
-						if(!password_verify($results['password'],$password['password'])){
-							$app->log_message(2,'Failed Login','Incorrect password supplied for '.$password['first_name'].' '.$password['last_name'].'.');
-							$app->set_message('error',"Email and password do not match");
-						}else{
-							$_SESSION['user_id']=$password['id'];
-							$updates['last_login']=date('Y-m-d H:i:s');
-							$user->update_user($updates,$password['id']);
-							if($_GET['url']){
-								header('Location: '.$_GET['url']);
-							}elseif(!$_GET['url']){
-								header('Location: users');
-							}
-							exit;
-						}
+				$results=parent::unname($results['data']);
+				if($password=$db->get_row(
+					"SELECT `users`.`id`,`users`.`role_id`,`users`.`first_name`,`users`.`last_name`,`users`.`password`
+					FROM `users`
+					WHERE `email`=?",
+					$results['email']
+				)){
+					if(!password_verify($results['password'],$password['password'])){
+						$app->log_message(2,'Failed Login','Incorrect password supplied for '.$password['first_name'].' '.$password['last_name'].'.');
+						$app->set_message('error',"Email and password do not match");
+						$this->redirect(false,$results);
 					}else{
-						$app->log_message(2,'Failed Login','Login attempt for unlisted user.');
-						$app->set_message('error',"Username and password do not match");
+						$_SESSION['user_id']=$password['id'];
+						$updates['last_login']=date('Y-m-d H:i:s');
+						$user->update_user($updates,$password['id']);
+						if($_GET['url']){
+							header('Location: '.$_GET['url']);
+						}elseif(!$_GET['url']){
+							header('Location: users');
+						}
+						exit;
 					}
-					$this->reload($results);
+				}else{
+					$app->log_message(2,'Failed Login','Login attempt for unlisted user.');
+					$app->set_message('error',"Username and password do not match");
+					$this->redirect(false,$results);
 				}
+				$this->redirect();
 			}
 		}
 	}

@@ -71,7 +71,7 @@ class database{
 			$type.' Error',
 			'<strong>Error: </strong>'.$message,
 			array(
-				'trace'=>$data,
+				'trace'		=>$data,
 				'user_history'=>$_SESSION['history']
 			)
 		);
@@ -172,7 +172,7 @@ class database{
 		$stmt=$this->db->prepare($sql);
 		if(!$stmt){
 			$e=$this->db->errorInfo();
-			$this->error('SQL',$e[2],__FILE__,__LINE__);
+			$this->error('SQL',$e[2],__FILE__,__LINE__,NULL,array('sql'=>$sql,'values'=>$values));
 			echo "<strong>SQL ERROR</strong>: ".$e[2]."<br>";
 			$echo=1;
 		}else{
@@ -191,7 +191,7 @@ class database{
 			}
 			$status=$stmt->errorInfo();
 			if($status[0]>0){
-				$this->error('PDO',$status[2],__FILE__,__LINE__);
+				$this->error('PDO',$status[2],__FILE__,__LINE__,NULL,array('sql'=>$sql,'values'=>$values));
 				echo "<strong>SQL ERROR: <em>{$status[2]}</em></strong><br>";
 				$error=1;
 			}

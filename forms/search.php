@@ -11,13 +11,9 @@
 	public function process(){
 		if($_POST['form_name']==$this->data['name']){
 			$results=parent::process();
-			if($results['status']=='error'){
-				$this->set_message('error',$results['data']);
-			}else{
-				$results=$this->unname($results['data']);
-				header('Location: /search?term='.urlencode($results['search']));
-				exit;
-			}
+			$results=$this->unname($results['data']);
+			header('Location: /search?term='.urlencode($results['search']));
+			exit;
 		}
 	}
 }

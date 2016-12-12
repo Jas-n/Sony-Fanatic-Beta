@@ -93,46 +93,43 @@
 		if($_POST['form_name']==$this->data['name']){
 			global $article,$app,$db;
 			$results=parent::process();
-			if($results['status']!='error'){
-				$results['data']=parent::unname($results['data']);
-				$results['files']=parent::unname($results['files']);
-				$sets=array(
-					'product_id',
-					'type',
-					'status',
-					'title',
-					'excerpt',
-					
-					'content',
-					'updated'
-				);
-				$options=array(
-					$results['data']['product_id'],
-					$results['data']['type'],
-					$results['data']['status'],
-					$results['data']['title'],
-					$results['data']['excerpt'],
-					
-					$results['data']['content'],
-					DATE_TIME
-				);
-				if($results['data']['status']==2 && $article['published']=='0000-00-00 00:00:00'){
-					$sets[]='published';
-					$options[]=DATE_TIME;
-				}
-				$options[]=$_GET['id'];
-				$db->query(
-					"UPDATE `articles`
-					SET `".implode("`=?,`",$sets)."`=?
-					WHERE `id`=?",
-					$options,
-					0
-				);
-				$app->set_message('success','Successfully updated article.');
-				$app->log_message(3,'Article Updated','Updated <strong>'.$results['data']['title'].'</strong>.');
-				header('Location: '.$_GET['id']);
-				exit;
+			$results['data']=parent::unname($results['data']);
+			$results['files']=parent::unname($results['files']);
+			$sets=array(
+				'product_id',
+				'type',
+				'status',
+				'title',
+				'excerpt',
+
+				'content',
+				'updated'
+			);
+			$options=array(
+				$results['data']['product_id'],
+				$results['data']['type'],
+				$results['data']['status'],
+				$results['data']['title'],
+				$results['data']['excerpt'],
+
+				$results['data']['content'],
+				DATE_TIME
+			);
+			if($results['data']['status']==2 && $article['published']=='0000-00-00 00:00:00'){
+				$sets[]='published';
+				$options[]=DATE_TIME;
 			}
+			$options[]=$_GET['id'];
+			$db->query(
+				"UPDATE `articles`
+				SET `".implode("`=?,`",$sets)."`=?
+				WHERE `id`=?",
+				$options,
+				0
+			);
+			$app->set_message('success','Successfully updated article.');
+			$app->log_message(3,'Article Updated','Updated <strong>'.$results['data']['title'].'</strong>.');
+			$this->redirect();
 		}
 	}
 }

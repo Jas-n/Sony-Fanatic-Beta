@@ -9,9 +9,11 @@ require('../init.php');
 $edit_product=new edit_product();
 $edit_product->process();
 require('header.php');?>
-<a class="btn btn-info pull-right" href="../p/<?=$edit_product->product->id?>-<?=$edit_product->product->slug?>">View</a>
 <h1><?=$edit_product->product->name?></h1>
 <ol class="breadcrumb">
+	<li class="pull-right">
+		<a class="btn btn-info" data-toggle="tooltip" href="../p/<?=$edit_product->product->id?>-<?=$edit_product->product->slug?>" target="_blank" title="View Product"><i class="fa fa-fw fa-eye"></i></a>
+	</li>
 	<li class="breadcrumb-item"><a href="../">Home</a></li>
 	<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
 	<li class="breadcrumb-item"><a href="products">Products</a></li>
@@ -30,12 +32,4 @@ require('header.php');?>
 </div>
 <?php $app->get_messages();
 $edit_product->get_form();
-if($edit_product->product->images['thumbnail']){?>
-	<h2>Media</h2>
-	<div class="product_images">
-		<?php foreach($edit_product->product->images['thumbnail'] as $thumbnail){?>
-			<a href="<?=$thumbnail?>" target="_blank"><img class="img-thumbnail" src="<?=$thumbnail?>"></a>
-		<?php }?>
-	</div>
-<?php }
 require('footer.php');

@@ -1,5 +1,5 @@
-<?php # Version Bootstrap 3.27 - Bootstrap 4a2
-# Updated 2016-07-11 13:28
+<?php # Version Bootstrap 3.29 - Bootstrap 4a5
+# Updated 30/11/2016 12:46
 class form{
 	private	$args;
 	private	$has_file;
@@ -7,6 +7,7 @@ class form{
 	public	$button_count=1;
 	public	$uploaded_files=0;
 	private	$has_required=false;
+	private $session_data;	# Data carried over from an dev defined error
 	# bootsrap settings
 	protected	$label_width=2;
 	protected	$value_width;
@@ -42,6 +43,15 @@ class form{
 				'name'			=>$name,
 				'showinfo'		=>$showinfo
 			);
+			# Unset any other form data, the results are expired
+			if($_SESSION['form_data']){
+				foreach($_SESSION['form_data'] as $form=>$form_data){
+					if($form==$this->data['name']){
+						$this->session_data=$form_data;
+					}
+					unset($_SESSION['form_data'][$form]);
+				}
+			}
 			if(strpos($class,'form-horizontal')!==false){
 				$this->data['orientation']='horizontal';
 			}elseif(strpos($class,'form-inline')!==false){
@@ -213,10 +223,7 @@ class form{
 							$app->set_message('error',"'{$field['label']}' is required, but has not been completed.");
 							$this->errors=true;
 						}
-						if($field['required']==1 && $field['type']=='email'
-						&& (strlen($temp_name)<6
-						|| strpos($temp_name,'@')<1
-						|| strlen($temp_name)-strrpos($temp_name,'.')<3)){
+						if($temp_name && $field['type']=='email' && !validate_email($temp_name)){
 							$app->set_message('error',"'".$temp_name."' is not a valid email address.");
 							$this->errors=true;
 						}
@@ -227,9 +234,7 @@ class form{
 				}
 			}
 			if($this->errors){
-				return array(
-					'status'=>'error'
-				);
+				$this->redirect(false,$_POST);
 			}else{
 				$return=array(
 					'status'=>'success',
@@ -311,6 +316,9 @@ class form{
 				$this->data['files'][$this->data['name'].'_'.$args['name']]=explode(',',$args['accept']);
 				$this->has_file=true;
 			}
+			if($this->session_data[$args['name']]){
+				$args['value']=$this->session_data[$args['name']];
+			}
 			# Add to $data
 			$this->data['fields'][]=$args;
 			$this->field_count++;
@@ -362,6 +370,9 @@ class form{
 		if($args['required']){
 			$this->has_required=1;
 		}
+		if($this->session_data[$args['name']]){
+			$args['value']=$this->session_data[$args['name']];
+		}
 		# Append extra info
 		$args['type']="select";
 		$args['options']=$options;
@@ -381,7 +392,7 @@ class form{
 			$errors[]='There was an error generating this form, please <a href="/contact.php">contact us</a> to let us know.';
 		}elseif(($this->field_count+$this->button_count)>ini_get('max_input_vars')){
 			$errors[]='Could not render form as it contains <strong>'.($this->field_count+$this->button_count).'</strong> fields, which is above the allowed by the server of <strong>'.ini_get('max_input_vars').'</strong>.';
-			$app->log_message(1,'Field count exceeds server limit.','The form \''.$this->data['name'].'\' contains '.($this->field_count+$this->button_count).' fields, which is above the allowed by the server of '.ini_get('max_input_vars').'.');
+			$app->log_message(1,'Field count exceeds server limit.','The form <strong>'.$this->data['name'].'</strong> contains <strong>'.($this->field_count+$this->button_count).'</strong> fields, which is above the allowed by the server of <strong>'.ini_get('max_input_vars').'</strong>.');
 		}
 		if($errors){
 			if($return){
@@ -546,7 +557,7 @@ class form{
 							}
 						$out.='" id="'.$id.'_outer">';
 							if($field['label'] && $this->data['orientation']!='inline'){
-								$out.='<label class="m-b-0';
+								$out.='<label class="mb-0';
 									if($this->data['orientation']=='horizontal'){
 										$out.=' col-sm-'.$this->label_width;
 									}
@@ -569,7 +580,7 @@ class form{
 							}
 							$out.='<div class="'.strtolower($field['type']);
 							if($field['note']){
-								$out.=' m-b-0';
+								$out.=' mb-0';
 							}
 							$out.='">	
 								<label';
@@ -667,7 +678,7 @@ class form{
 								if($this->data['orientation']=='horizontal'){
 									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
-								$out.='m-b-0 text-muted"><em>'.$field['note'].'</em></p>';
+								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}
 						$out.='</fieldset> ';
 						break;
@@ -820,14 +831,14 @@ class form{
 								if($this->data['orientation']=='horizontal'){
 									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
-								$out.='m-b-0 text-muted"><em>Accepts: .'.implode(', .',explode(',',$field['accept'])).'</em></p>';
+								$out.='mb-0 text-muted"><em>Accepts: .'.implode(', .',explode(',',$field['accept'])).'</em></p>';
 							}
 							if($field['note']){
 								$out.='<p class="';
 								if($this->data['orientation']=='horizontal'){
 									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
-								$out.='m-b-0 text-muted"><em>'.$field['note'].'</em></p>';
+								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}
 						$out.='</fieldset> ';
 						break;
@@ -933,14 +944,14 @@ class form{
 								if($this->data['orientation']=='horizontal'){
 									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
-								$out.='m-b-0 text-muted"><em><kbd>CTRL/CMD</kbd> + Click to select multiple items.</em></p>';
+								$out.='mb-0 text-muted"><em><kbd>CTRL/CMD</kbd> + Click to select multiple items.</em></p>';
 							}
 							if($field['note']){
 								$out.='<p class="';
 								if($this->data['orientation']=='horizontal'){
 									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
-								$out.='m-b-0 text-muted"><em>'.$field['note'].'</em></p>';
+								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}
 						$out.='</fieldset> ';
 						break;
@@ -977,7 +988,7 @@ class form{
 								if($this->data['orientation']=='horizontal'){
 									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
-								$out.='m-b-0 text-muted"><em>'.$field['note'].'</em></p>';
+								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}
 							if($this->data['orientation']=='horizontal'){
 								$out.='</div>';
@@ -1045,7 +1056,7 @@ class form{
 									$out.=' disabled';
 								}
 								$out.=' id="'.$id.'"';
-								if($field['maxlength']){
+								if($field['maxlength'] && in_array($field['type'],array('text','email','search','password','tel'))){
 									$out.=' maxlength="'.$field['maxlength'].'"';
 								}
 								if($field['minlength'] && in_array($field['type'],array('text','email','search','password','tel'))){
@@ -1084,10 +1095,10 @@ class form{
 								if($this->data['orientation']=='horizontal'){
 									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
-								$out.='m-b-0 text-muted"><em>'.$field['note'].'</em></p>';
+								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}
 						$out.='</fieldset> ';
-						break;					
+						break;
 				}
 			}
 			$out.='<input class="form_name" name="form_name" type="hidden" value="'.$this->data['name'].'">
@@ -1115,8 +1126,34 @@ class form{
 		}
 		return $data;
 	}
-	# Reload form with new data
-	public function reload($args=NULL,$classes=NULL){
-		$this->__construct($args);
+	# Redirect after processing
+	public function redirect($status=true,$args=NULL){
+		# If there's any errors (status=false), capture submitted data and save it to $_SESSION['form_data'], redirect then in __construct, populate data and empty the session
+		if($status==false && $args!==NULL){
+			if($args['data']){
+				$args=$args['data'];
+			}
+			$_SESSION['form_data'][$this->data['name']]=$args;
+		}
+		header('Location: '.$_SERVER['REQUEST_URI']);
+		exit;
+	}
+	# Add colour select
+	public function colour_select($name,$value=NULL,$label=NULL,$rgba=NULL){
+		global $bootstrap;
+		if($bootstrap){
+			$colours=(array) $bootstrap->colours->colours;
+			$this->add_select(
+				array(
+					'class'	=>'colour_select" style="border-left:4px solid rgba('.$rgba.')',
+					'label'	=>$label,
+					'name'	=>$name,
+					'note'	=>'Set to <strong>Automatic</strong> to make this colour available elsewhere.',
+					'value'	=>$value,
+				),
+				array_combine(array_keys($colours),array_map('ucwords',array_keys($colours))),
+				'Automatic'
+			);
+		}
 	}
 }

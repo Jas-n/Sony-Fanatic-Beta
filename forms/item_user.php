@@ -54,39 +54,40 @@
 		global $app,$db,$user;
 		if($_POST['form_name']==$this->data['name']){
 			$results=parent::process();
-			if($results['status']!='error'){
-				$results['data']=parent::unname($results['data']);
-				$results['files']=parent::unname($results['files']);
-				if($results['data']['can_access']){
-					$results['data']['can_access']=1;
+			$results['data']=parent::unname($results['data']);
+			$results['files']=parent::unname($results['files']);
+			if($results['data']['can_access']){
+				$results['data']['can_access']=1;
+			}else{
+				$results['data']['can_access']=0;
+			}
+			if($results['data']['update']){
+				if(($results['data']['new_password_1'] && !$results['data']['new_password_2'])
+				|| (!$results['data']['new_password_1'] && $results['data']['new_password_2'])
+				|| ($results['data']['new_password_1'] != $results['data']['new_password_2'])){
+					$app->set_message('error',"New Passwords do not match.");
+					$this->redirect(false,$results);
+				}elseif($results['data']['new_password_1'] && password_verify($results['data']['new_password_1'],$user->password)){
+					$app->set_message('error',"'Existing Password' does not match our records.");
+					$this->redirect(false,$results);
+				}elseif($db->query("SELECT `id` FROM `users` WHERE `email`=? AND `id` <> ?",array($results['data']['email'],$results['data']['user_id']))){
+					$app->set_message('error',"Email is already assigned to another user.");
+					$this->redirect(false,$results);
 				}else{
-					$results['data']['can_access']=0;
-				}
-				if($results['data']['update']){
-					if(($results['data']['new_password_1'] && !$results['data']['new_password_2'])
-					|| (!$results['data']['new_password_1'] && $results['data']['new_password_2'])
-					|| ($results['data']['new_password_1'] != $results['data']['new_password_2'])){
-						$app->set_message('error',"New Passwords do not match.");
-					}elseif($results['data']['new_password_1'] && password_verify($results['data']['new_password_1'],$user->password)){
-						$app->set_message('error',"'Existing Password' does not match our records.");
-					}elseif($db->query("SELECT `id` FROM `users` WHERE `email`=? AND `id` <> ?",array($results['data']['email'],$results['data']['user_id']))){
-						$app->set_message('error',"Email is already assigned to another user.");
-					}else{
-						# Unset the values we won't store in the DB
-						unset(
-							$results['data']['form_name'],			# Form Name
-							$results['data']['update'],				# Update button
-							$results['data']['existing_password'],	# Existing password
-							$results['data']['new_password_1'],		# New password
-							$results['data']['new_password_2']		# New Password confirmation
-						);
-						# Update the user with the verified results
-						$user->update_user($results['data'],$results['data']['user_id']);
-						$user->update_avatar($results['files']['avatar'],$results['data']['user_id']);
-						# Reconstruct form with new values
-						$this->reload($_GET['id']);
-						$app->set_message('success',"Profile Updated.");
-					}
+					# Unset the values we won't store in the DB
+					unset(
+						$results['data']['form_name'],			# Form Name
+						$results['data']['update'],				# Update button
+						$results['data']['existing_password'],	# Existing password
+						$results['data']['new_password_1'],		# New password
+						$results['data']['new_password_2']		# New Password confirmation
+					);
+					# Update the user with the verified results
+					$user->update_user($results['data'],$results['data']['user_id']);
+					$user->update_avatar($results['files']['avatar'],$results['data']['user_id']);
+					# Reconstruct form with new values
+					$app->set_message('success',"Profile Updated.");
+					$this->redirect();
 				}
 			}
 		}

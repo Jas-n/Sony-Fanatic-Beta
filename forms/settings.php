@@ -293,81 +293,81 @@
 		global $app,$db,$user;
 		if($_POST['form_name']==$this->data['name']){
 			$results=parent::process();
-			if($results['status']!='error'){
-				$results['data']=$this->unname($results['data']);
-				if($results['data']['recaptcha_site_key'] && !$results['data']['recaptcha_secret_key']){
-					$app->set_message('error','A site key was supplied without a secret key');
-				}elseif($results['data']['recaptcha_secret_key'] && !$results['data']['recaptcha_site_key']){
-					$app->set_message('error','A secret key was supplied without a site key');
-				}else{
-					if($this->uploaded_files){
-						$results['files']=$this->unname($results['files']);
-						if($results['files']['logo']['size']){
-							$file=$results['files']['logo'];
-							rrmdir(ROOT.'images/logos');
-							mkdir(ROOT.'images/logos',0777,1);
-							copy(ROOT.'images/index.php',ROOT.'images/logos/index.php');
-							list($width,$height)=getimagesize($file['tmp_name']);
-							smart_resize_image($file['tmp_name'],NULL,0,$height>=75?75:$height,		1,ROOT.'images/logos/75.png',	0,'png');
-							smart_resize_image($file['tmp_name'],NULL,0,$height>=150?150:$height,	1,ROOT.'images/logos/150.png',	0,'png');
-							smart_resize_image($file['tmp_name'],NULL,0,$height>=300?300:$height,	1,ROOT.'images/logos/300.png',	0,'png');
-							smart_resize_image($file['tmp_name'],NULL,0,$height>=500?500:$height,	1,ROOT.'images/logos/500.png',	0,'png');
-							smart_resize_image($file['tmp_name'],NULL,0,$height>=1000?1000:$height,	1,ROOT.'images/logos/1000.png',	0,'png');
-						}
-						if($results['files']['icon'] && $results['files']['icon']['size']>0){
-							generate_icons($results['files']['icon']['tmp_name']);
-						}
+			$results['data']=$this->unname($results['data']);
+			if($results['data']['recaptcha_site_key'] && !$results['data']['recaptcha_secret_key']){
+				$app->set_message('error','A site key was supplied without a secret key');
+				$this->redirect(false,$results);
+			}elseif($results['data']['recaptcha_secret_key'] && !$results['data']['recaptcha_site_key']){
+				$app->set_message('error','A secret key was supplied without a site key');
+				$this->redirect(false,$results);
+			}else{
+				if($this->uploaded_files){
+					$results['files']=$this->unname($results['files']);
+					if($results['files']['logo']['size']){
+						$file=$results['files']['logo'];
+						rrmdir(ROOT.'images/logos');
+						mkdir(ROOT.'images/logos',0777,1);
+						copy(ROOT.'images/index.php',ROOT.'images/logos/index.php');
+						list($width,$height)=getimagesize($file['tmp_name']);
+						smart_resize_image($file['tmp_name'],NULL,0,$height>=75?75:$height,		1,ROOT.'images/logos/75.png',	0,'png');
+						smart_resize_image($file['tmp_name'],NULL,0,$height>=150?150:$height,	1,ROOT.'images/logos/150.png',	0,'png');
+						smart_resize_image($file['tmp_name'],NULL,0,$height>=300?300:$height,	1,ROOT.'images/logos/300.png',	0,'png');
+						smart_resize_image($file['tmp_name'],NULL,0,$height>=500?500:$height,	1,ROOT.'images/logos/500.png',	0,'png');
+						smart_resize_image($file['tmp_name'],NULL,0,$height>=1000?1000:$height,	1,ROOT.'images/logos/1000.png',	0,'png');
 					}
-					if(!$results['data']['main_admins']){
-						$results['data']['main_admins'][]=1;
+					if($results['files']['icon'] && $results['files']['icon']['size']>0){
+						generate_icons($results['files']['icon']['tmp_name']);
 					}
-					foreach($results['data'] as $name=>&$value){
-						# JSON Encode
-						if(is_array($value)){
-							$value=json_encode($value);
-						}
-						if($name=='titles'){
-							$titles=explode("\r\n",$value);
-							$value=json_encode(array_combine($titles,$titles));
-						}
-					}
-					# Round to nearest 30 mins
-					$day_start	=explode(':',$results['data']['day_start']);
-					if($day_start[1]!='00' && $day_start[1]!='30'){
-						$day_start[1]=date('i',round($day_start[1]*60 / (60*30)) * (60*30));
-					}
-					$results['data']['day_start']=implode(':',$day_start);
-					# Round to nearest 30 mins
-					$day_end	=explode(':',$results['data']['day_end']);
-					if($day_end[1]!='00' && $day_end[1]!='30'){
-						$day_end[1]=date('i',round($day_end[1]*60 / (60*30)) * (60*30));
-					}
-					$results['data']['day_end']=implode(':',$day_end);
-					if(($lat = $results['data']['latitude']) && ($lng = $results['data']['longitude'])){
-						$results['data']['company_latlng'] = $lat.','.$lng;
-						unset($results['data']['latitude']);
-						unset($results['data']['longitude']);
-					}
-					foreach(array('debug','registration_allowed','show_contact_map','user_uploads') as $checkbox){
-						if(!$results['data'][$checkbox]){
-							$results['data'][$checkbox]=0;
-						}
-					}
-					unset(
-						$results['data']['form_name'],
-						$results['data']['save']
-					);
-					foreach($results['data'] as $setting=>$value){
-						if(!defined(strtoupper($setting))){
-							$db->query("INSERT INTO `settings` (`name`,`value`) VALUES (?,?)",array($setting,$value));
-						}else{
-							$db->query("UPDATE `settings` SET `value`=? WHERE `name`=?",array($value,$setting));
-						}
-					}
-					$app->set_message('success','Settings Updated');
-					$app->log_message(3,'Settings Updated','Updated the settings');
-					$this->reload();
 				}
+				if(!$results['data']['main_admins']){
+					$results['data']['main_admins'][]=1;
+				}
+				foreach($results['data'] as $name=>&$value){
+					# JSON Encode
+					if(is_array($value)){
+						$value=json_encode($value);
+					}
+					if($name=='titles'){
+						$titles=explode("\r\n",$value);
+						$value=json_encode(array_combine($titles,$titles));
+					}
+				}
+				# Round to nearest 30 mins
+				$day_start	=explode(':',$results['data']['day_start']);
+				if($day_start[1]!='00' && $day_start[1]!='30'){
+					$day_start[1]=date('i',round($day_start[1]*60 / (60*30)) * (60*30));
+				}
+				$results['data']['day_start']=implode(':',$day_start);
+				# Round to nearest 30 mins
+				$day_end	=explode(':',$results['data']['day_end']);
+				if($day_end[1]!='00' && $day_end[1]!='30'){
+					$day_end[1]=date('i',round($day_end[1]*60 / (60*30)) * (60*30));
+				}
+				$results['data']['day_end']=implode(':',$day_end);
+				if(($lat = $results['data']['latitude']) && ($lng = $results['data']['longitude'])){
+					$results['data']['company_latlng'] = $lat.','.$lng;
+					unset($results['data']['latitude']);
+					unset($results['data']['longitude']);
+				}
+				foreach(array('debug','registration_allowed','show_contact_map','user_uploads') as $checkbox){
+					if(!$results['data'][$checkbox]){
+						$results['data'][$checkbox]=0;
+					}
+				}
+				unset(
+					$results['data']['form_name'],
+					$results['data']['save']
+				);
+				foreach($results['data'] as $setting=>$value){
+					if(!defined(strtoupper($setting))){
+						$db->query("INSERT INTO `settings` (`name`,`value`) VALUES (?,?)",array($setting,$value));
+					}else{
+						$db->query("UPDATE `settings` SET `value`=? WHERE `name`=?",array($value,$setting));
+					}
+				}
+				$app->set_message('success','Settings Updated');
+				$app->log_message(3,'Settings Updated','Updated the settings');
+				$this->redirect();
 			}
 		}
 	}

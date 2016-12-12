@@ -82,75 +82,77 @@
 		global $app,$db,$user;
 		if($_POST['form_name']==$this->data['name']){
 			$results=parent::process();
-			if($results['status']!='error'){
-				$results=parent::unname($results['data']);
-				$placeholder_string=implode(',',array_pad([],sizeof($results['check']),'?'));
-				# If reset is clicked
-				if($results['reset']){
-					if(is_array($results['check'])){
-						$user->reset_password($results['check']);
-					}else{
-						$app->set_message('error','No users were selected for password resetting.');
-					}
-				}
-				# If enable is clicked
-				elseif($results['enable']){
-					if(is_array($results['check'])){
-						$db->query(
-							"UPDATE `users`
-							SET
-								`can_access`=?,
-								`updated`=?
-							WHERE `id` IN(".$placeholder_string.")",
-							array_merge(
-								array(
-									1,
-									DATE_TIME
-								),
-								$results['check']
-							)
-						);
-						$updated=$db->rows_updated();
-						$app->set_message('success',$updated.' users were marked as active');
-						$app->log_message(3,'Users Enabled',$updated.' users were marked as active');
-					}else{
-						$app->set_message('error','No users were selected for password enabling.');
-					}
-				}
-				# If disable is clicked
-				elseif($results['disable']){
-					if(is_array($results['check'])){
-						$db->query(
-							"UPDATE `users`
-							SET
-								`can_access`=?,
-								`updated`=?
-							WHERE `id` IN(".$placeholder_string.")",
-							array_merge(
-								array(
-									0,
-									DATE_TIME
-								),
-								$results['check']
-							)
-						);
-						$updated=$db->rows_updated();
-						$app->log_message(2,'Users Disabled',$updated.' users were marked as inactive');
-						$app->set_message('success',$updated.' users were marked as active');
-					}else{
-						$app->set_message('error','No users were selected for password disabling.');
-					}
-				}
-				# If delete is clicked
-				elseif($results['delete']){
-					if(is_array($results['check'])){
-						$user->delete_users($results['check']);
-					}else{
-						$app->set_message('error','No users were selected for deletion.');
-					}
+			$results=parent::unname($results['data']);
+			$placeholder_string=implode(',',array_pad([],sizeof($results['check']),'?'));
+			# If reset is clicked
+			if($results['reset']){
+				if(is_array($results['check'])){
+					$user->reset_password($results['check']);
+				}else{
+					$app->set_message('error','No users were selected for password resetting.');
+					$this->redirect(false,$results);
 				}
 			}
-			$this->reload($this->ids);
+			# If enable is clicked
+			elseif($results['enable']){
+				if(is_array($results['check'])){
+					$db->query(
+						"UPDATE `users`
+						SET
+							`can_access`=?,
+							`updated`=?
+						WHERE `id` IN(".$placeholder_string.")",
+						array_merge(
+							array(
+								1,
+								DATE_TIME
+							),
+							$results['check']
+						)
+					);
+					$updated=$db->rows_updated();
+					$app->set_message('success',$updated.' users were marked as active');
+					$app->log_message(3,'Users Enabled',$updated.' users were marked as active');
+				}else{
+					$app->set_message('error','No users were selected for password enabling.');
+					$this->redirect(false,$results);
+				}
+			}
+			# If disable is clicked
+			elseif($results['disable']){
+				if(is_array($results['check'])){
+					$db->query(
+						"UPDATE `users`
+						SET
+							`can_access`=?,
+							`updated`=?
+						WHERE `id` IN(".$placeholder_string.")",
+						array_merge(
+							array(
+								0,
+								DATE_TIME
+							),
+							$results['check']
+						)
+					);
+					$updated=$db->rows_updated();
+					$app->log_message(2,'Users Disabled',$updated.' users were marked as inactive');
+					$app->set_message('success',$updated.' users were marked as active');
+				}else{
+					$app->set_message('error','No users were selected for password disabling.');
+					$this->redirect(false,$results);
+				}
+			}
+			# If delete is clicked
+			elseif($results['delete']){
+				if(is_array($results['check'])){
+					$user->delete_users($results['check']);
+				}else{
+					$app->set_message('error','No users were selected for deletion.');
+					$this->redirect(false,$results);
+				}
+			}
+			$this->redirect();
 		}
 	}
 }

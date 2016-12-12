@@ -63,7 +63,26 @@ include('header.php');
 	<?=$product->description?>
 </section>
 <section class="hidden" id="features">
-	// Features and specifications
+	<?php if($product->features){ ?>
+		<table class="table table-bordered table-fixed table-hover table-striped">
+			<thead>
+				<tr>
+					<th>Category</th>
+					<th>Feature</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($product->features as $feature){ ?>
+					<tr>
+						<td><?=$feature['category']?></td>
+						<td><?=$feature['feature']?></td>
+						<td><?=$feature['value']?></td>
+					</tr>
+				<?php } ?>
+			</tbody>
+		</table>
+	<?php } ?>
 </section>
 <?php if($product->images){ ?>
 	<section class="hidden" id="media">
