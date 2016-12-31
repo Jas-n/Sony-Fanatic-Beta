@@ -2,15 +2,24 @@
 @import "custom";
 @import "variables";
 @import "mixins";
-$nav-height-small:3.75rem;
-$nav-height:5rem;
-$nav2-height-small:3.5rem;
-$nav2-height:4rem;
+$footer-height:		$spacer*7;
+$nav-height-small:	$spacer*3.75;
+$nav-height:		$spacer*5;
+$nav2-height-small:	$spacer*3.5;
+$nav2-height:		$spacer*4;
 // Common
 footer{
 	background:$gray-dark;
+	bottom:0;
 	color:#fff;
+	height:$footer-height;
 	padding:1rem;
+	position:absolute;
+	width:100%;
+	p{
+		font-size:$spacer*.9;
+		margin-bottom:0;
+	}
 }
 img.cover{
 	object-fit:cover;
@@ -54,6 +63,9 @@ img.cover{
 			}
 		}
 	}
+}
+main{
+	padding-bottom:$footer-height;
 }
 //// NAV
 .cd-auto-hide-header {
@@ -379,7 +391,7 @@ Main content
 
 .cd-main-content {
 	overflow: hidden;
-	padding-top: $nav-height-small + $spacer;
+	padding-top: $nav-height-small;
 	&.sub-nav {
 		/* to be used if there is sub nav */
 		padding-top: $nav-height-small + $nav2-height-small;

@@ -15,6 +15,8 @@
 						));
 					parent::add_html('</th>
 					<th>Name</th>
+					<th>Options</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>');
@@ -29,12 +31,22 @@
 									'value'	=>$id
 								));
 							parent::add_html('</td>
-							<td>'.$feature_category['name'].'</td>
+							<td>');
+								parent::add_field(array(
+									'name'			=>'category['.$id.']',
+									'placeholder'	=>'Category',
+									'required'		=>1,
+									'type'			=>'text',
+									'value'			=>$feature_category['name']
+								));
+							parent::add_html('</td>
+							<td>'.$feature_category['options'].'</td>
+							<td><a class="btn btn-sm btn-primary" href="feature_options/'.$feature_category['id'].'">Options</a></td>
 						</tr>');
 					}
 				}
 				parent::add_html('<tr class="thead-default">
-					<th class="text-xs-center" colspan="2">Add Feature Category</th>
+					<th class="text-xs-center" colspan="4">Add Feature Category</th>
 				</tr>
 				<tr>
 					<td></td>
@@ -46,6 +58,7 @@
 							'type'			=>'text'
 						));
 					parent::add_html('</td>
+					<td colspan="2"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -71,9 +84,29 @@
 			$results=parent::unname($results['data']);
 			if($results['update']){
 				if($results['new_category']){
-					$db->query("INSERT INTO `feature_categories` (`name`) VALUES (?)",$results['new_category']);
+					$db->query(
+						"INSERT INTO `feature_categories` (
+							`name`
+						) VALUES (?)",
+						$results['new_category']
+					);
 					$app->set_message('success','Added '.$results['new_category'].' to feature categories');
 					$app->log_message(3,'New Feature Categories','Added '.$results['new_category'].' to feature categories');
+				}
+				if($results['category']){
+					foreach($results['category'] as $id=>$category){
+						$db->query(
+							"UPDATE `feature_categories`
+							SET `name` =?
+							WHERE `id`=?",
+							array(
+								$category,
+								$id
+							)
+						);
+					}
+					$app->set_message('success','Updated '.sizeof($results['category']).' feature categories');
+					$app->log_message(3,'Updated Feature Categories','Updated '.sizeof($results['category']).' feature categories');
 				}
 			}elseif($results['delete'] && $results['check']){
 				$db->query("DELETE FROM `feature_categories` WHERE `id` IN(".implode(',',$results['check']).")");

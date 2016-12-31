@@ -1,86 +1,84 @@
 <?php class item_article extends form{
 	public function __construct($data=NULL){
-		global $article,$articles,$products;
+		global $article,$articles;
 		parent::__construct("name=".__CLASS__);
-		$brands=$products->get_brands();
-		$brands=array_combine(array_column($brands,'id'),array_column($brands,'brand'));
-		parent::add_select(
-			array(
-				'label'		=>'Brand',
-				'name'		=>'brand',
-				'required'	=>1,
-				'value'		=>$article['product']['brand_id']
-			),
-			$brands,
-			'Select&hellip;'
-		);
-		parent::add_fields(array(
-			array(
-				'class'			=>'ajax_product',
-				'label'			=>'Product',
-				'name'			=>'product',
-				'note'			=>'Start typing for list of matching products.<br>Products can be added via <a href="products">Products</a> &gt; <a href="add_product">New</a>',
-				'placeholder'	=>'Product',
-				'required'		=>2,
-				'type'			=>'text',
-				'postfield'		=>"<i class='fa fa-refresh'></i>",
-				'value'			=>$article['product']['name']
-			),
-			array(
-				'class'		=>'ajax_product_id',
-				'name'		=>'product_id',
-				'type'		=>'hidden',
-				'value'		=>$article['product']['id']
-			)
-		));
-		parent::add_select(
-			array(
-				'label'		=>'Type',
-				'name'		=>'type',
-				'required'	=>1,
-				'value'		=>$article['type']
-			),
-			$articles->types(),'Select&hellip;'
-		);
-		parent::add_select(
-			array(
-				'label'	=>'Status',
-				'name'	=>'status',
-				'value'	=>$article['status_id']
-			),
-			$articles->statuses()
-		);
-		parent::add_fields(array(
-			array(
-				'label'		=>'Title',
-				'maxlength'	=>70,
-				'name'		=>'title',
-				'placeholder'=>'Title',
-				'required'	=>1,
-				'rows'		=>3,
-				'type'		=>'text',
-				'value'		=>$article['title']
-			),
-			array(
-				'label'		=>'Excerpt',
-				'maxlength'	=>160,
-				'name'		=>'excerpt',
-				'placeholder'=>'Excerpt',
-				'required'	=>1,
-				'rows'		=>3,
-				'type'		=>'textarea',
-				'value'		=>$article['excerpt']
-			),
-			array(
-				'class'		=>'tinymce',
-				'label'		=>'Content',
-				'name'		=>'content',
-				'required'	=>1,
-				'type'		=>'textarea',
-				'value'		=>$article['content']
-			)
-		));
-		parent::add_html('<p class="text-xs-center">');
+		parent::add_html('<ul class="nav nav-tabs" role="tablist">
+			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#article" role="tab">Article</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#products" role="tab">Products</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="article" role="tabpanel">');
+				parent::add_select(
+					array(
+						'label'		=>'Type',
+						'name'		=>'type',
+						'required'	=>1,
+						'value'		=>$article['type']
+					),
+					$articles->types(),'Select&hellip;'
+				);
+				parent::add_select(
+					array(
+						'label'	=>'Status',
+						'name'	=>'status',
+						'value'	=>$article['status_id']
+					),
+					$articles->statuses()
+				);
+				parent::add_fields(array(
+					array(
+						'label'		=>'Title',
+						'maxlength'	=>70,
+						'name'		=>'title',
+						'placeholder'=>'Title',
+						'required'	=>1,
+						'rows'		=>3,
+						'type'		=>'text',
+						'value'		=>$article['title']
+					),
+					array(
+						'label'		=>'Excerpt',
+						'maxlength'	=>160,
+						'name'		=>'excerpt',
+						'placeholder'=>'Excerpt',
+						'required'	=>1,
+						'rows'		=>3,
+						'type'		=>'textarea',
+						'value'		=>$article['excerpt']
+					),
+					array(
+						'class'		=>'tinymce',
+						'label'		=>'Content',
+						'name'		=>'content',
+						'required'	=>1,
+						'type'		=>'textarea',
+						'value'		=>$article['content']
+					)
+				));
+			parent::add_html('</div>
+			<div class="tab-pane" id="products" role="tabpanel">');
+				parent::add_fields(array(
+					array(
+						'class'			=>'ajax_product',
+						'label'			=>'Product',
+						'name'			=>'product',
+						'note'			=>'Start typing for list of matching products.<br>Products can be added via <a href="products">Products</a> &gt; <a href="add_product">New</a>',
+						'placeholder'	=>'Product',
+						'required'		=>2,
+						'type'			=>'text',
+						'postfield'		=>"<i class='fa fa-refresh'></i>",
+						'value'			=>$article['product']['name']
+					),
+					array(
+						'class'		=>'ajax_product_id',
+						'name'		=>'product_id',
+						'type'		=>'hidden',
+						'value'		=>$article['product']['id']
+					)
+				));
+			parent::add_html('</div>
+		</div>
+		<p class="text-xs-center">');
 			parent::add_button(array(
 				'class' =>'btn-primary',
 				'name'  =>'save',

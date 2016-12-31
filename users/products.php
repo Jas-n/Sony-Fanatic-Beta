@@ -5,6 +5,7 @@ $products=$products->get_products();?>
 <h1>Products</h1>
 <ol class="breadcrumb">
 	<li class="pull-right">
+		<a class="btn btn-secondary" data-toggle="tooltip" href="tags" title="Tags"><i class="fa fa-fw fa-tags"></i></a>
 		<a class="btn btn-success" data-toggle="tooltip" href="add_product" title="Add Product"><i class="fa fa-fw fa-plus"></i></a>
 	</li>
 	<li class="breadcrumb-item"><a href="../">Home</a></li>
@@ -29,7 +30,7 @@ $products=$products->get_products();?>
 					<td><?=sql_datetime($product['updated'])?></td>
 					<td>
 						<a class="btn btn-sm btn-primary" href="product/<?=$product['id']?>">Edit</a>
-						<a class="btn btn-sm btn-info" href="../p/<?=$product['id']?>-<?=$product['slug']?>">View</a>
+						<a class="btn btn-sm btn-info" href="../p/<?=$product['id']?>-<?=$product['slug']?>" target="_blank">View</a>
 					</td>
 				</tr>
 			<?php }

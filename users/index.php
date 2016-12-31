@@ -1,56 +1,72 @@
 <?php require('../init.php');
-$html_help='<p>The Dashboard is the central hub for Glowt.</p>
-<p>At the top you will see your notifications. To close notifications, click dismiss to the right of the notification. (please note: only applicable to those that are dismissable)</p>';
 require('header.php');?>
 <h1>Dashboard</h1>
 <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="../">Home</a></li>
 	<li class="breadcrumb-item active">Dashboard</li>
 </ol>
-<h2>To Do</h2>
-<ol>
-	<li>Finish menu tree</li>
-	<li>Menu using <a href="https://tympanus.net/codrops/2015/11/17/multi-level-menu/" target="_blank">this</a>
-	<li>Product feature categories - custom order</li>
-	<li>Tidy up un-needed files</li>
-	<li>Product - Featured Image
-		<ul>
-			<li>Thumbnail for product page.</li>
-			<li>Wide for article page.</li>
-		</ul>
-	</li>
-</ol>
-<h2>Overview</h2>
-<ol>
-	<li>Product Database</li>
-	<li>Cross-product comparisons</li>
-	<li>My Catalogue
-		<ol>
-			<li>Products owned with reason
-				<ol>
-					<li>Now</li>
-					<li>Past</li>
-				</ol>
-			</li>
-			<li>Products wanted with reason</li>
-		</ol>
-	</li>
-	<li>Product Reviews
-		<ol>
-			<li>SF</li>
-			<li>User-submitted</li>
-		</ol>
-	</li>
-	<li>Report product inaccuracies</li>
-	<li>Per-product forum</li>
-	<li>product gallery</li>
-	<li>product purchase links</li>
-	<li>Per-product ads if available, otherwise:
-		<ol>
-			<li>Category</li>
-			<li>Brand</li>
-			<li>Other</li>
-		</ol>
-	</li>
-</ol>
-<?php require('footer.php');
+<?php if($user->role_id==1){
+	$board=curl('https://api.trello.com/1/boards/585a3f0e6c3d230192cd9048?key=b3c2759fa13a510063e97bafcb8a1c42');
+	$board=json_decode($board,1);
+	$lists=curl('https://api.trello.com/1/boards/585a3f0e6c3d230192cd9048/lists?key=b3c2759fa13a510063e97bafcb8a1c42');
+	$lists=json_decode($lists,1);
+	$lists=array_combine(array_column($lists,'id'),$lists);
+	$cards=curl('https://api.trello.com/1/boards/585a3f0e6c3d230192cd9048/cards?key=b3c2759fa13a510063e97bafcb8a1c42');
+	$cards=json_decode($cards,1);
+	if($cards){
+		foreach($cards as $card){
+			# If not closed
+			if(!$card['closed']){
+				$lists[$card['idList']]['cards'][]=$card;
+			}
+		}
+	}?>
+	<div class="cols-md-6 cols-lg-4">
+		<h2 class="mb-0">Trello Updates</h2>
+		<?php if($cards){ ?>
+			<p class="mb-05"><strong>Updated</strong> <em><?=sql_datetime(date('Y-m-d H:i:s',strtotime(max(array_column($cards,'dateLastActivity')))))?></em></p>
+		<?php }
+		foreach($lists as $list){
+			#												   On List/ Complete
+			if(!$list['closed'] && !in_array($list['id'],array('585a3fac12bf55eb77b860cb'))){
+				if($list['cards']){?>
+					<div data-list="<?=$list['id']?>">
+						<h3 class="mb-0"><?=$list['name']?></h3>
+						<p><strong>Updated</strong> <em><?=sql_datetime(date('Y-m-d H:i:s',strtotime(max(array_column($list['cards'],'dateLastActivity')))))?></em></p>
+						<ul class="list-group mb-1" style="font-size:14px">
+							<?php foreach($list['cards'] as $card){?>
+								<li class="list-group-item" style="padding:7px;break-inside:avoid-column">
+									<span class="h6"><a href="<?=$card['shortUrl']?>" target="_blank"><?=htmlspecialchars($card['name'])?></a></span><br>
+									<?=$card['desc']?nl2br($card['desc']).'<br>':''?>
+									<?php if($card['badges']['attachments'] || $card['badges']['comments'] || $card['badges']['description']){
+										if($card['badges']['attachments']){ ?>
+											<i class="fa fa-paperclip"></i>
+										<?php }
+										if($card['badges']['comments']){ ?>
+											<i class="fa fa-comments"></i>
+										<?php }
+										if($card['badges']['checkItems']){?>
+											<progress class="progress progress-success mb-0" style="bottom:0;height:3px;left:0;position:absolute" max="<?=$card['badges']['checkItems']?>" value="<?=$card['badges']['checkItemsChecked']?>"></progress>
+										<?php }
+									} ?>
+								</li>
+							<?php }?>
+						</ul>
+					</div>
+				<?php }
+			}
+		} ?>
+		<h3 class="mb-0">Completed</h3>
+		<?php $list=$lists['585a3fac12bf55eb77b860cb'];
+		if($list['cards']){
+			$list['cards']=array_slice($list['cards'],0,25);?>
+			<p class="mb-05"><strong>Updated</strong> <em><?=sql_datetime(date('Y-m-d H:i:s',strtotime(max(array_column($list['cards'],'dateLastActivity')))))?></em></p>
+			<ul class="mb-0">
+				<?php foreach($list['cards'] as $card){ ?>
+					<li style="break-inside:avoid-column"><a href="<?=$card['shortUrl']?>" target="_blank"><?=htmlspecialchars($card['name'])?></a></li>
+				<?php } ?>
+			</ul>
+		<?php } ?>
+	</div>
+<?php }
+require('footer.php');

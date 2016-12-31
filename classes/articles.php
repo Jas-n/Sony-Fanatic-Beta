@@ -3,48 +3,100 @@
 		# Get articles
 		global $db,$products,$user;
 		if($article=$db->get_row(
-			"SELECT
-				`articles`.*,
-				`products`.`name` as `product`
+			"SELECT *
 			FROM `articles`
-			LEFT JOIN `products`
-			ON `articles`.`product_id`=`products`.`id`
-			WHERE `articles`.`id`=?",
+			WHERE `id`=?",
 			$id
 		)){
 			$article['author']=$user->get_user($article['author']);
-			$article['product']=$products->get_product($article['product_id']);
+			$article['products']=$db->query(
+				"SELECT `id`,`name`,`slug`
+				FROM `products` WHERE `id` IN(
+					SELECT `product_id`
+					FROM `article_products`
+					WHERE `article_id`=?
+				)",
+				$id
+			);
 			$article['status_id']=$article['status'];
 			$article['status']=$this->statuses($article['status']);
 			return $article;
 		}
 	}
-	public function get_articles($status=2){
+	public function get_articles($status=2,$type=-1,$ids=NULL){
 		# Get articles
 		global $db;
+		if($status!==-1){
+			$where[]='`status`=?';
+			$options[]=$status;
+		}
+		if($type!==-1){
+			$where[]='`type`=?';
+			$options[]=$type;
+		}
+		if($ids!==NULL){
+			if(!is_array($ids)){
+				$ids=(array) $ids;
+			}
+			$where[]="`id` IN(".implode(',',array_pad([],sizeof($ids),'?')).")";
+			foreach($ids as $id){
+				$options[]=$id;
+			}
+		}else{
+			$limit=SQL_LIMIT;
+		}
+		if($where){
+			$where=" WHERE (".implode(") AND (",$where).")";
+		}
 		if($datas=$db->query(
 			"SELECT
-				`articles`.*,
-				`products`.`name` as `product`
-			FROM `articles`
-			LEFT JOIN `products`
-			ON `articles`.`product_id`=`products`.`id`
-			ORDER BY
+				*,
+				(SELECT COUNT(`id`) FROM `article_products` WHERE `article_id`=`articles`.`id`) as `products`
+			FROM `articles`".
+			$where.
+			"ORDER BY
 				`status` ASC,
 				`published` DESC,
-				`updated` DESC
-			WHERE `status`=?".
-			SQL_LIMIT,
-			$status
+				`updated` DESC".
+			$limit,
+			$options
 		)){
 			foreach($datas as &$data){
+				$data['slug']=$data['id'].'-'.$data['slug'];
 				$data['status']=$this->statuses($data['status']);
 			}
 			return array(
-				'count'	=>$db->result_count("FROM `articles`"),
+				'count'	=>$db->result_count(
+					"FROM `articles`".
+					$where,
+					$options
+				),
 				'data'	=>$datas
 			);
 		}
+	}
+	public function get_latest($status=2,$type=-1,$count=NULL){
+		global $db;
+		if($status!==-1){
+			$where[]='`articles`.`status`=?';
+			$options[]=$status;
+		}
+		if($type!==-1){
+			$where[]='`articles`.`type`=?';
+			$options[]=$type;
+		}
+		if(!is_numeric($count)){
+			$count=ITEMS_PER_PAGE;
+		}
+		if($articles=$db->query(
+			"SELECT `articles`.`id`
+			FROM `articles`
+			ORDER BY `published` DESC
+			LIMIT ".$count
+		)){
+			return $this->get_articles($status,$type,array_column($articles,'id'));
+		}
+		return false;
 	}
 	public function statuses($id=NULL){
 		$statuses=array(

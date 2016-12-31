@@ -1,7 +1,7 @@
 <?php $app_require[]='php.articles';
 require('../init.php');
 require('header.php');
-$article_list=$articles->get_articles();?>
+$article_list=$articles->get_articles(-1);?>
 <h1>Articles</h1>
 <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="../">Home</a></li>
@@ -12,7 +12,7 @@ $article_list=$articles->get_articles();?>
 	<thead>
 		<tr>
 			<th>Title</th>
-			<th>Product</th>
+			<th>Products</th>
 			<th>Category</th>
 			<th>Status</th>
 			<th>Published</th>
@@ -24,7 +24,7 @@ $article_list=$articles->get_articles();?>
 			foreach($article_list['data'] as $article){?>
 				<tr>
 					<td><?=$article['title']?></td>
-					<td><?=$article['product']?></td>
+					<td><?=$article['products']?></td>
 					<td><?=$article['category']?></td>
 					<td><?=$article['status']?></td>
 					<td><?=sql_datetime($article['published'])?></td>

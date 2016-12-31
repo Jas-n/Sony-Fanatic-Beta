@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="core.js" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131220776995242762" remote="131220777000000000" Dst="2" />
-<file name="users.js" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131210470425822808" remote="131211069000000000" Dst="2" />
-<file name="index.php" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131193815140000000" remote="131211068400000000" Dst="2" />
-<file name="form.js" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131199712940000000" remote="131211068400000000" Dst="2" />
-<file name="root.js" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131240590080981761" remote="131240589600000000" Dst="1" />
-<file name="product.js" server="sonyfanatic.com/beta.sonyfanatic.com/" local="131241475984661019" remote="131241476400000000" Dst="1" />
+<file name="tinymce.js" server="techversus.tech/techversus.tech/" local="131269966287303963" remote="131269966200000000" Dst="1" />
+<file name="core.js" server="techversus.tech/techversus.tech/" local="131270056270654476" remote="131220777000000000" Dst="1" />
+<file name="form.js" server="techversus.tech/techversus.tech/" local="131270056270844492" remote="131211068400000000" Dst="1" />
+<file name="index.php" server="techversus.tech/techversus.tech/" local="131270056271709600" remote="131211068400000000" Dst="1" />
+<file name="product.js" server="techversus.tech/techversus.tech/" local="131275784642425789" remote="131270923200000000" Dst="1" />
 </dwsync>

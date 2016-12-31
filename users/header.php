@@ -11,42 +11,21 @@
 		<base href="<?=SERVER_NAME?>users/">
     </head>
     <body id="<?=strtolower(str_replace(' ','-','users-'.$page->slug))?>">
-    	<?php /*if($page->has_feature_permission('search')){ ?>
-			<div class="full_page_search_container" id="full-page-search">
-				<div class="row">
-					<div class="col-xl-10 offset-xl-1">
-						<div class="full_page_search_close" id="full-search-close-trigger">&times;</div>
-						<h2 class="h1" id="search-results-title"><span id="search-results-status">Search</span> <small class="text-muted" id="search-results-text"></small></h2>	
-						<input type="search" id="full-page-search-term" class="form-control full_page_search_page_bar" placeholder="Start Searching&hellip;">
-						<div class="alert alert-warning hidden" id="search-results-warning">No Results Found</div>
-						<div id="searching" class="loading_bar hidden"><div></div></div>
-						<ul class="nav nav-tabs" id="full-search-results-nav" role="tablist"></ul>
-						<div class="tab-content" id="full-results"></div>
-					</div>
-				</div>
-			</div>
-		<?php }*/ ?>
    		<nav>
    			<div class="nav_head">
-				<a href="../">Sony Fanatic</a>
+				<a href="../"><?=SITE_NAME?></a>
 			</div>
 			<ul>
 				<li><a href="./"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a></li>
 				<li class="has_children">
 					<a><i class="fa fa-fw fa-television"></i> Products</a>
 					<ul>
-						<li><a href="products"><i class="fa fa-fw fa-list"></i> Products</a></li>
+						<li><a href="products"><i class="fa fa-fw fa-television"></i> Products</a></li>
 						<li><a href="add_product"><i class="fa fa-fw fa-plus"></i> Add</a></li>
 						<li><a href="brands"><i class="fa fa-fw fa-list"></i> Brands</a></li>
 						<li><a href="categories"><i class="fa fa-fw fa-th"></i> Categories</a></li>
-						<li class="has_children">
-							<a><i class="fa fa-fw fa-th"></i> Features</a>
-							<ul>
-								<li><a href="feature_categories"><i class="fa fa-fw fa-th"></i> Categories</a></li>
-								<li><a href="feature_options"><i class="fa fa-fw fa-th"></i> Options</a></li>
-							</ul>
-						</li>
-						<li><a href="tags"><i class="fa fa-fw fa-th"></i> Tags</a></li>
+						<li><a href="feature_categories"><i class="fa fa-fw fa-list-ol"></i> Features</a></li>
+						<li><a href="tags"><i class="fa fa-fw fa-tags"></i> Tags</a></li>
 					</ul>
 				</li>
 				<li class="has_children">

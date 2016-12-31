@@ -11,7 +11,7 @@
     </head>
     <body id="<?=basename($_SERVER['PHP_SELF'],'.php')?>">
 		<header class="cd-auto-hide-header">
-			<div class="logo"><a href="/">Sony Fanatic</a></div>
+			<div class="logo"><a href="/"><?=SITE_NAME?></a></div>
 			<nav class="cd-primary-nav">
 				<a href="#cd-navigation" class="nav-trigger">
 					<span>

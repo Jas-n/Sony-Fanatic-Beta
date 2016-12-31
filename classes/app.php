@@ -82,7 +82,8 @@ class app{
 			$out.='<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>';
 		}
 		if(in_array('js.tinymce',$require)){
-			$out.='<script src="//cdnjs.cloudflare.com/ajax/libs/tinymce/4.4.3/tinymce.min.js"></script>';
+			$out.='<script src="//cdnjs.cloudflare.com/ajax/libs/tinymce/4.4.3/tinymce.min.js"></script>
+			<script src="/js/tinymce.js"></script>';
 		}
 		$out.='<script>';
 			$out.='var _GET={';
@@ -96,51 +97,8 @@ class app{
 			var page="'.$page->slug.'";
 			var user_id='.($user->id?$user->id:0).';
 			$("[data-toggle=tooltip]").tooltip();';
-			if(in_array('js.sortable',$require) || in_array('js.tinymce',$require)){
-				$out.='$(document).ready(function(){';
-					if(in_array('js.tinymce',$require)){
-						$out.='tinymce.init({
-							browser_spellcheck:true,
-							content_css:"/css/tinymce.css",
-							menubar:false,
-							min_height:200,
-							plugins:"link,paste,code",
-							paste_auto_cleanup_on_paste:true,
-							selector:".tinymce",
-							statusbar:false,
-							style_formats:[
-								{title: "Headers",items:[
-									{title:"Header 2",format:"h2"},
-									{title:"Header 3",format:"h3"},
-									{title:"Header 4",format:"h4"},
-									{title:"Header 5",format:"h5"},
-									{title:"Header 6",format:"h6"}
-								]},
-								{title:"Inline",items:[
-									{title:"Underline",icon:"underline",format:"underline"},
-									{title:"Strikethrough",icon:"strikethrough",format:"strikethrough"},
-									{title:"Superscript",icon:"superscript",format:"superscript"},
-									{title:"Subscript",icon:"subscript",format:"subscript"}
-								]},
-								{title:"Blocks",items:[
-									{title:"Paragraph",format:"p"},
-									{title:"Blockquote",format:"blockquote"}
-								]},
-								{title:"Alignment",items:[
-									{title:"Left",icon:"alignleft",format:"alignleft"},
-									{title:"Center",icon:"aligncenter",format:"aligncenter"},
-									{title:"Right",icon:"alignright",format:"alignright"},
-									{title:"Justify",icon:"alignjustify",format:"alignjustify"}
-								]}
-							],
-							toolbar1:"undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link code",
-						});';
-					}
-					if(in_array('js.sortable',$require)){
-						$out.='$(".sortable").sortable();
-						$(".sortable").disableSelection();';
-					}
-				$out.='});';
+			if(in_array('js.sortable',$require)){
+				$out.='$(".sortable").sortable();';
 			}
 		$out.='</script>
 		<script src="/js/core.js"></script>';
@@ -258,18 +216,23 @@ class app{
 	}
 	# Get page title
 	public function page_title(){
-		if($this->page_title && strtolower($this->page_title)!='index'){
-			$out=crop($this->page_title,25).' | ';
+		if($this->page_title){
+			$page=$this->page_title;
 		}else{
 			$page=basename($_SERVER['PHP_SELF'],'.php');
-			if($page=='index' && get_dir()){
-				$page='Dashboard';
+			if($page=='index' && !get_dir()){
+				$this->page_title=SITE_NAME;
+				return SITE_NAME;
+			}else{
+				if($pagge=='index' && get_dir()){
+					$page='Dashboard';
+				}else{
+					$page=ucwords(str_replace(array('-','_'),' ',$page));
+				}
 			}
-			$page=ucwords(str_replace(array('-','_'),' ',$page));
-			$this->page_title=$page;
-			$out.=crop($page,25).' | ';
 		}
-		echo $out.(defined('SITE_NAME')?SITE_NAME:'glowt');
+		$this->page_title=$page;
+		return $page.' | '.SITE_NAME;
 	}
 	# Set message for visual output
 	public function set_message($type,$message){

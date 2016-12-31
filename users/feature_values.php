@@ -11,8 +11,9 @@ require('header.php');?>
 	<li class="breadcrumb-item"><a href="../">Home</a></li>
 	<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
 	<li class="breadcrumb-item">Products</li>
-	<li class="breadcrumb-item"><a href="feature_options">Feature Options</a></li>
-	<li class="breadcrumb-item active"><?=$feature_values->category['name']?> <?=$feature_values->option['name']?></li>
+	<li class="breadcrumb-item"><a href="feature_categories">Feature Categories</a></li>
+	<li class="breadcrumb-item"><a href="feature_options/<?=$feature_values->category['id']?>"><?=$feature_values->category['name']?></a></li>
+	<li class="breadcrumb-item active"><?=$feature_values->option['name']?></li>
 </ol>
 <?php $app->get_messages();
 $feature_values->get_form();

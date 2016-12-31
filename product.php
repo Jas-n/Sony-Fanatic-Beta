@@ -5,6 +5,7 @@
 );
 include('init.php');
 $product=new product($_GET['id']);
+$app->page_title=$product->brand.' '.$product->name;
 if(!$product->id){
 	header('Location: /');
 	exit;

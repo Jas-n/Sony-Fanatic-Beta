@@ -13,6 +13,7 @@ body{
 	overflow-x: hidden;
 	position:relative;
 }
+a.tag,
 .btn:not(.btn-secondary){
 	color:#fff !important;
 }
@@ -31,12 +32,6 @@ b, dt, optgroup, strong, th{
 .carousel .carousel-thumbnails>*{
 	cursor: pointer;
 }
-footer{
-	bottom:0;
-	height:$spacer*3.5;
-	position:absolute;
-	width:100%;
-}
 .hidden{
 	display:none !important;
 }
@@ -45,9 +40,6 @@ html{
 }
 img{
 	max-width:100%;
-}
-main{
-	padding-bottom:$spacer*4.5;
 }
 ol,ol ol ol ol{
 	list-style-type:decimal;

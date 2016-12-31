@@ -1,7 +1,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</main>
 		<div class="hidden" id="loading">
 			<svg class="loading_svg" width="40" height="40" viewbox="0 0 40 40">
 			  <polygon points="0 0 0 40 40 40 40 0" class="rect" />
@@ -30,8 +30,5 @@
 			</div>
 		<?php } ?>
 		<?php $app->get_foot_js();?>
-		<footer class="text-xs-center">
-			<div class="col-xs-12"><span class="hidden" id="render_time"><?=microtime(true)-$render_start?></span></div>
-		</footer>
 	</body>
 </html>

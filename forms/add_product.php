@@ -2,12 +2,14 @@
 	public function __construct($data=NULL){
 		global $products;
 		parent::__construct("name=".__CLASS__);
+		$brands=$products->get_brands();
+		$brands=$this->optioner(tree($brands));
 		parent::add_select(
 			array(
 				'label'	=>'Brand',
 				'name'	=>'brand'
 			),
-			$products->get_brands(),
+			$brands,
 			'Select&hellip;'
 		);
 		parent::add_fields(array(
@@ -66,5 +68,17 @@
 			header('Location: ./products');
 			exit;
 		}
+	}
+	private function optioner($items,$level=0){
+		$list=array();
+		if($items){
+			foreach($items as $item){
+				$list[$item['id']]=implode('',array_pad([],$level,'-&nbsp;&nbsp;')).$item['brand'];
+				if($item['children']){
+					$list=$list+$this->optioner($item['children'],$level+1);
+				}
+			}
+		}
+		return $list;
 	}
 }

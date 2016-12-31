@@ -1,9 +1,8 @@
 <?php class feature_options extends form{
 	public function __construct($data=NULL){
 		global $products;
-		$feature_categories	=$products->get_feature_categories();
-		$feature_categories	=array_combine(array_keys($feature_categories),array_column($feature_categories,'name'));
-		$feature_options	=$products->get_feature_options($_GET['id']);
+		$this->feature_category=$products->get_feature_category($_GET['id']);
+		$feature_options=$products->get_feature_options($_GET['id']);
 		parent::__construct("name=".__CLASS__."&class=form-inline");
 		parent::add_html('<table class="table table-hover table-striped table-sm">
 			<thead>
@@ -17,7 +16,6 @@
 						));
 					parent::add_html('</th>
 					<th>Name</th>
-					<th>Category</th>
 					<th>Values</th>
 					<th>Actions</th>
 				</tr>
@@ -43,24 +41,13 @@
 									'value'		=>$feature_option['name']
 								));
 							parent::add_html('</td>
-							<td>');
-								parent::add_select(
-									array(
-										'name'		=>'category['.$id.']',
-										'required'	=>1,
-										'value'		=>$feature_option['category_id']
-									),
-									$feature_categories,
-									'Select&hellip;'
-								);
-							parent::add_html('</td>
 							<td>'.number_format($feature_option['values']).'</td>
 							<td><a class="btn btn-sm btn-primary" href="feature_values/'.$feature_option['id'].'">Values</a></td>
 						</tr>');
 					}
 				}
 				parent::add_html('<tr class="thead-default">
-					<th class="text-xs-center" colspan="5">Add Feature Option</th>
+					<th class="text-xs-center" colspan="4">Add Feature Option</th>
 				</tr>
 				<tr>
 					<td></td>
@@ -71,16 +58,6 @@
 							'required'		=>2,
 							'type'			=>'text'
 						));
-					parent::add_html('</td>
-					<td>');
-						parent::add_select(
-							array(
-								'name'		=>'new_category',
-								'required'	=>2
-							),
-							$feature_categories,
-							'Select&hellip;'
-						);
 					parent::add_html('</td>
 					<td colspan="2"></td>
 				</tr>
@@ -113,24 +90,21 @@
 							`category_id`,`name`,`added`
 						) VALUES (?,?,?)",
 						array(
-							$results['new_category'],
+							$_GET['id'],
 							$results['new_option'],
 							DATE_TIME
 						)
 					);
 					$app->set_message('success','Added '.$results['new_option'].' to feature options');
-					$app->log_message(3,'New Feature Option','Added '.$results['new_category'].' to feature options');
+					$app->log_message(3,'New Feature Option','Added '.$results['new_option'].' to feature options');
 				}
 				if($results['option']){
 					foreach($results['option'] as $id=>$option){
 						$db->query(
 							"UPDATE `feature_options`
-							SET
-								`category_id`=?,
-								`name`=?
+							SET `name`=?
 							WHERE `id`=?",
 							array(
-								$results['category'][$id],
 								$option,
 								$id
 							)

@@ -2,10 +2,18 @@
 include_once('../init.php');
 if(
 	!$_POST || !$_POST['action']
-	|| !in_array($_POST['action'],array('delete_value','get_features','get_product','get_values','save_value'))
+	|| !in_array($_POST['action'],array(
+		'add_tag',		'assign_tag',	'delete_link',	'delete_tag','delete_value',
+		'get_features',	'get_product',	'get_tags',		'get_values','save_value'
+	))
+	|| ($_POST['action']=='add_tag' && (!$_POST['product'] || !$_POST['tag']))
+	|| ($_POST['action']=='assign_tag' && (!$_POST['product'] || !$_POST['tag']))
+	|| ($_POST['action']=='delete_link' && !$_POST['link'])
+	|| ($_POST['action']=='delete_tag' && !$_POST['tag'])
 	|| ($_POST['action']=='delete_value' && !$_POST['value'])
 	|| ($_POST['action']=='get_features' && !$_POST['category'])
-	|| ($_POST['action']=='get_product' && (!$_POST['brand'] || !$_POST['term']))
+	|| ($_POST['action']=='get_product' && !$_POST['term'])
+	|| ($_POST['action']=='get_tags' && !$_POST['term'])
 	|| ($_POST['action']=='get_values' && !$_POST['feature'])
 	|| ($_POST['action']=='save_value' && (!$_POST['product'] || !$_POST['value']))
 ){
@@ -13,6 +21,54 @@ if(
 		'status'	=>false,
 		'message'	=>'Invalid details'
 	));
+	exit;
+}
+elseif($_POST['action']=='add_tag'){
+	$db->query("INSERT INTO `tags` (`tag`) VALUES (?)",$_POST['tag']);
+	$tag_id=$db->insert_id();
+	$db->query("INSERT INTO `product_tags` (`product`,`tag`) VALUES (?,?)",array($_POST['product'],$tag_id));
+	$tag=$db->get_row(
+		"SELECT
+			`tags`.*,
+			`product_tags`.`id` as `link_id`
+		FROM `tags`
+		INNER JOIN `product_tags`
+		ON `tags`.`id`=`product_tags`.`tag`
+		WHERE `tags`.`id`=?",
+		$tag_id
+	);
+	echo json_encode(array(
+		'status'=>true,
+		'tag'	=>$tag
+	));
+	exit;
+}
+elseif($_POST['action']=='assign_tag'){
+	$db->query("INSERT INTO `product_tags` (`product`,`tag`) VALUES (?,?)",array($_POST['product'],$_POST['tag']));
+	$tag=$db->get_row(
+		"SELECT
+			`tags`.*,
+			`product_tags`.`id` as `link_id`
+		FROM `tags`
+		INNER JOIN `product_tags`
+		ON `tags`.`id`=`product_tags`.`tag`
+		WHERE `tags`.`id`=?",
+		$_POST['tag']
+	);
+	echo json_encode(array(
+		'status'=>true,
+		'tag'	=>$tag
+	));
+	exit;
+}
+elseif($_POST['action']=='delete_link'){
+	$db->query("DELETE FROM `product_links` WHERE `id`=?",$_POST['link']);
+	echo json_encode(true);
+	exit;
+}
+elseif($_POST['action']=='delete_tag'){
+	$db->query("DELETE FROM `product_tags` WHERE `id`=?",$_POST['tag']);
+	echo json_encode(true);
 	exit;
 }
 elseif($_POST['action']=='delete_value'){
@@ -28,18 +84,36 @@ elseif($_POST['action']=='get_product'){
 	echo json_encode(array(
 		'status'=>true,
 		'data'	=>$db->query(
-			"SELECT `id`,`name`
+			"SELECT
+				`products`.`id`,`products`.`name`,
+				`brands`.`brand`
 			FROM `products`
+			INNER JOIN `brands`
+			ON `products`.`brand_id`=`brands`.`id`
 			WHERE
-				`brand_id`=? AND
 				(
-					`id` LIKE ? OR
-					`name` LIKE ?
+					`products`.`id` LIKE ? OR
+					`products`.`name` LIKE ?
 				)
-			ORDER BY `name` ASC",
+			ORDER BY `products`.`name` ASC",
 			array(
-				$_POST['brand'],
 				'%'.$_POST['term'].'%',
+				'%'.$_POST['term'].'%'
+			)
+		)
+	));
+	exit;
+}
+elseif($_POST['action']=='get_tags'){
+	echo json_encode(array(
+		'status'=>true,
+		'data'	=>$db->query(
+			"SELECT `id`,`tag`
+			FROM `tags`
+			WHERE
+				`tag` LIKE ?
+			ORDER BY `tag` ASC",
+			array(
 				'%'.$_POST['term'].'%'
 			)
 		)

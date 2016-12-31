@@ -11,6 +11,20 @@ $day=date('d');
 $hour=date('G');
 # Every 6 Hours
 if(in_array($hour,array(0,6,12,18))){
+
+	$folding=json_decode(file_get_contents('http://folding.stanford.edu/stats/api/team/88889'),1);
+	if(!$data['error']){
+		$data=array(
+			'active'=>$folding['active_50'],
+			'credit'=>$folding['credit'],
+			'last'	=>$folding['last'],
+			'rank'	=>$folding['rank'],
+			'team'	=>$folding['team'],
+			'teams'	=>$folding['total_teams'],
+			'wus'	=>$folding['wus']
+		);
+		file_put_contents(ROOT.'folding.json',json_encode($data));
+	}
 	mkdir(ROOT.'backups/quarter_day/'.date('Y-m-d').'/'.date('H'),0777,1);
 	$db->backup('all','backups/quarter_day/'.date('Y-m-d').'/'.date('H'));
 	$backup = new zip(ROOT.'/backups/quarter_day/'.date('Y-m-d').'/'.date('H').'/files.zip');

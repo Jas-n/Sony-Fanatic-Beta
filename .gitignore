@@ -10,10 +10,7 @@ themes/
 !themes/index.php
 !themes/glowt/
 error_log.txt
-users/test.php
 classes/connect.php
-users/test.php
 transfer.php
 users/test.php
-users/test.php
-users/test.php
+folding.json

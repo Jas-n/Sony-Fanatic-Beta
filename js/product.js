@@ -15,3 +15,6 @@ $('.cd-secondary-nav').click(function(e){
 	$('.cd-secondary-nav a').removeClass('active');
 	$(e.target).addClass('active');
 });
+$('.social> *').click(function(e){
+	
+});

@@ -2,7 +2,7 @@
 
 // Embedded icons from Open Iconic.
 // Released under MIT and copyright 2014 Waybury.
-// https://useiconic.com/open
+// http://useiconic.com/open
 
 
 // Checkboxes and radios
@@ -11,7 +11,7 @@
 
 .custom-control {
   position: relative;
-  display: inline-block;
+  display: inline;
   padding-left: $custom-control-gutter;
   cursor: pointer;
 
@@ -61,7 +61,7 @@
 
 .custom-control-indicator {
   position: absolute;
-  top: .25rem;
+  top: .0625rem;
   left: 0;
   display: block;
   width: $custom-control-indicator-size;
@@ -117,8 +117,13 @@
 
 .custom-controls-stacked {
   .custom-control {
-    float: left;
-    clear: left;
+    display: inline;
+
+    &::after {
+      display: block;
+      margin-bottom: $custom-control-spacer-y;
+      content: "";
+    }
 
     + .custom-control {
       margin-left: 0;
@@ -137,8 +142,6 @@
 .custom-select {
   display: inline-block;
   max-width: 100%;
-  $select-border-width: ($border-width * 2);
-  height: calc(#{$input-height} - #{$select-border-width});
   padding: $custom-select-padding-y ($custom-select-padding-x + $custom-select-indicator-padding) $custom-select-padding-y $custom-select-padding-x;
   padding-right: $custom-select-padding-x \9;
   color: $custom-select-color;
