@@ -122,6 +122,7 @@
 		if($products=$db->query(
 			"SELECT `id`
 			FROM `products`
+			WHERE `status`=1
 			ORDER BY `added` DESC
 			LIMIT ".$count
 		)){
@@ -130,7 +131,7 @@
 		return false;
 	}
 	public function get_product($id){
-		global $db;
+		global $db,$user;
 		if($product=$db->get_row(
 			"SELECT
 				`brands`.`brand`,
@@ -153,19 +154,27 @@
 				$product['images']['thumb'][]=str_replace(ROOT,'',$thumb);
 			}
 			$product['articles']['count']=$db->result_count(
-				"FROM `articles`
+				"FROM `article_products`
+				INNER JOIN `articles`
+				ON `article_products`.`article_id`=`articles`.`id`
 				WHERE
-					`status`=2 AND
-					`product_id`=?",
+					`articles`.`status`=2 AND
+					`article_products`.`product_id`=?",
 				$id
 			);
-			$product['articles']['articles']=$db->query(
-				"SELECT `id`,`title`,`slug`
-				FROM `articles`
+			$product['articles']['data']=$db->query(
+				"SELECT
+					`articles`.`id`,`articles`.`title`,`articles`.`slug`,`articles`.`published`,
+					`users`.`username` as `author_username`
+				FROM `article_products`
+				INNER JOIN `articles`
+				ON `article_products`.`article_id`=`articles`.`id`
+				LEFT JOIN `users`
+				ON `articles`.`author`=`users`.`id`
 				WHERE
-					`status`=2 AND
-					`product_id`=?
-				ORDER BY `published` DESC".
+					`articles`.`status`=2 AND
+					`article_products`.`product_id`=?
+				ORDER BY `articles`.`published` DESC".
 				SQL_LIMIT,
 				$id
 			);
@@ -207,6 +216,24 @@
 				ORDER BY `tags`.`tag` ASC",
 				$id
 			);
+			$product['catalogue']=array(
+				'had'	=>$db->result_count("FROM `product_catalogue` WHERE `product`=? AND `status`=?",array($id,-1)),
+				'got'	=>$db->result_count("FROM `product_catalogue` WHERE `product`=? AND `status`=?",array($id,0)),
+				'want'	=>$db->result_count("FROM `product_catalogue` WHERE `product`=? AND `status`=?",array($id,1))
+			);
+			if(!get_dir() && is_logged_in()){
+				$product['catalogue']['status']=$db->get_value(
+					"SELECT `status`
+					FROM `product_catalogue`
+					WHERE
+						`product`=? AND
+						`user`=?",
+					array(
+						$id,
+						$user->id
+					)
+				);
+			}
 			return $product;
 		}
 	}
@@ -229,7 +256,9 @@
 			LEFT JOIN `brands`
 			ON `products`.`brand_id`=`brands`.`id`
 			".$where."
-			ORDER BY `products`.`added` DESC".
+			ORDER BY
+				`products`.`status` DESC,
+				`products`.`added` DESC".
 			$limit,
 			$options
 		)){

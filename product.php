@@ -41,18 +41,19 @@ $page_nav=array_merge($page_nav,array(
 	array(
 		'link'=>'#discuss',
 		'name'=>'Discuss',
-		'count'=>mt_rand(1,100)
+		'count'=>$product->comments['count']
 	)
 ));
-include('header.php');
-#print_pre($product);?>
+include('header.php');?>
 <h1 class="mb-0"><?=$product->name?></h1>
 <div class="btn-toolbar text-xs-center interactions" role="toolbar" aria-label="Interactions">
-	<div class="btn-group catalog" role="group" aria-label="My Catalog">
-		<button type="button" class="btn btn-sm btn-secondary catalog_had" data-toggle="tooltip" data-placement="top" title="<?=$product->catalog['had']?> Others">Had It</button>
-		<button type="button" class="btn btn-sm btn-secondary catalog_got true" data-toggle="tooltip" data-placement="top" title="You and <?=$product->catalog['got']?> Others">Got It</button>
-		<button type="button" class="btn btn-sm btn-secondary catalog_want" data-toggle="tooltip" data-placement="top" title="<?=$product->catalog['want']?> Others">Want It</button>
-	</div>
+	<?php if(is_logged_in()){ ?>
+		<div class="btn-group catalogue" role="group" aria-label="My Catalogue">
+			<button type="button" class="btn btn-sm btn-secondary catalogue_had<?=isset($product->catalogue['status']) && $product->catalogue['status']==-1?' true':''?>" data-toggle="tooltip" data-placement="top" title="<?=$product->catalogue['had']?> <?=$product->catalogue['had']==1?'Person':'People'?>">Had It</button>
+			<button type="button" class="btn btn-sm btn-secondary catalogue_got<?=isset($product->catalogue['status']) && $product->catalogue['status']==0?' true':''?>" data-toggle="tooltip" data-placement="top" title="<?=$product->catalogue['got']?> <?=$product->catalogue['got']==1?'Person':'People'?>">Got It</button>
+			<button type="button" class="btn btn-sm btn-secondary catalogue_want<?=isset($product->catalogue['status']) && $product->catalogue['status']==1?' true':''?>" data-toggle="tooltip" data-placement="top" title="<?=$product->catalogue['want']?> <?=$product->catalogue['want']==1?'Person':'People'?>">Want It</button>
+		</div>
+	<?php } ?>
 	<div class="btn-group social" role="group" aria-label="Social">
 		<button type="button" class="btn btn-sm btn-secondary facebook" data-toggle="tooltip" data-placement="top" title="<?=$product->facebooks?> Shares"><span class="fa fa-fw fa-facebook"></span></button>
 		<button type="button" class="btn btn-sm btn-secondary twitter" data-toggle="tooltip" data-placement="top" title="<?=$product->twitters?> Tweets"><span class="fa fa-fw fa-twitter"></span></button>
@@ -64,8 +65,13 @@ include('header.php');
 	<?=$product->description?>
 </section>
 <section class="hidden" id="features">
-	<?php if($product->features){ ?>
-		<table class="table table-bordered table-fixed table-hover table-striped">
+	<?php if($product->features){
+		foreach($product->features as $feature){
+			$feature_categories[$feature['category']][$feature['feature']][]=$feature['value'];
+			ksort($feature_categories);
+			ksort($feature_categories[$feature['category']]);
+		}?>
+		<table class="table table-bordered table-fixed table-hover">
 			<thead>
 				<tr>
 					<th>Category</th>
@@ -74,11 +80,24 @@ include('header.php');
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach($product->features as $feature){ ?>
+				<?php foreach($feature_categories as $feature_category=>$features){?>
 					<tr>
-						<td><?=$feature['category']?></td>
-						<td><?=$feature['feature']?></td>
-						<td><?=$feature['value']?></td>
+						<th rowspan="<?=sizeof($features)?>"><?=$feature_category?></th>
+						<?php $first_feature=key($features);
+						foreach($features as $feature=>$values){
+							if($first_feature!=$feature){?>
+								<tr>
+							<?php } ?>
+							<td><?=$feature?></td>
+							<td>
+								<?php if($values){?>
+									<?=implode('<br>',$values)?>
+								<?php } ?>
+							</td>
+							<?php if($first_feature!=$feature){?>
+								</tr>
+							<?php }
+						}?>
 					</tr>
 				<?php } ?>
 			</tbody>
@@ -96,7 +115,7 @@ include('header.php');
 				<?php } ?>
 			</div>
 			<div class="carousel-thumbnails">
-				<?php foreach($product->images['thumbnail'] as $i=>$image){ ?>
+				<?php foreach($product->images['thumb'] as $i=>$image){ ?>
 					<div data-target="#latest_banner" data-slide-to="<?=$i?>"<?=$i==0?'class="active"':''?>>
 						<img src="<?=$image?>" width="75">
 					</div>

@@ -87,16 +87,6 @@ class database{
 		}
 		return false;
 	}
-	# Get location from $location_id
-	public function get_location($location_id,$as_string=false){
-		if($location=$this->query("SELECT `town`,`county` FROM `locations` WHERE `id`=?",$location_id)){
-			if($as_string){
-				return $location[0]['town'].', '.$location[0]['county'];
-			}
-			return $location[0];
-		}
-		return false;
-	}
 	# Get Logs
 	public function get_logs($level=NULL){
 		if($level!=NULL){
@@ -113,8 +103,8 @@ class database{
 				LEFT JOIN `users`
 				ON `logs`.`user_id`=`users`.`id`
 				'.$where.'
-				ORDER BY `id` DESC
-				LIMIT '.($_GET['page']?(($_GET['page']-1)*ITEMS_PER_PAGE):0).','.ITEMS_PER_PAGE,
+				ORDER BY `date` DESC'.
+				SQL_LIMIT,
 				$options
 			)
 		);
@@ -233,11 +223,5 @@ class database{
 	# Get rows affected by last query
 	public function rows_updated(){
 		return $this->rows_updated;
-	}
-	# Returns the setting value
-	public function setting($name){
-		$options[]=$name;
-		$out=$this->query("SELECT `value` FROM `settings` WHERE `name`=? $sql",$options);
-		return $out[0]['value'];
 	}
 }

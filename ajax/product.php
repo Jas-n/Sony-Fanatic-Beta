@@ -3,8 +3,9 @@ include_once('../init.php');
 if(
 	!$_POST || !$_POST['action']
 	|| !in_array($_POST['action'],array(
-		'add_tag',		'assign_tag',	'delete_link',	'delete_tag','delete_value',
-		'get_features',	'get_product',	'get_tags',		'get_values','save_value'
+		'add_tag','assign_tag','delete_link','delete_tag','delete_value',
+		'get_features','get_product','get_tags','get_values','save_value',
+		'update_catalogue'
 	))
 	|| ($_POST['action']=='add_tag' && (!$_POST['product'] || !$_POST['tag']))
 	|| ($_POST['action']=='assign_tag' && (!$_POST['product'] || !$_POST['tag']))
@@ -16,6 +17,7 @@ if(
 	|| ($_POST['action']=='get_tags' && !$_POST['term'])
 	|| ($_POST['action']=='get_values' && !$_POST['feature'])
 	|| ($_POST['action']=='save_value' && (!$_POST['product'] || !$_POST['value']))
+	|| ($_POST['action']=='update_catalogue' && (!$_POST['product'] || !isset($_POST['status']) || !$_POST['user']))
 ){
 	echo json_encode(array(
 		'status'	=>false,
@@ -122,6 +124,49 @@ elseif($_POST['action']=='get_tags'){
 }
 elseif($_POST['action']=='get_values'){
 	echo json_encode($products->get_feature_values($_POST['feature']));
+}
+elseif($_POST['action']=='update_catalogue'){
+	if(!$db->get_value(
+		"SELECT `id`
+		FROM `product_catalogue`
+		WHERE
+			`product`=? AND
+			`user`=?",
+		array(
+			$_POST['product'],
+			$_POST['user']
+		)
+	)){
+		$db->query(
+			"INSERT INTO `product_catalogue` (
+				`product`,`user`,`status`,`updated`
+			) VALUES (?,?,?)",
+			array(
+				$_POST['product'],
+				$_POST['user'],
+				$_POST['status'],
+				DATE_TIME
+			)
+		);
+	}else{
+		$db->query(
+			"UPDATE `product_catalogue`
+			SET
+				`status`=?,
+				`updated`=?
+			WHERE
+				`product`=? AND
+				`user`=?",
+			array(
+				$_POST['status'],
+				DATE_TIME,
+				$_POST['product'],
+				$_POST['user']
+			)
+		);
+	}
+	echo json_encode(true);
+	exit;
 }
 elseif($_POST['action']=='save_value'){
 	if(!$db->get_value(

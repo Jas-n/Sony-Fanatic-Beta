@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="root.scss" server="techversus.tech/techversus.tech/" local="131276985495066684" remote="131276985000000000" Dst="1" />
+<file name="root.scss" server="techversus.tech/techversus.tech/" local="131278585783496485" remote="131278585200000000" Dst="1" />
 <file name=".scss-lint.yml" server="techversus.tech/techversus.tech/" local="131270054786813681" remote="131211068400000000" Dst="1" />
 <file name="_alert.scss" server="techversus.tech/techversus.tech/" local="131270054787873813" remote="131211068400000000" Dst="1" />
 <file name="_breadcrumb.scss" server="techversus.tech/techversus.tech/" local="131270054788143849" remote="131211068400000000" Dst="1" />
@@ -11,7 +11,7 @@
 <file name="_carousel.scss" server="techversus.tech/techversus.tech/" local="131270054790224103" remote="131211068400000000" Dst="1" />
 <file name="_close.scss" server="techversus.tech/techversus.tech/" local="131270054792709416" remote="131211068400000000" Dst="1" />
 <file name="_code.scss" server="techversus.tech/techversus.tech/" local="131270054792804432" remote="131211068400000000" Dst="1" />
-<file name="_custom.scss" server="techversus.tech/techversus.tech/" local="131270054796849936" remote="131235017400000000" Dst="1" />
+<file name="_custom.scss" server="techversus.tech/techversus.tech/" local="131277783473046482" remote="131277783000000000" Dst="1" />
 <file name="_custom-forms.scss" server="techversus.tech/techversus.tech/" local="131270054797154972" remote="131211068400000000" Dst="1" />
 <file name="_dropdown.scss" server="techversus.tech/techversus.tech/" local="131270054797810056" remote="131211068400000000" Dst="1" />
 <file name="_forms.scss" server="techversus.tech/techversus.tech/" local="131270054797920072" remote="131211068400000000" Dst="1" />
@@ -43,6 +43,7 @@
 <file name="bootstrap-grid.scss" server="techversus.tech/techversus.tech/" local="131270054837920072" remote="131211068400000000" Dst="1" />
 <file name="bootstrap-reboot.scss" server="techversus.tech/techversus.tech/" local="131270054841090472" remote="131211068400000000" Dst="1" />
 <file name="bootstrap.scss" server="techversus.tech/techversus.tech/" local="131270054841190484" remote="131211068400000000" Dst="1" />
-<file name="index.scss" server="techversus.tech/techversus.tech/" local="131275803120070430" remote="131275803000000000" Dst="1" />
-<file name="core.scss" server="techversus.tech/techversus.tech/" local="131276984038267811" remote="131276983800000000" Dst="1" />
+<file name="index.scss" server="techversus.tech/techversus.tech/" local="131277059216976503" remote="131277058800000000" Dst="1" />
+<file name="core.scss" server="techversus.tech/techversus.tech/" local="131278454984120054" remote="131278454400000000" Dst="1" />
+<file name="versus.scss" server="techversus.tech/techversus.tech/" local="131277756980456453" remote="131277756600000000" Dst="1" />
 </dwsync>

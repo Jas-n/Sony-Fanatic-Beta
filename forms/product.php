@@ -1,4 +1,5 @@
 <?php class edit_product extends form{
+	public $product;
 	public function __construct($data=NULL){
 		global $products;
 		$this->product=new product($_GET['id']);
@@ -16,6 +17,17 @@
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active" id="details" role="tabpanel">');
+				parent::add_select(
+					array(
+						'label'	=>'Status',
+						'name'	=>'status',
+						'value'	=>$this->product->status
+					),
+					array(
+						0=>'Disabled',
+						1=>'Enabled'
+					)
+				);
 				parent::add_select(
 					array(
 						'label'	=>'Brand',
@@ -133,9 +145,9 @@
 					'name'		=>'images[]',
 					'type'		=>'file'
 				));
-				if($this->product->images['thumbnail']){
+				if($this->product->images['thumb']){
 					parent::add_html('<div class="product_images">');
-						foreach($this->product->images['thumbnail'] as $i=>$thumbnail){
+						foreach($this->product->images['thumb'] as $i=>$thumbnail){
 							parent::add_html('<a href="'.$this->product->images['full'][$i].'" target="_blank"><img class="img-thumbnail" src="'.$thumbnail.'"></a>');
 						}
 					parent::add_html('</div>');
@@ -190,7 +202,7 @@
 					</thead>
 					<tbody>');
 						if($this->product->articles['count']){
-							foreach($this->product->articles['articles'] as $article){
+							foreach($this->product->articles['data'] as $article){
 								parent::add_html('<tr>
 									<td>'.$article['title'].'</td>
 									<td>
@@ -238,17 +250,21 @@
 				"UPDATE `products`
 				SET
 					`brand_id`=?,
+					`status`=?,
 					`name`=?,
 					`excerpt`=?,
 					`description`=?,
+					`published`=?,
 					`updated`=?
 				WHERE `id`=?",
 				array(
 					$results['data']['brand'],
+					$results['data']['status'],
 					$results['data']['name'],
 					$results['data']['excerpt'],
 					$results['data']['description'],
 					DATE_TIME,
+					$results['data']['status']==1&&$this->product->status!=1?DATE_TIME:$this->product->published,
 					$_GET['id']
 				),0
 			);
@@ -266,21 +282,22 @@
 			}
 			if($results['stats']['uploaded_files']){
 				$images=$results['files']['images'];
-				if(!is_dir(ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id)){
-					mkdir(ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id,0777,1);
+				if(!is_dir(ROOT.$this->product->dir)){
+					mkdir(ROOT.$this->product->dir,0777,1);
 				}
 				foreach($images['name'] as $i=>$name){
 					$j=0;
 					list($width,$height)=getimagesize($images['tmp_name'][$i]);
-					while(is_file(ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id.'/'.$j.'_thumb.png')){
+					while(is_file(ROOT.$this->product->dir.$j.'_thumb.png')){
 						$j++;
 					}
-					smart_resize_image($images['tmp_name'][$i],NULL,150,0,1,ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id.'/'.$j.'_thumb.png',0,'png');
-					smart_resize_image($images['tmp_name'][$i],NULL,640,360,0,ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id.'/'.$j.'_medium.png',0,'png');
-					smart_resize_image($images['tmp_name'][$i],NULL,1920,1080,0,ROOT.'uploads/products/'.$this->product->brand_slug.'/'.$this->product->id.'/'.$j.'_full.png',0,'png');
+					smart_resize_image($images['tmp_name'][$i],NULL,150,0,1,ROOT.$this->product->dir.$j.'_thumb.png',0,'png');
+					smart_resize_image($images['tmp_name'][$i],NULL,640,360,0,ROOT.$this->product->dir.$j.'_medium.png',0,'png');
+					smart_resize_image($images['tmp_name'][$i],NULL,1920,1080,0,ROOT.$this->product->dir.$j.'_full.png',0,'png');
 				}
 			}
 			$app->log_message(3,'Updated Product','Updated <strong>'.$results['data']['name'].'</strong>.');
+			$app->set_message('success','Updated <strong>'.$results['data']['name'].'</strong>.');
 			$this->redirect();
 		}
 	}

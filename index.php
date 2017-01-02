@@ -8,16 +8,20 @@ $latest			=$products->get_latest(9);
 $latest_rows	=array_chunk($latest['data'],3);
 $latest_news	=$articles->get_latest(2,1)['data'][0];
 $latest_review	=$articles->get_latest(2,2)['data'][0];
-$slider[]=array(
-	'title'	=>$latest_review['title'],
-	'excerpt'=>$latest_review['excerpt'],
-	'link'	=>'/a/'.$latest_review['slug']
-);
-$slider[]=array(
-	'title'	=>$latest_revire['title'],
-	'excerpt'=>$latest_revire['excerpt'],
-	'link'	=>'/a/'.$latest_review['slug']
-);
+if($latest_review){
+	$slider[]=array(
+		'title'	=>$latest_review['title'],
+		'excerpt'=>$latest_review['excerpt'],
+		'link'	=>'/a/'.$latest_review['slug']
+	);
+}
+if($latest_news){
+	$slider[]=array(
+		'title'	=>$latest_news['title'],
+		'excerpt'=>$latest_news['excerpt'],
+		'link'	=>'/a/'.$latest_news['slug']
+	);
+}
 /*$slider[]=array(
 	'title'	=>$latest_comment['title'],
 	'excerpt'=>$latest_comment['excerpt'],
@@ -53,15 +57,17 @@ $slider[]=array(
 		</div>
 	</div>
 	<div class="row">
-		<?php foreach($latest_rows as $latest_row){
-			foreach($latest_row as $latest_product){
-				$link='/p/'.$latest_product['id'].'-'.$latest_product['slug'];?>
-				<div class="col-xs-12 col-sm-6 col-md-4 home_product" style="background-image:url(<?=$latest_product['images']['medium'][0]?>)">
-					<a class="meta" href="<?=$link?>">
-						<h2><?=$latest_product['brand'].' '.$latest_product['name']?></h2>
-					</a>
-				</div>
-			<?php }
+		<?php if($latest_rows){
+			foreach($latest_rows as $latest_row){
+				foreach($latest_row as $latest_product){
+					$link='/p/'.$latest_product['id'].'-'.$latest_product['slug'];?>
+					<div class="col-xs-12 col-sm-6 col-md-4 home_product" style="background-image:url(<?=$latest_product['images']['medium'][0]?>)">
+						<a class="meta" href="<?=$link?>">
+							<h2><?=$latest_product['brand'].' '.$latest_product['name']?></h2>
+						</a>
+					</div>
+				<?php }
+			}
 		} ?>
 	</div>
 </div>

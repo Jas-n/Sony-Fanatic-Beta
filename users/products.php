@@ -24,13 +24,13 @@ $products=$products->get_products();?>
 	<tbody>
 		<?php if($products['count']){
 			foreach($products['data'] as $product){?>
-				<tr>
+				<tr<?=!$product['status']?' class="table-danger"':''?>>
 					<td><?=$product['brand']?></td>
 					<td><?=$product['name']?></td>
 					<td><?=sql_datetime($product['updated'])?></td>
 					<td>
 						<a class="btn btn-sm btn-primary" href="product/<?=$product['id']?>">Edit</a>
-						<a class="btn btn-sm btn-info" href="../p/<?=$product['id']?>-<?=$product['slug']?>" target="_blank">View</a>
+						<a class="btn btn-sm btn-secondary" href="../p/<?=$product['id']?>-<?=$product['slug']?>" target="_blank">View</a>
 					</td>
 				</tr>
 			<?php }

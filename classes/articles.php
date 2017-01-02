@@ -88,11 +88,16 @@
 		if(!is_numeric($count)){
 			$count=ITEMS_PER_PAGE;
 		}
+		if($where){
+			$where="WHERE (".implode(") AND (",$where).")";
+		}
 		if($articles=$db->query(
 			"SELECT `articles`.`id`
 			FROM `articles`
+			".$where."
 			ORDER BY `published` DESC
-			LIMIT ".$count
+			LIMIT ".$count,
+			$options
 		)){
 			return $this->get_articles($status,$type,array_column($articles,'id'));
 		}

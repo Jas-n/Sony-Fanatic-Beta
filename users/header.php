@@ -61,6 +61,7 @@
 						<li><a href="../logout"><i class="fa fa-fw fa-sign-out"></i> Logout</a></li>
 					</ul>
 				</li>
+				<li><a href="test"><i class="fa fa-fw fa-exclamation-triangle"></i> Tests</a></li>
 			</ul>
 		</nav>
 		<div id="body">

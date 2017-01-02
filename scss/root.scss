@@ -11,14 +11,33 @@ $nav2-height:		$spacer*4;
 footer{
 	background:$gray-dark;
 	bottom:0;
-	color:#fff;
-	height:$footer-height;
-	padding:1rem;
-	position:absolute;
-	width:100%;
+	color:$gray-lightest;
+	padding:$spacer*1;
+	a:hover{
+		color:$brand-primary;
+	}
+	.copy p{
+		font-size:.8rem;
+	}
 	p{
 		font-size:$spacer*.9;
 		margin-bottom:0;
+	}
+}
+.cd-auto-hide-header+.cd-secondary-nav{
+	margin-top:$nav2-height-small;
+	@include media-breakpoint-up(lg) {
+		margin-top:$nav2-height;
+	}
+}
+@include media-breakpoint-up(sm) {
+	footer{
+		height:$footer-height;
+		position:absolute;
+		width:100%;
+	}
+	main{
+		padding-bottom:$footer-height;
 	}
 }
 img.cover{
@@ -26,29 +45,29 @@ img.cover{
 	width:100%;
 }
 .interactions{
-	.catalog,
+	.catalogue,
 	.social{
 		float:none;
 		margin:1rem .25rem;
 	}
-	.catalog{
+	.catalogue{
 		button.true,
 		button:hover{
-			color:#fff;
-			&.catalog_had{
+			color:$gray-lightest;
+			&.catalogue_had{
 				background:$brand-primary;
 			}
-			&.catalog_got{
+			&.catalogue_got{
 				background:$brand-success;
 			}
-			&.catalog_want{
+			&.catalogue_want{
 				background:$brand-danger;
 			}
 		}
 	}
 	.social{
 		button:hover{
-			color:#fff;
+			color:$gray-lightest;
 			&.email{
 				background:$email;
 			}
@@ -63,9 +82,6 @@ img.cover{
 			}
 		}
 	}
-}
-main{
-	padding-bottom:$footer-height;
 }
 //// NAV
 .cd-auto-hide-header {

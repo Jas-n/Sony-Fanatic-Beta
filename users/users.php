@@ -3,8 +3,6 @@
 	'php.users'
 );
 require('../init.php');
-$html_help='<p>Users shows a list of all users currently registered to the system. Here you are able to go through and view or email any one of those users.</p>
-<p>When viewing you are taken through to that users profile which holds information such as their Number, Address, and Email address.</p>';
 require('header.php');
 $list_users=new list_users();
 $list_users->process();?>

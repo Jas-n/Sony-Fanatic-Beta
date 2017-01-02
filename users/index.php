@@ -1,4 +1,5 @@
-<?php require('../init.php');
+<?php $permissions='*';
+require('../init.php');
 require('header.php');?>
 <h1>Dashboard</h1>
 <ol class="breadcrumb">

@@ -137,7 +137,7 @@
 			LEFT JOIN `roles`
 			ON `users`.`role_id`=`roles`.`id`
 			WHERE
-				`users`.`role_id`<>5 AND
+				`users`.`role_id`<>0 AND
 				(
 					`users`.`id`=? OR
 					`users`.`username`=?
@@ -269,7 +269,7 @@
 			$roles=implode(',',(array) $roles);
 			$where[]="`users`.`role_id` IN(".$roles.")";
 		}else{
-			$where[]="`users`.`role_id` <> 5";
+			$where[]="`users`.`role_id` <> 0";
 		}
 		if($ids!=NULL){
 			$where[]="`users`.`id` IN(".implode(',',array_pad([],sizeof((array) $ids),'?')).")";
@@ -396,25 +396,6 @@
 			'slug'	=>'users',
 			'count'	=>sizeof($data),
 			'data'	=>$data
-		);
-	}
-	public function statistics(){
-		global $db;
-		$active		=$db->result_count("FROM `users` WHERE `last_login`>?",date('Y-m-d H:i:s',strtotime('-'.MONTH_LENGTH.' days')));
-		$live		=$db->result_count("FROM `users` WHERE `last_login`>?",array(date('Y-m-d H:i:s',strtotime('today'))));
-		$no_access	=$db->result_count("FROM `users` WHERE `can_access`=0");
-		$total		=$db->result_count("FROM `users`");
-		$roles=$this->get_roles();
-		foreach($roles['roles'] as $role){
-			$rls[slug($role['role'])]=$db->result_count("FROM `users` WHERE `role_id`=?",$role['id']);
-		}
-		return array(
-			'active'		=>$active,
-			'live'			=>$live,
-			'has-access'	=>$total-$no_access,
-			'no-access'		=>$no_access,
-			'total'			=>$total,
-			'roles'			=>$rls
 		);
 	}
 	public function update_avatar($file,$user_id=NULL){

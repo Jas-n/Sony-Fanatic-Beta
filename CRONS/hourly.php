@@ -5,19 +5,29 @@
 set_time_limit(0);
 ini_set('memory_limit',-1);
 $app_require=array('lib.zip');
-require('../init.php');
-$month=date('m');
-$day=date('d');
-$hour=date('G');
+require(__DIR__.'/../init.php');
+set_time_limit(0);
+ini_set('memory_limit',-1);
+ini_set('error_log',ROOT.'CRONS/error_log.txt');
+include(ROOT.'CRONS/functions.php');
+$month	=date('m');
+$day	=date('d');
+$hour	=date('G');
+# Hourly
+	# Save logs from the error_log files
+	scan_errors(ROOT);
+	if($error_files){
+		$cron_messages[]='Processed <strong>'.$error_files.'</strong> error files ready to send to devlopers.';
+	}
 # Every 6 Hours
 if(in_array($hour,array(0,6,12,18))){
-
 	$folding=json_decode(file_get_contents('http://folding.stanford.edu/stats/api/team/88889'),1);
 	if(!$data['error']){
 		$data=array(
 			'active'=>$folding['active_50'],
 			'credit'=>$folding['credit'],
 			'last'	=>$folding['last'],
+			'name'	=>$folding['name'],
 			'rank'	=>$folding['rank'],
 			'team'	=>$folding['team'],
 			'teams'	=>$folding['total_teams'],
