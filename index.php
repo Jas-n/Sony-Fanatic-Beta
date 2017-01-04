@@ -12,20 +12,20 @@ if($latest_review){
 	$slider[]=array(
 		'title'	=>$latest_review['title'],
 		'excerpt'=>$latest_review['excerpt'],
-		'link'	=>'/a/'.$latest_review['slug']
+		'link'	=>'/n/'.$latest_review['slug']
 	);
 }
 if($latest_news){
 	$slider[]=array(
 		'title'	=>$latest_news['title'],
 		'excerpt'=>$latest_news['excerpt'],
-		'link'	=>'/a/'.$latest_news['slug']
+		'link'	=>'/n/'.$latest_news['slug']
 	);
 }
 /*$slider[]=array(
 	'title'	=>$latest_comment['title'],
 	'excerpt'=>$latest_comment['excerpt'],
-	'link'	=>'/a/'.$latest_comment['slug']
+	'link'	=>'/n/'.$latest_comment['slug']
 );*/?>
 <div class="container-fluid">
 	<div class="row">
@@ -38,10 +38,10 @@ if($latest_news){
 			<div class="carousel-inner" role="listbox">
 				<?php foreach($slider as $i=>$slide){?>
 					<div class="carousel-item<?=$i==0?' active':''?>">
-						<img src="http://placehold.it/1920x500">
+						<a href="<?=$slide['link']?>"><img src="http://placehold.it/1920x500"></a>
 						<div class="carousel-caption">
-							<h3><?=$slide['title']?></h3>
-							<p><?=crop($slide['excerpt'],50)?></p>
+							<h3><a href="<?=$slide['link']?>"><?=$slide['title']?></a></h3>
+							<p class="text-truncate"><?=crop($slide['excerpt'],50)?></p>
 						</div>
 					</div>
 				<?php } ?>

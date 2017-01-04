@@ -21,6 +21,7 @@
 				</a> <!-- .nav-trigger -->
 				<ul id="cd-navigation">
 					<li><a href="/">Home</a></li>
+					<li><a href="/news">News</a></li>
 					<?php if(!is_logged_in()){ ?>
 						<li><a href="/login">Login</a></li>
 					<?php }else{ ?>

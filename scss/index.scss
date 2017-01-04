@@ -37,6 +37,12 @@
 #latest_banner{
 	border-bottom:1px solid #fff;
 	margin:auto;
+	a{
+		color:#fff;
+		&:hover{
+			text-decoration:none;
+		}
+	}
 	sup{
 		font-size:50%;
 	}

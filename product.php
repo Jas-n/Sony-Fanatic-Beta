@@ -129,12 +129,12 @@ include('header.php');?>
 		foreach($product->articles['data'] as $i=>$article){ ?>
 			<div class="article media">
 				<?php if($article['featured_image']){ ?>
-					<a class="media-left" href="/a/<?=$article['id']?>-<?=slug($article['title'])?>" title="<?=$article['title']?>">
+					<a class="media-left" href="/n/<?=$article['id']?>-<?=slug($article['title'])?>" title="<?=$article['title']?>">
 						<img class="media-object" src="..." alt="<?=$article['title']?>">
 					</a>
 				<?php } ?>
 				<div class="media-body">
-					<h4 class="media-heading"><a href="/a/<?=$article['id']?>-<?=slug($article['title'])?>" title="<?=$article['title']?>"><?=$article['title']?></a></h4>
+					<h4 class="media-heading"><a href="/n/<?=$article['id']?>-<?=slug($article['title'])?>" title="<?=$article['title']?>"><?=$article['title']?></a></h4>
 					<?=$article['excerpt']?>
 					<p><em>Published: <?=sql_datetime($article['published'])?> by <a href="/u/<?=$article['author_username']?>"><?=$article['author_username']?></a></em></p>
 				</div>

@@ -1,12 +1,6 @@
-<?php $app_require=array(
-	'js.tooltip',
-	'php.articles',
-	'php.products'
-);
-include('init.php');
-$article=$articles->get_article($_GET['id']);
+<?php $article=$articles->get_article($_GET['id']);
 if(!$article){
-	header('Location: /');
+	header('Location: /news');
 	exit;
 }
 if($article['featured_image']){
@@ -15,15 +9,9 @@ if($article['featured_image']){
 		$hero['content']='<p><em>'.$article['excerpt'].'</em></p>';
 	}
 }
-include('header.php');
-#print_pre($product);?>
+include('header.php');?>
 <h1 class="mb-0"><?=$article['title']?></h1>
 <div class="btn-toolbar text-xs-center interactions" role="toolbar" aria-label="Interactions">
-	<div class="btn-group catalog" role="group" aria-label="My Catalog">
-		<button type="button" class="btn btn-sm btn-secondary catalog_had" data-toggle="tooltip" data-placement="top" title="<?=$product->catalog['had']?> Others">Had It</button>
-		<button type="button" class="btn btn-sm btn-secondary catalog_got true" data-toggle="tooltip" data-placement="top" title="You and <?=$product->catalog['got']?> Others">Got It</button>
-		<button type="button" class="btn btn-sm btn-secondary catalog_want" data-toggle="tooltip" data-placement="top" title="<?=$product->catalog['want']?> Others">Want It</button>
-	</div>
 	<div class="btn-group social" role="group" aria-label="Social">
 		<button type="button" class="btn btn-sm btn-secondary facebook" data-toggle="tooltip" data-placement="top" title="<?=$article['facebooks']?> Shares"><span class="fa fa-fw fa-facebook"></span></button>
 		<button type="button" class="btn btn-sm btn-secondary twitter" data-toggle="tooltip" data-placement="top" title="<?=$article['twitters']?> Tweets"><span class="fa fa-fw fa-twitter"></span></button>
@@ -50,4 +38,3 @@ include('header.php');
 		<?php } ?>
 	</div>
 </div>
-<?php include('footer.php');

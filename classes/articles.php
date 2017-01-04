@@ -62,6 +62,7 @@
 			$options
 		)){
 			foreach($datas as &$data){
+				$data['author']=$db->get_row("SELECT `id`,`username` FROM `users` WHERE `id`=?",$data['author']);
 				$data['slug']=$data['id'].'-'.$data['slug'];
 				$data['status']=$this->statuses($data['status']);
 			}
