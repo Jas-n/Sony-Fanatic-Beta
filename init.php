@@ -64,6 +64,7 @@ $app=new app;
 $encryption=new encryption();
 $user=new user();
 $page=new page();
+$products=new products;
 if($app_require){
 	$app->require=$app_require;
 	$require=array_map('strtolower',$app->require);

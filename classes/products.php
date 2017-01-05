@@ -32,6 +32,32 @@
 		}
 		return false;
 	}
+	public function get_categories($parent=0){
+		global $db;
+		if($categories=$db->query(
+			"SELECT
+				*,
+				(SELECT COUNT(`id`) FROM `categories` c2 WHERE c2.`parent_id`=`categories`.`id`) as `children`
+			FROM `categories`
+			WHERE `parent_id`=?
+			ORDER BY
+				`parent_id` ASC,
+				`name` ASC",
+			$parent
+		)){
+			return array_combine(array_column($categories,'id'),$categories);
+		}
+	}
+	public function get_category($id){
+		global $db;
+		return $db->get_row("SELECT * FROM `categories` WHERE `id`=?",$id);
+	}
+	public function get_category_tree(){
+		global $db;
+		$categories=$db->query("SELECT * FROM `categories` ORDER BY `parent_id` ASC, `name` ASC");
+		$categories=array_combine(array_column($categories,'id'),$categories);
+		return tree($categories);
+	}
 	public function get_feature_categories(){
 		global $db;
 		if(!$this->feature_categories){
@@ -143,6 +169,9 @@
 			WHERE `products`.`id`=?",
 			$id
 		)){
+			if($product['categories']=$db->query("SELECT `category` FROM `product_categories` WHERE `product`=?",$id)){
+				$product['categories']=array_column($product['categories'],'category');
+			}
 			$product['dir']='/uploads/p/'.implode('/',str_split($product['id'],1)).'/';
 			foreach(glob(ROOT.$product['dir'].'*_full.png') as $full){
 				$product['images']['full'][]=str_replace(ROOT,'',$full);

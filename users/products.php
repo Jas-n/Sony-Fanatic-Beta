@@ -1,7 +1,6 @@
-<?php $app_require[]='php.products';
-require('../init.php');
+<?php require('../init.php');
 require('header.php');
-$products=$products->get_products();?>
+$product_lists=$products->get_products();?>
 <h1>Products</h1>
 <ol class="breadcrumb">
 	<li class="pull-right">
@@ -22,8 +21,8 @@ $products=$products->get_products();?>
 		</tr>
 	</thead>
 	<tbody>
-		<?php if($products['count']){
-			foreach($products['data'] as $product){?>
+		<?php if($product_lists['count']){
+			foreach($product_lists['data'] as $product){?>
 				<tr<?=!$product['status']?' class="table-danger"':''?>>
 					<td><?=$product['brand']?></td>
 					<td><?=$product['name']?></td>
@@ -37,5 +36,5 @@ $products=$products->get_products();?>
 		} ?>
 	</tbody>
 </table>
-<?php pagination($products['count']);
+<?php pagination($product_lists['count']);
 require('footer.php');

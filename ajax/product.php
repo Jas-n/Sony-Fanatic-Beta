@@ -1,5 +1,4 @@
-<?php $app_require=array('php.products');
-include_once('../init.php');
+<?php include_once('../init.php');
 if(
 	!$_POST || !$_POST['action']
 	|| !in_array($_POST['action'],array(

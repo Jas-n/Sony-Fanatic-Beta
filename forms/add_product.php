@@ -3,20 +3,32 @@
 		global $products;
 		parent::__construct("name=".__CLASS__);
 		$brands=$products->get_brands();
-		$brands=$this->optioner(tree($brands));
+		$brands=$this->optioner(tree($brands),'brand');
+		$categories=$this->optioner($products->get_category_tree(),'name');
 		parent::add_select(
 			array(
-				'label'	=>'Brand',
-				'name'	=>'brand'
+				'label'		=>'Brand',
+				'name'		=>'brand',
+				'required'	=>1
 			),
 			$brands,
 			'Select&hellip;'
+		);
+		parent::add_select(
+			array(
+				'label'		=>'Category',
+				'name'		=>'categories[]',
+				'multiple'	=>1,
+				'required'	=>1
+			),
+			$categories
 		);
 		parent::add_fields(array(
 			array(
 				'label'			=>'Name',
 				'name'			=>'name',
 				'placeholder'	=>'Name',
+				'required'		=>1,
 				'type'			=>'text'
 			),
 			array(
@@ -47,13 +59,14 @@
 			$results=parent::process();
 			$results['data']=parent::unname($results['data']);
 			$results['files']=parent::unname($results['files']);
+			$id=$db->next_hex_id('products','id');
 			$db->query(
 				"INSERT INTO `products` (
 					`id`,			`brand_id`,	`name`,`slug`,`excerpt`,
 					`description`,	`added`,	`updated`
 				) VALUES (?,?,?,?,?,	?,?,?)",
 				array(
-					$db->next_hex_id('products','id'),
+					$id,
 					$results['data']['brand'],
 					$results['data']['name'],
 					slug($results['data']['name']),
@@ -64,18 +77,29 @@
 					DATE_TIME
 				),0
 			);
+			foreach($results['data']['categories'] as $category){
+				$db->query(
+					"INSERT INTO `product_categories` (
+						`product`,`category`
+					) VALUES (?,?)",
+					array(
+						$id,
+						$category
+					)
+				);
+			}
 			$app->log_message(3,'Added Product','Added <strong>'.$results['data']['name'].'</strong> to products.');
 			header('Location: ./products');
 			exit;
 		}
 	}
-	private function optioner($items,$level=0){
+	private function optioner($items,$key,$level=0){
 		$list=array();
 		if($items){
 			foreach($items as $item){
-				$list[$item['id']]=implode('',array_pad([],$level,'-&nbsp;&nbsp;')).$item['brand'];
+				$list[$item['id']]=implode('',array_pad([],$level,'-&nbsp;&nbsp;')).$item[$key];
 				if($item['children']){
-					$list=$list+$this->optioner($item['children'],$level+1);
+					$list=$list+$this->optioner($item['children'],$key,$level+1);
 				}
 			}
 		}

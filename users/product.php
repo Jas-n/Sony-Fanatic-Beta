@@ -2,8 +2,7 @@
 	'form.product',
 	'js.lightbox',
 	'js.tinymce',
-	'php.product',
-	'php.products'
+	'php.product'
 );
 require('../init.php');
 $edit_product=new edit_product();

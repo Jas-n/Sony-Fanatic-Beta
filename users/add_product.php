@@ -1,7 +1,6 @@
 <?php $app_require=array(
 	'form.add_product',
-	'js.tinymce',
-	'php.products'
+	'js.tinymce'
 );
 require('../init.php');
 $add_product=new add_product();

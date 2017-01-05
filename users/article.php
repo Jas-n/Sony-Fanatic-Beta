@@ -2,8 +2,7 @@
 	'form.item_article',
 	'js.lightbox',
 	'js.tinymce',
-	'php.articles',
-	'php.products'
+	'php.articles'
 );
 require('../init.php');
 $article=$articles->get_article($_GET['id']);

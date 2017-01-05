@@ -12,7 +12,7 @@ $prods=explode('/',$_GET['products']);
 foreach($prods as $i=>$product){
 	$temp=new product($product);
 	if($temp->id){
-		$products[]=$temp;
+		$product_list[]=$temp;
 		$names[]=$temp->name;
 		if($temp->features){
 			foreach($temp->features as $feature){
@@ -24,7 +24,7 @@ foreach($prods as $i=>$product){
 	}
 	unset($temp);
 }
-if(!$products){
+if(!$product_list){
 	header('Location: /');
 	exit;
 }
@@ -32,7 +32,7 @@ $app->page_title=implode(' vs ',$names);
 include('header.php');?>
 <h1><?=implode(' <small class="text-muted">vs</small> ',$names)?></h1>
 <div class="vs_banner row">
-	<?php foreach($products as $i=>$product){
+	<?php foreach($product_list as $i=>$product){
 		if($product->images){ ?>
 			<div class="product col-xs" style="background-image:url(<?=$product->images['full'][0]?>)">
 				<a href="/p/<?=$product->id?>-<?=$product->slug?>"><span><?=$product->name?></span></a>
@@ -45,7 +45,7 @@ include('header.php');?>
 	<tbody>
 		<tr>
 			<th colspan="2"></th>
-			<?php foreach($products as $i=>$product){ ?>
+			<?php foreach($product_list as $i=>$product){ ?>
 				<th><?=$product->name?></th>
 			<?php } ?>
 		</tr>
@@ -58,7 +58,7 @@ include('header.php');?>
 						<tr>
 					<?php } ?>
 					<td><?=$feature?></td>
-					<?php foreach($products as $i=>$product){ ?>
+					<?php foreach($product_list as $i=>$product){ ?>
 						<td>
 							<?php if($values[$i]){?>
 								<?=implode('<br>',$values[$i])?>

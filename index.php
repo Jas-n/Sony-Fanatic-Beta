@@ -1,6 +1,5 @@
 <?php $app_require=array(
-	'php.articles',
-	'php.products'
+	'php.articles'
 );
 include('init.php');
 include('header.php');

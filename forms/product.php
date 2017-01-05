@@ -6,7 +6,8 @@
 		$feature_categories=$products->get_feature_categories();
 		$feature_categories=array_combine(array_keys($feature_categories),array_column($feature_categories,'name'));
 		$brands=$products->get_brands();
-		$brands=$this->optioner(tree($brands));
+		$brands=$this->optioner(tree($brands),'brand');
+		$categories=$this->optioner($products->get_category_tree(),'name');
 		parent::__construct("name=".__CLASS__);
 		parent::add_html('<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#details" role="tab">Details</a></li>
@@ -61,30 +62,46 @@
 					)
 				));
 			parent::add_html('</div>
-			<div class="tab-pane" id="associations" role="tabpanel">');
-				parent::add_fields(array(
-					array(
-						'class'			=>'ajax_tags',
-						'label'			=>'Tag',
-						'name'			=>'tag',
-						'note'			=>'Start typing for list of matching tags.',
-						'placeholder'	=>'Tag',
-						'type'			=>'text',
-						'postfield'		=>"<i class='fa fa-refresh'></i>"
-					),
-					array(
-						'class'		=>'ajax_tag_id',
-						'name'		=>'tag_id',
-						'type'		=>'hidden'
-					)
-				));
-				parent::add_html('<p id="product_tags">Existing Tags<br>');
-					if($this->product->tags){
-						foreach($this->product->tags as $tag){
-							parent::add_html('<span>'.$tag['tag'].' <a class="tag tag-danger delete delete_tag" data-id="'.$tag['link_id'].'"><i class="fa fa-fw fa-times"></i></a></span>');
-						}
-					}
-				parent::add_html('</p>
+			<div class="tab-pane" id="associations" role="tabpanel">
+				<div class="row">
+					<div class="col-md-6">');
+						parent::add_select(
+							array(
+								'label'		=>'Category',
+								'name'		=>'categories[]',
+								'multiple'	=>1,
+								'required'	=>1,
+								'value'		=>$this->product->categories
+							),
+							$categories
+						);
+					parent::add_html('</div>
+					<div class="col-md-6">');
+						parent::add_fields(array(
+							array(
+								'class'			=>'ajax_tags',
+								'label'			=>'Tag',
+								'name'			=>'tag',
+								'note'			=>'Start typing for list of matching tags.',
+								'placeholder'	=>'Tag',
+								'type'			=>'text',
+								'postfield'		=>"<i class='fa fa-refresh'></i>"
+							),
+							array(
+								'class'		=>'ajax_tag_id',
+								'name'		=>'tag_id',
+								'type'		=>'hidden'
+							)
+						));
+						parent::add_html('<p id="product_tags">Existing Tags<br>');
+							if($this->product->tags){
+								foreach($this->product->tags as $tag){
+									parent::add_html('<span>'.$tag['tag'].' <a class="tag tag-danger delete delete_tag" data-id="'.$tag['link_id'].'"><i class="fa fa-fw fa-times"></i></a></span>');
+								}
+							}
+						parent::add_html('</p>
+					</div>
+				</div>
 				<table class="table table-sm table-hover table-striped">
 					<thead>
 						<tr>
@@ -268,6 +285,18 @@
 					$_GET['id']
 				),0
 			);
+			$db->query("DELETE FROM `product_categories` WHERE `product`=?",$_GET['id']);
+			foreach($results['data']['categories'] as $category){
+				$db->query(
+					"INSERT INTO `product_categories` (
+						`product`,`category`
+					) VALUES (?,?)",
+					array(
+						$_GET['id'],
+						$category
+					)
+				);
+			}
 			if($results['data']['new_link']){
 				$db->query(
 					"INSERT INTO `product_links` (
@@ -301,13 +330,13 @@
 			$this->redirect();
 		}
 	}
-	private function optioner($items,$level=0){
+	private function optioner($items,$key,$level=0){
 		$list=array();
 		if($items){
 			foreach($items as $item){
-				$list[$item['id']]=implode('',array_pad([],$level,'-&nbsp;&nbsp;')).$item['brand'];
+				$list[$item['id']]=implode('',array_pad([],$level,'-&nbsp;&nbsp;')).$item[$key];
 				if($item['children']){
-					$list=$list+$this->optioner($item['children'],$level+1);
+					$list=$list+$this->optioner($item['children'],$key,$level+1);
 				}
 			}
 		}

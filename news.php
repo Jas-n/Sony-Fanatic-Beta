@@ -1,7 +1,5 @@
 <?php $app_require=array(
-	'js.tooltip',
-	'php.articles',
-	'php.products'
+	'php.articles'
 );
 include('init.php');
 if($_GET['id']){

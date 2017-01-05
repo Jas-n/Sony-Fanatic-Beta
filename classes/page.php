@@ -2,15 +2,16 @@
 	public $slug;
 	private $all_permissions=array(
 		# Page				Roles
-		'users/'					=>'*', # Dashboard
 		'users/add_article'			=>[1,2,3],
 		'users/add_product'			=>[1,2,3],
 		'users/article'				=>[1,2,3],
 		'users/articles'			=>[1,2,3],
 		'users/brands'				=>[1,2],
 		'users/feature_categories'	=>[1,2],
+		'users/categories'			=>[1,2],
 		'users/feature_options'		=>[1,2],
 		'users/feature_values'		=>[1,2],
+		'users/index'				=>'*',
 		'users/logs'				=>[1,2],
 		'users/product'				=>[1,2,3],
 		'users/products'			=>[1,2,3],
@@ -25,8 +26,7 @@
 	public $permissions;
 	public function __construct(){
 		global $app,$user;
-		$slug=explode('?',$_SERVER['REQUEST_URI'])[0];
-		$slug=substr($slug,1);
+		$slug=get_dir().'/'.basename($_SERVER['SCRIPT_NAME'],'.php');
 		$this->slug=$slug;
 		# Access to all
 		$dir=get_dir();

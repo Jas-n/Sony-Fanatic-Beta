@@ -1,6 +1,5 @@
 <?php $app_require=array(
-	'form.brands',
-	'php.products'
+	'form.brands'
 );
 require('../init.php');
 $brands=new brands;

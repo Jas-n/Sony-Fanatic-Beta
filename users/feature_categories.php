@@ -1,6 +1,5 @@
 <?php $app_require=array(
-	'form.feature_categories',
-	'php.products'
+	'form.feature_categories'
 );
 require('../init.php');
 $feature_categories=new feature_categories;

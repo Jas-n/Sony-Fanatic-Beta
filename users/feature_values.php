@@ -1,6 +1,5 @@
 <?php $app_require=array(
-	'form.feature_values',
-	'php.products'
+	'form.feature_values'
 );
 require('../init.php');
 $feature_values=new feature_values;
