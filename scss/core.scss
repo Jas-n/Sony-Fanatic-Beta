@@ -2,6 +2,27 @@
 @import "custom";
 @import "variables";
 @import "mixins";
+// BS 4a6
+a:not([href]):not([tabindex]):not([class*=-secondary]):not([class*=-link]){
+	color:#fff;
+}
+.form-control{
+	padding:5px .75rem;
+}
+input[type="color"]{
+	max-width:50px;
+	padding:.125rem .25rem;
+}
+.list-group,
+.list-group-item{
+	display:block;
+}
+.list-group-item{
+	break-inside:avoid-column;
+}
+select.form-control:not([size]):not([multiple]){
+	height:2rem;
+}
 // Common
 .alert p:last-of-type{
 	margin-bottom:0;
@@ -22,6 +43,9 @@ a.tag,
 }
 b, dt, optgroup, strong, th{
 	font-weight:500 !important;
+}
+.card{
+	margin-bottom:$spacer;
 }
 .card-details{
 	padding:$spacer;
@@ -57,12 +81,7 @@ ol ol ol ol ol{
 ol ol ol ol ol ol{
 	list-style-type:upper-roman;
 }
-.overflow{
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-.overflow:hover{
+.text-truncate:hover{
 	overflow:visible;
 	white-space:normal;
 }
@@ -76,11 +95,13 @@ ol ol ol ol ol ol{
 textarea{
 	resize:vertical;
 }
-table>thead>tr>th[colspan]{
-	text-align:center;
-}
-table>thead>tr>th[rowspan]{
-	vertical-align:middle;
+table > thead > tr > th{
+	&[colspan]{
+		text-align:center;
+	}
+	&[rowspan]{
+		vertical-align:middle;
+	}
 }
 td p{margin-bottom:0.5rem}
 td .print_pre{

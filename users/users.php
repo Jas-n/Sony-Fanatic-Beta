@@ -6,7 +6,7 @@ require('../init.php');
 require('header.php');
 $list_users=new list_users();
 $list_users->process();?>
-<a class="btn btn-success pull-xs-right" href="./add_user" title="Add User"><span class="fa fa-plus"></span> Add</a>
+<a class="btn btn-success float-right" href="./add_user" title="Add User"><span class="fa fa-plus"></span> Add</a>
 <h1>Users <small class="text-muted"><?=$list_users->count?></small></h1>
 <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="../">Home</a></li>

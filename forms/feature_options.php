@@ -1,12 +1,12 @@
 <?php class feature_options extends form{
 	public function __construct($data=NULL){
-		global $products;
+		global $bootstrap,$products;
 		$this->feature_category=$products->get_feature_category($_GET['id']);
 		$feature_options=$products->get_feature_options($_GET['id']);
-		parent::__construct("name=".__CLASS__."&class=form-inline");
-		parent::add_html('<table class="table table-hover table-striped table-sm">
+		parent::__construct("name=".__CLASS__);
+		parent::add_html('<table class="'.$bootstrap->table->classes->table.'">
 			<thead>
-				<tr class="thead-default">
+				<tr class="'.$bootstrap->table->classes->header.'">
 					<th>');
 						parent::add_field(array(
 							'class'	=>'check_all',
@@ -47,7 +47,7 @@
 					}
 				}
 				parent::add_html('<tr class="thead-default">
-					<th class="text-xs-center" colspan="4">Add Feature Option</th>
+					<th class="text-center" colspan="4">Add Feature Option</th>
 				</tr>
 				<tr>
 					<td></td>
@@ -63,7 +63,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<p class="text-xs-center">');
+		<p class="text-center">');
 			parent::add_button(array(
 				'class'	=>'btn-primary',
 				'name'	=>'update',

@@ -11,7 +11,7 @@ if($article['featured_image']){
 }
 include('header.php');?>
 <h1 class="mb-0"><?=$article['title']?></h1>
-<div class="btn-toolbar text-xs-center interactions" role="toolbar" aria-label="Interactions">
+<div class="btn-toolbar text-center interactions" role="toolbar" aria-label="Interactions">
 	<div class="btn-group social" role="group" aria-label="Social">
 		<button type="button" class="btn btn-sm btn-secondary facebook" data-toggle="tooltip" data-placement="top" title="<?=$article['facebooks']?> Shares"><span class="fa fa-fw fa-facebook"></span></button>
 		<button type="button" class="btn btn-sm btn-secondary twitter" data-toggle="tooltip" data-placement="top" title="<?=$article['twitters']?> Tweets"><span class="fa fa-fw fa-twitter"></span></button>

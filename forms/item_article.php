@@ -78,7 +78,7 @@
 				));
 			parent::add_html('</div>
 		</div>
-		<p class="text-xs-center">');
+		<p class="text-center">');
 			parent::add_button(array(
 				'class' =>'btn-primary',
 				'name'  =>'save',

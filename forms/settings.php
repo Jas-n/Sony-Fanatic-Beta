@@ -280,7 +280,7 @@
 				parent::add_html('</div>');
 			}
 		parent::add_html('</div>
-		<p class="m-t-075 text-xs-center">');
+		<p class="text-center">');
 			parent::add_button(array(
 				'class'	=>'btn-primary',
 				'name'	=>'save',

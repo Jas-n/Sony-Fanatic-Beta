@@ -21,13 +21,13 @@ include('header.php');?>
 	<p>As well as feeling great about making the world a better place, it also allows us to be competitive with other <?=SITE_NAME?> members to fight up the <a href="http://folding.stanford.edu/stats/team/<?=$folding['team']?>" target="_blank">team</a> ranks and pushing us all up the team leader boards.</p>
 	<?php $folding=json_decode(file_get_contents(ROOT.'folding.json'),1);?>
 	<dl class="row">
-		<dt class="col-xs-3">Team</dt>
-		<dd class="col-xs-9"><a href="http://folding.stanford.edu/stats/team/<?=$folding['team']?>" target="_blank"><?=$folding['name']?> (<?=$folding['team']?>)</a></dd>
-		<dt class="col-xs-3">Credit</dt>
-		<dd class="col-xs-9"><?=number_format($folding['credit'])?></dd>
+		<dt class="col-3">Team</dt>
+		<dd class="col-9"><a href="http://folding.stanford.edu/stats/team/<?=$folding['team']?>" target="_blank"><?=$folding['name']?> (<?=$folding['team']?>)</a></dd>
+		<dt class="col-3">Credit</dt>
+		<dd class="col-9"><?=number_format($folding['credit'])?></dd>
 		<?php if($folding['rank']){ ?>
-			<dt class="col-xs-3">Rank</dt>
-			<dd class="col-xs-9"><?=number_format($folding['rank'])?></dd>
+			<dt class="col-3">Rank</dt>
+			<dd class="col-9"><?=number_format($folding['rank'])?></dd>
 		<?php } ?>
 	</dl>
 	<p>Find out more about <a href="https://foldingathome.stanford.edu/" target="_blank">Folding@home</a></p>

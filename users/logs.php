@@ -1,6 +1,16 @@
 <?php require('../init.php');
 require('header.php');
-$logs=$db->get_logs();?>
+$count=$db->result_count("FROM `logs`");
+$logs=$this->query(
+	'SELECT
+		`logs`.*,
+		CONCAT(`users`.`first_name`," ",`users`.`last_name`) as `name`
+	FROM `logs`
+	LEFT JOIN `users`
+	ON `logs`.`user_id`=`users`.`id`
+	ORDER BY `date` DESC'.
+	SQL_LIMIT
+);?>
 <h1>Logs <small class="text-muted"><?=number_format($logs['count'])?></small></h1>
 <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="../">Home</a></li>
@@ -8,9 +18,9 @@ $logs=$db->get_logs();?>
 	<li class="breadcrumb-item">Management</li>
 	<li class="breadcrumb-item active">Logs</li>
 </ol>
-<table class="table table-hover table-sm table-striped">
+<table class="<?=$bootstrap->table->classes->table?>">
 	<thead>
-		<tr>
+		<tr class="<?=$bootstrap->table->classes->header?>">
 			<th class="mw-5">Date</th>
 			<th class="mw-10">Title</th>
 			<th>Message</th>

@@ -60,7 +60,7 @@ if($latest_news){
 			foreach($latest_rows as $latest_row){
 				foreach($latest_row as $latest_product){
 					$link='/p/'.$latest_product['id'].'-'.$latest_product['slug'];?>
-					<div class="col-xs-12 col-sm-6 col-md-4 home_product" style="background-image:url(<?=$latest_product['images']['medium'][0]?>)">
+					<div class="col-12 col-sm-6 col-md-4 home_product" style="background-image:url(<?=$latest_product['images']['medium'][0]?>)">
 						<a class="meta" href="<?=$link?>">
 							<h2><?=$latest_product['brand'].' '.$latest_product['name']?></h2>
 						</a>

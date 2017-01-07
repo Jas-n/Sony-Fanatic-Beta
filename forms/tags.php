@@ -1,7 +1,7 @@
 <?php class tags extends form{
 	public $count=0;
 	public function __construct(){
-		global $db;
+		global $bootstrap,$db;
 		$tags=$db->query(
 			"SELECT
 				*,
@@ -11,10 +11,10 @@
 			SQL_LIMIT
 		);
 		$tag_count=$db->result_count('FROM `tags`');
-		parent::__construct("name=users&class=form-inline");
-		parent::add_html('<table class="table table-fixed table-hover table-striped table-sm">
+		parent::__construct("name=".__CLASS__);
+		parent::add_html('<table class="'.$bootstrap->table->classes->table.' table-fixed">
 			<thead>
-				<tr>
+				<tr class="'.$bootstrap->table->classes->header.'">
 					<th>');
 						parent::add_field(array(
 							'class'	=>'check_all',
@@ -47,7 +47,7 @@
 			parent::add_html('</tbody>
 		</table>'.
 		pagination($tag_count,0).
-		'<p class="text-xs-center">');
+		'<p class="text-center">');
 			parent::add_button(array(
 				'class'	=>'btn-danger delete',
 				'name'	=>'delete',

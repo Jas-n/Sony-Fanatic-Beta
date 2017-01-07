@@ -65,7 +65,7 @@ var product={
 		}
 	},
 	render_tag:function(tag){
-		$('#product_tags').append('<span>'+tag.tag+' <a class="tag tag-danger delete delete_tag" data-id="'+tag.link_id+'"><i class="fa fa-fw fa-times"></i></a></span>');
+		$('#product_tags').append('<span>'+tag.tag+' <a class="badge badge-danger delete delete_tag" data-id="'+tag.link_id+'"><i class="fa fa-fw fa-times"></i></a></span>');
 	},
 	render_values:function(values){
 		if(values){

@@ -10,7 +10,7 @@ $edit_product->process();
 require('header.php');?>
 <h1><?=$edit_product->product->name?></h1>
 <ol class="breadcrumb">
-	<li class="pull-right">
+	<li class="float-right">
 		<a class="btn btn-info" data-toggle="tooltip" href="../p/<?=$edit_product->product->id?>-<?=$edit_product->product->slug?>" target="_blank" title="View Product"><i class="fa fa-fw fa-eye"></i></a>
 	</li>
 	<li class="breadcrumb-item"><a href="../">Home</a></li>

@@ -8,9 +8,9 @@ $article_list=$articles->get_articles(-1);?>
 	<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
 	<li class="breadcrumb-item active">Articles</li>
 </ol>
-<table class="table table-hover table-sm table-striped">
+<table class="<?=$bootstrap->table->classes->table?>">
 	<thead>
-		<tr>
+		<tr class="<?=$bootstrap->table->classes->header?>">
 			<th>Title</th>
 			<th>Products</th>
 			<th>Category</th>

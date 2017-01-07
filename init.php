@@ -26,10 +26,6 @@ if(!in_array(basename(__FILE__,'.php'),array('notifications'))){
 }
 /* Global */
 include_once(ROOT.'functions/core.php');
-if(is_file(ROOT.'m.txt') && !in_array(basename($_SERVER['PHP_SELF'],'.php'),array('doupdate','run','finalise_updates'))){
-	header('Location: /users/maintenance');
-	exit;
-}
 $dir=get_dir();
 if($dir && $dir!='ajax' && $dir!='api' && $dir!='CRONS' && !is_logged_in()){
 	header('Location: /login?url='.urlencode($_SERVER['REQUEST_URI']));
@@ -65,6 +61,7 @@ $encryption=new encryption();
 $user=new user();
 $page=new page();
 $products=new products;
+$bootstrap=new bootstrap;
 if($app_require){
 	$app->require=$app_require;
 	$require=array_map('strtolower',$app->require);

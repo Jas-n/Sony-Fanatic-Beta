@@ -73,7 +73,7 @@ elseif($_POST['action']=='delete_tag'){
 	exit;
 }
 elseif($_POST['action']=='delete_value'){
-	$db->query("DELETE FROM `product_value` WHERE `id`=?",$_POST['value']);
+	$db->query("DELETE FROM `product_values` WHERE `id`=?",$_POST['value']);
 	echo json_encode(true);
 	exit;
 }
@@ -170,7 +170,7 @@ elseif($_POST['action']=='update_catalogue'){
 elseif($_POST['action']=='save_value'){
 	if(!$db->get_value(
 		"SELECT `id`
-		FROM `product_value`
+		FROM `product_values`
 		WHERE
 			`product`=? AND
 			`feature_value`=?",
@@ -180,7 +180,7 @@ elseif($_POST['action']=='save_value'){
 		)
 	)){
 		$db->query(
-			"INSERT INTO `product_value` (
+			"INSERT INTO `product_values` (
 				`product`,`feature_value`
 			) VALUES (?,?)",
 			array(

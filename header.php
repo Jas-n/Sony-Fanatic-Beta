@@ -41,7 +41,7 @@
 			<nav class="cd-secondary-nav">
 				<ul>
 					<?php foreach($page_nav as $i=>$nav_item){ ?>
-						<li><a<?=$i==0?' class="active"':''?> href="<?=$nav_item['link']?>" title="<?=$nav_item['name']?>"><?=$nav_item['name']?><?=$nav_item['count']?' <span class="tag tag-primary">'.$nav_item['count'].'</span>':''?></a></li>
+						<li><a<?=$i==0?' class="active"':''?> href="<?=$nav_item['link']?>" title="<?=$nav_item['name']?>"><?=$nav_item['name']?><?=$nav_item['count']?' <span class="badge badge-primary">'.$nav_item['count'].'</span>':''?></a></li>
 					<?php } ?>
 				</ul>
 			</nav>

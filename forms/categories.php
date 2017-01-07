@@ -1,11 +1,11 @@
 <?php class categories extends form{
 	public function __construct($data=NULL){
-		global $products;
+		global $bootstrap,$products;
 		$categories=$products->get_categories($_GET['id']);
-		parent::__construct("name=".__CLASS__."&class=form-inline");
-		parent::add_html('<table class="table table-hover table-striped table-sm">
+		parent::__construct("name=".__CLASS__);
+		parent::add_html('<table class="'.$bootstrap->table->classes->table.'">
 			<thead>
-				<tr>
+				<tr class="'.$bootstrap->table->classes->header.'">
 					<th>');
 						parent::add_field(array(
 							'class'	=>'check_all',
@@ -46,7 +46,7 @@
 					}
 				}
 				parent::add_html('<tr class="thead-default">
-					<th class="text-xs-center" colspan="4">Add Category</th>
+					<th class="text-center" colspan="4">Add Category</th>
 				</tr>
 				<tr>
 					<td></td>
@@ -62,7 +62,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<p class="text-xs-center">');
+		<p class="text-center">');
 			parent::add_button(array(
 				'class'	=>'btn-primary',
 				'name'	=>'update',

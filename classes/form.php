@@ -520,9 +520,9 @@ class form{
 								$out.='</label>';
 							}
 							if($this->data['orientation']=='horizontal'){
-								$out.='<div class="col-sm-'.$this->value_width;
+								$out.='<div class="col-sm- '.$this->value_width;
 									if(!$field['label']){
-										$out.=' col-sm-offset-'.$this->label_width;
+										$out.=' offset-sm-'.$this->label_width;
 									}
 								$out.='">';
 							}
@@ -534,7 +534,7 @@ class form{
 							if($field['note']){
 								$out.='<p class="text-muted';
 								if($this->data['orientation']=='horizontal'){
-									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
 								$out.='"><em>'.$field['note'].'</em></p>';
 							}
@@ -576,7 +576,7 @@ class form{
 									$out.='<div class="col-sm-'.$this->value_width.'">';
 								}
 							}elseif($this->data['orientation']=='horizontal'){
-								$out.='<div class="col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.'">';
+								$out.='<div class="offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.'">';
 							}
 							$out.='<div class="'.strtolower($field['type']);
 							if($field['note']){
@@ -676,7 +676,7 @@ class form{
 							if($field['note']){
 								$out.='<p class="';
 								if($this->data['orientation']=='horizontal'){
-									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
 								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}
@@ -727,7 +727,7 @@ class form{
 								$out.='<div class="';
 								if($this->data['orientation']=='horizontal'){
 									if(!$field['label']){
-										$out.='col-sm-offset-'.$this->label_width;
+										$out.='offset-sm-'.$this->label_width;
 									}
 									$out.=' col-sm-'.$this->value_width;
 								}
@@ -829,14 +829,14 @@ class form{
 							if($field['type']=='file'){
 								$out.='<p class="';
 								if($this->data['orientation']=='horizontal'){
-									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
 								$out.='mb-0 text-muted"><em>Accepts: .'.implode(', .',explode(',',$field['accept'])).'</em></p>';
 							}
 							if($field['note']){
 								$out.='<p class="';
 								if($this->data['orientation']=='horizontal'){
-									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
 								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}
@@ -888,7 +888,7 @@ class form{
 							if($this->data['orientation']=='horizontal'){
 								$out.='<div class="';
 								if(!$field['label']){
-									$out.='col-sm-offset-'.$this->label_width;
+									$out.='offset-sm-'.$this->label_width;
 								}
 								$out.=' col-sm-'.$this->value_width.'">';
 							}
@@ -942,14 +942,14 @@ class form{
 							if($field['multiple']==1){
 								$out.='<p class="';
 								if($this->data['orientation']=='horizontal'){
-									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
 								$out.='mb-0 text-muted"><em><kbd>CTRL/CMD</kbd> + Click to select multiple items.</em></p>';
 							}
 							if($field['note']){
 								$out.='<p class="';
 								if($this->data['orientation']=='horizontal'){
-									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
 								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}
@@ -978,7 +978,7 @@ class form{
 							if($this->data['orientation']=='horizontal'){
 								$out.='<div class="';
 								if(!$field['label']){
-									$out.='col-sm-offset-'.$this->label_width;
+									$out.='offset-sm-'.$this->label_width;
 								}
 								$out.=' col-sm-'.$this->value_width.'">';
 							}
@@ -986,7 +986,7 @@ class form{
 							if($field['note']){
 								$out.='<p class="';
 								if($this->data['orientation']=='horizontal'){
-									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
 								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}
@@ -1024,7 +1024,7 @@ class form{
 							if($this->data['orientation']=='horizontal'){
 								$out.='<div class="';
 								if(!$field['label']){
-									$out.='col-sm-offset-'.$this->label_width;
+									$out.='offset-sm-'.$this->label_width;
 								}
 								$out.=' col-sm-'.$this->value_width.'">';
 							}
@@ -1093,7 +1093,7 @@ class form{
 							if($field['note']){
 								$out.='<p class="';
 								if($this->data['orientation']=='horizontal'){
-									$out.='col-sm-offset-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
 								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}

@@ -14,10 +14,10 @@ include('header.php');?>
 <div class="row">
 	<div class="col-md-6">
 		<div class="card">
-			<div class="card-header">Users<a class="btn btn-primary btn-sm  pull-right" href="./users" title="View Users">View</a></div>
-			<table class="table table-sm table-hover table-striped table-fixed">
+			<div class="card-header">Users<a class="btn btn-primary btn-sm float-right" href="./users" title="View Users">View</a></div>
+			<table class="<?=$bootstrap->table->classes->table?> table-fixed">
 				<thead>
-					<tr>
+					<tr class="<?=$bootstrap->table->classes->header?>">
 						<th></th>
 						<th>Count</th>
 						<th>Can Access</th>

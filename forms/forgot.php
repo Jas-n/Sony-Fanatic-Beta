@@ -9,7 +9,7 @@
 			'type'			=>'email',
 			'value'			=>$data['email']
 		));
-		parent::add_html('<p class="text-xs-center">');
+		parent::add_html('<p class="text-center">');
 			parent::add_button(array(
 				'class'	=>'btn-primary',
 				'name'	=>'login',

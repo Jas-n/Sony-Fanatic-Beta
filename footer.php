@@ -1,11 +1,11 @@
 		</main>
 		<footer>
 			<div class="row">
-				<div class="col-xs-6 copy">
+				<div class="col copy">
 					<p>&copy; <?=SITE_NAME?> 2010 - <?=date('Y')?></p>
 					<p>This site is not affiliated with any of the brands featured.</p>
 				</div>
-				<div class="col-xs-6">
+				<div class="col">
 					<ul class="list-unstyled">
 						<li><a href="about">About</a></li>
 						<li><a href="contact">Contact</a></li>

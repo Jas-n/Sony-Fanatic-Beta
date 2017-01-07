@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="root.css" server="techversus.tech/techversus.tech/" local="131278585801178703" remote="131278585800000000" Dst="1" />
-<file name="article.css" server="techversus.tech/techversus.tech/" local="131270056180948247" remote="131241530400000000" Dst="1" />
-<file name="bootstrap-flex.css" server="techversus.tech/techversus.tech/" local="131270056186974020" remote="131239756200000000" Dst="1" />
-<file name="bootstrap-flex.css.map" server="techversus.tech/techversus.tech/" local="131270056189829355" remote="131239756200000000" Dst="1" />
-<file name="bootstrap-grid.css" server="techversus.tech/techversus.tech/" local="131270056193064756" remote="131239756200000000" Dst="1" />
-<file name="bootstrap-grid.css.map" server="techversus.tech/techversus.tech/" local="131270056193159768" remote="131239756200000000" Dst="1" />
-<file name="bootstrap-reboot.css" server="techversus.tech/techversus.tech/" local="131270056197550318" remote="131239756200000000" Dst="1" />
-<file name="bootstrap-reboot.css.map" server="techversus.tech/techversus.tech/" local="131270056197600328" remote="131239756200000000" Dst="1" />
-<file name="bootstrap.css" server="techversus.tech/techversus.tech/" local="131270056200500695" remote="131222524800000000" Dst="1" />
-<file name="core.css" server="techversus.tech/techversus.tech/" local="131276984063495972" remote="131276983800000000" Dst="1" />
-<file name="index.css" server="techversus.tech/techversus.tech/" local="131279520732839018" remote="131279520600000000" Dst="1" />
-<file name="index.css.map" server="techversus.tech/techversus.tech/" local="131279520733084055" remote="131279520600000000" Dst="1" />
+<file name="root.css" server="techversus.tech/techversus.tech/" local="131282660808360575" remote="131282660400000000" Dst="1" />
+<file name="article.css" server="techversus.tech/techversus.tech/" local="131282059788168603" remote="131282663400000000" Dst="1" />
+<file name="core.css" server="techversus.tech/techversus.tech/" local="131282955569585732" remote="131282955600000000" Dst="1" />
+<file name="index.css" server="techversus.tech/techversus.tech/" local="131282059795989583" remote="131282663400000000" Dst="1" />
+<file name="index.css.map" server="techversus.tech/techversus.tech/" local="131282059796539648" remote="131282663400000000" Dst="1" />
 <file name="index.php" server="techversus.tech/techversus.tech/" local="131270056205806355" remote="131211069600000000" Dst="1" />
-<file name="print.css" server="techversus.tech/techversus.tech/" local="131270056209426809" remote="131211069600000000" Dst="1" />
-<file name="product.css" server="techversus.tech/techversus.tech/" local="131270056211467068" remote="131253560400000000" Dst="1" />
-<file name="product.css.map" server="techversus.tech/techversus.tech/" local="131270056211892115" remote="131253560400000000" Dst="1" />
+<file name="product.css" server="techversus.tech/techversus.tech/" local="131282059786708424" remote="131282663400000000" Dst="1" />
+<file name="product.css.map" server="techversus.tech/techversus.tech/" local="131282059786803436" remote="131282663400000000" Dst="1" />
 <file name="tinymce.css" server="techversus.tech/techversus.tech/" local="131270056216487692" remote="131211069600000000" Dst="1" />
-<file name="users.css" server="techversus.tech/techversus.tech/" local="131270056222463440" remote="131264787000000000" Dst="1" />
-<file name="root.css.map" server="techversus.tech/techversus.tech/" local="131278585802773901" remote="131278585800000000" Dst="1" />
-<file name="core.css.map" server="techversus.tech/techversus.tech/" local="131276984064096043" remote="131276983800000000" Dst="1" />
-<file name="versus.css" server="techversus.tech/techversus.tech/" local="131277757000743995" remote="131277756600000000" Dst="1" />
-<file name="versus.css.map" server="techversus.tech/techversus.tech/" local="131277757000944022" remote="131277756600000000" Dst="1" />
+<file name="users.css" server="techversus.tech/techversus.tech/" local="131282939854820690" remote="131282939400000000" Dst="1" />
+<file name="root.css.map" server="techversus.tech/techversus.tech/" local="131282660809845758" remote="131282660400000000" Dst="1" />
+<file name="core.css.map" server="techversus.tech/techversus.tech/" local="131282955570210810" remote="131282955600000000" Dst="1" />
+<file name="versus.css" server="techversus.tech/techversus.tech/" local="131282059796444640" remote="131282663400000000" Dst="1" />
+<file name="versus.css.map" server="techversus.tech/techversus.tech/" local="131282059796749675" remote="131282663400000000" Dst="1" />
+<file name="article.css.map" server="techversus.tech/techversus.tech/" local="131282059788243616" remote="131282663400000000" Dst="1" />
+<file name="users.css.map" server="techversus.tech/techversus.tech/" local="131282939855695801" remote="131282939400000000" Dst="1" />
+<file name="bootstrap.css" server="techversus.tech/techversus.tech/" local="131282703665969964" remote="131282703600000000" Dst="1" />
+<file name="bootstrap.css.map" server="techversus.tech/techversus.tech/" local="131282703688932835" remote="131282703600000000" Dst="1" />
 </dwsync>

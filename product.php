@@ -46,7 +46,7 @@ $page_nav=array_merge($page_nav,array(
 ));
 include('header.php');?>
 <h1 class="mb-0"><?=$product->name?></h1>
-<div class="btn-toolbar text-xs-center interactions" role="toolbar" aria-label="Interactions">
+<div class="btn-toolbar interactions" role="toolbar" aria-label="Interactions">
 	<?php if(is_logged_in()){ ?>
 		<div class="btn-group catalogue" role="group" aria-label="My Catalogue">
 			<button type="button" class="btn btn-sm btn-secondary catalogue_had<?=isset($product->catalogue['status']) && $product->catalogue['status']==-1?' true':''?>" data-toggle="tooltip" data-placement="top" title="<?=$product->catalogue['had']?> <?=$product->catalogue['had']==1?'Person':'People'?>">Had It</button>
@@ -71,9 +71,9 @@ include('header.php');?>
 			ksort($feature_categories);
 			ksort($feature_categories[$feature['category']]);
 		}?>
-		<table class="table table-bordered table-fixed table-hover">
+		<table class="table table-sm table-fixed">
 			<thead>
-				<tr>
+				<tr class="<?=$bootstrap->table->classes->header?>">
 					<th>Category</th>
 					<th>Feature</th>
 					<th>Value</th>

@@ -1,7 +1,7 @@
 <?php class edit_product extends form{
 	public $product;
 	public function __construct($data=NULL){
-		global $products;
+		global $bootstrap,$products;
 		$this->product=new product($_GET['id']);
 		$feature_categories=$products->get_feature_categories();
 		$feature_categories=array_combine(array_keys($feature_categories),array_column($feature_categories,'name'));
@@ -96,15 +96,15 @@
 						parent::add_html('<p id="product_tags">Existing Tags<br>');
 							if($this->product->tags){
 								foreach($this->product->tags as $tag){
-									parent::add_html('<span>'.$tag['tag'].' <a class="tag tag-danger delete delete_tag" data-id="'.$tag['link_id'].'"><i class="fa fa-fw fa-times"></i></a></span>');
+									parent::add_html('<span>'.$tag['tag'].' <a class="badge badge-danger delete delete_tag" data-id="'.$tag['link_id'].'"><i class="fa fa-fw fa-times"></i></a></span>');
 								}
 							}
 						parent::add_html('</p>
 					</div>
 				</div>
-				<table class="table table-sm table-hover table-striped">
+				<table class="'.$bootstrap->table->classes->table.'">
 					<thead>
-						<tr>
+						<tr class="'.$bootstrap->table->classes->header.'">
 							<th>Category</th>
 							<th>Feature</th>
 							<th>Value</th>
@@ -171,9 +171,9 @@
 				}
 			parent::add_html('</div>
 			<div class="tab-pane" id="purchasing" role="tabpanel">
-				<table class="table table-sm table-hover table-striped">
+				<table class="'.$bootstrap->table->classes->table.'">
 					<thead>
-						<tr class="thead-default">
+						<tr class="'.$bootstrap->table->classes->header.'">
 							<th>Title</th>
 							<th>Link</th>
 							<th>Actions</th>
@@ -210,9 +210,9 @@
 				</table>
 			</div>
 			<div class="tab-pane" id="articles" role="tabpanel">
-				<table class="table table-sm table-hover table-striped">
+				<table class="'.$bootstrap->table->classes->table.'">
 					<thead>
-						<tr class="thead-default">
+						<tr class="'.$bootstrap->table->classes->header.'">
 							<th>Title</th>
 							<th>Actions</th>
 						</tr>
@@ -248,7 +248,7 @@
 				</table>
 			</div>
 		</div>
-		<p class="text-xs-center">');
+		<p class="text-center">');
 			parent::add_button(array(
 				'class' =>'btn-primary',
 				'name'  =>'update',

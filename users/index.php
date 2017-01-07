@@ -25,7 +25,7 @@ require('header.php');?>
 	<div class="cols-md-6 cols-lg-4">
 		<h2 class="mb-0">Trello Updates</h2>
 		<?php if($cards){ ?>
-			<p class="mb-05"><strong>Updated</strong> <em><?=sql_datetime(date('Y-m-d H:i:s',strtotime(max(array_column($cards,'dateLastActivity')))))?></em></p>
+			<p class="mb-2"><strong>Updated</strong> <em><?=sql_datetime(date('Y-m-d H:i:s',strtotime(max(array_column($cards,'dateLastActivity')))))?></em></p>
 		<?php }
 		foreach($lists as $list){
 			#												   On List/ Complete
@@ -34,10 +34,10 @@ require('header.php');?>
 					<div data-list="<?=$list['id']?>">
 						<h3 class="mb-0"><?=$list['name']?></h3>
 						<p><strong>Updated</strong> <em><?=sql_datetime(date('Y-m-d H:i:s',strtotime(max(array_column($list['cards'],'dateLastActivity')))))?></em></p>
-						<ul class="list-group mb-1" style="font-size:14px">
+						<ul class="list-group mb-3" style="font-size:14px">
 							<?php foreach($list['cards'] as $card){?>
-								<li class="list-group-item" style="padding:7px;break-inside:avoid-column">
-									<span class="h6"><a href="<?=$card['shortUrl']?>" target="_blank"><?=htmlspecialchars($card['name'])?></a></span><br>
+								<li class="list-group-item">
+									<h6 class="mb-0"><a href="<?=$card['shortUrl']?>" target="_blank"><?=htmlspecialchars($card['name'])?></a></h6>
 									<?=$card['desc']?nl2br($card['desc']).'<br>':''?>
 									<?php if($card['badges']['attachments'] || $card['badges']['comments'] || $card['badges']['description']){
 										if($card['badges']['attachments']){ ?>
@@ -46,10 +46,12 @@ require('header.php');?>
 										if($card['badges']['comments']){ ?>
 											<i class="fa fa-comments"></i>
 										<?php }
-										if($card['badges']['checkItems']){?>
-											<progress class="progress progress-success mb-0" style="bottom:0;height:3px;left:0;position:absolute" max="<?=$card['badges']['checkItems']?>" value="<?=$card['badges']['checkItemsChecked']?>"></progress>
-										<?php }
-									} ?>
+									}
+									if($card['badges']['checkItems']){?>
+										<div class="progress">
+											<div class="progress-bar" role="progressbar" style="bottom:0;height:3px;left:0;position:absolute;width:<?=$card['badges']['checkItemsChecked']/$card['badges']['checkItems']*100?>%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="<?=$card['badges']['checkItems']?>"></div>
+										</div>
+									<?php } ?>
 								</li>
 							<?php }?>
 						</ul>
@@ -61,7 +63,7 @@ require('header.php');?>
 		<?php $list=$lists['585a3fac12bf55eb77b860cb'];
 		if($list['cards']){
 			$list['cards']=array_slice($list['cards'],0,25);?>
-			<p class="mb-05"><strong>Updated</strong> <em><?=sql_datetime(date('Y-m-d H:i:s',strtotime(max(array_column($list['cards'],'dateLastActivity')))))?></em></p>
+			<p class="mb-2"><strong>Updated</strong> <em><?=sql_datetime(date('Y-m-d H:i:s',strtotime(max(array_column($list['cards'],'dateLastActivity')))))?></em></p>
 			<ul class="mb-0">
 				<?php foreach($list['cards'] as $card){ ?>
 					<li style="break-inside:avoid-column"><a href="<?=$card['shortUrl']?>" target="_blank"><?=htmlspecialchars($card['name'])?></a></li>

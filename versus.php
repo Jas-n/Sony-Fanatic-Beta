@@ -34,16 +34,16 @@ include('header.php');?>
 <div class="vs_banner row">
 	<?php foreach($product_list as $i=>$product){
 		if($product->images){ ?>
-			<div class="product col-xs" style="background-image:url(<?=$product->images['full'][0]?>)">
+			<div class="product col" style="background-image:url(<?=$product->images['full'][0]?>)">
 				<a href="/p/<?=$product->id?>-<?=$product->slug?>"><span><?=$product->name?></span></a>
 			</div>
 		<?php }
 	} ?>
 </div>
 <h2>Freatures</h2>
-<table class="table table-border table-hover">
+<table class="table table-sm table-fixed">
 	<tbody>
-		<tr>
+		<tr class="bg-primary table-inverse">
 			<th colspan="2"></th>
 			<?php foreach($product_list as $i=>$product){ ?>
 				<th><?=$product->name?></th>

@@ -106,11 +106,9 @@ nav{
 	}
 }
 table{
-	.form-group{
-		display:block !important;
-		.input-group{
-			display:flex;
-		}
+	.form-group,
+	label{
+		margin-bottom:0;
 	}
 }
 .ui-autocomplete{

@@ -29,7 +29,7 @@
 				$addresses->address_fields($this,$data['address']);
 			parent::add_html('</div>
 		</div>
-		<p class="text-xs-center">');
+		<p class="text-center">');
 			parent::add_button(array(
 				'class' =>'btn-success',
 				'name'  =>'add',

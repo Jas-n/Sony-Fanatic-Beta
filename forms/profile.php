@@ -11,8 +11,8 @@
 			<div class="col-md-6">');
 			parent::add_html('</div>
 		</div>
-		<p class="text-xs-center">');
-		parent::add_button('name=update&showlabel=no&type=submit&value=Update&class=btn-success');
+		<p class="text-center">');
+			parent::add_button('name=update&showlabel=no&type=submit&value=Update&class=btn-success');
 		parent::add_html('</p>');
 	}
 	public function process(){

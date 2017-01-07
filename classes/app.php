@@ -19,9 +19,7 @@ class app{
 		}
 		$css_files[]='//fonts.googleapis.com/css?family=Heebo:300,400,500';
 		$css_files[]='//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css';
-		$css_files[]='/css/bootstrap-reboot.css';
-		$css_files[]='/css/bootstrap-flex.css';
-		$css_files[]='/css/bootstrap-grid.css';
+		$css_files[]='/css/bootstrap.css';
 		if($form_included){
 			$css_files[]='//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css';
 		}
@@ -77,7 +75,7 @@ class app{
 		$out='<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>';
+		<script src="/js/bootstrap.min.js"></script>';
 		if($form_included){
 			$out.='<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>';
 		}
@@ -224,7 +222,7 @@ class app{
 				$this->page_title=SITE_NAME;
 				return SITE_NAME;
 			}else{
-				if($pagge=='index' && get_dir()){
+				if($page=='index' && get_dir()){
 					$page='Dashboard';
 				}else{
 					$page=ucwords(str_replace(array('-','_'),' ',$page));

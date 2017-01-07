@@ -1,14 +1,14 @@
 <?php class list_users extends form{
 	public $count=0;
 	public function __construct($ids=NULL){
-		global $page,$user;
+		global $bootstrap,$page,$user;
 		$this->ids=$ids;
 		$users=$user->get_users(0,0,0,$this->ids);
 		$this->count=$users['count'];
-		parent::__construct("name=users&class=form-inline");
-		parent::add_html('<table class="table table-hover table-striped table-sm">
+		parent::__construct("name=users");
+		parent::add_html('<table class="'.$bootstrap->table->classes->table.'">
 			<thead>
-				<tr>
+				<tr class="'.$bootstrap->table->classes->header.'">
 					<th>');
 						parent::add_field(array(
 							'class'	=>'check_all',
@@ -51,7 +51,7 @@
 			parent::add_html('</tbody>
 		</table>'.
 		pagination($users['count'],0).
-		'<p class="text-xs-center">');
+		'<p class="text-center">');
 			parent::add_button(array(
 				'class'	=>'btn-info',
 				'name'	=>'reset',
@@ -114,7 +114,7 @@
 					$app->set_message('success',$updated.' users were marked as active');
 					$app->log_message(3,'Users Enabled',$updated.' users were marked as active');
 				}else{
-					$app->set_message('error','No users were selected for password enabling.');
+					$app->set_message('error','No users were selected for user enabling.');
 					$this->redirect(false,$results);
 				}
 			}

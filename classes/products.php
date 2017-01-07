@@ -209,13 +209,13 @@
 			);
 			$product['features']=$db->query(
 				"SELECT
-					`product_value`.*,
+					`product_values`.*,
 					`feature_categories`.`name` as `category`,
 					`feature_options`.`name` as `feature`,
 					`feature_values`.`value`
-				FROM `product_value`
+				FROM `product_values`
 				INNER JOIN `feature_values`
-				ON `product_value`.`feature_value`=`feature_values`.`id`
+				ON `product_values`.`feature_value`=`feature_values`.`id`
 				INNER JOIN `feature_options`
 				ON `feature_values`.`option_id`=`feature_options`.`id`
 				INNER JOIN `feature_categories`

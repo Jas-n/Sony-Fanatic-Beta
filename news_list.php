@@ -8,7 +8,7 @@ if($news['count']){
 			<div class="card card-block article">
 				<h2 class="card-title h4"><a href="/n/<?=$article['slug']?>"><?=$article['title']?></a></h2>
 				<p><?=$article['excerpt']?></p>
-				<p class="small text-xs-right"><?=sql_datetime($article['published'])?> by <a href="/u/<?=$article['author']['username']?>"><?=$article['author']['username']?></a></p>
+				<p class="small text-right"><?=sql_datetime($article['published'])?> by <a href="/u/<?=$article['author']['username']?>"><?=$article['author']['username']?></a></p>
 			</div>
 		<?php if($i%3==2){?>
 			</div>

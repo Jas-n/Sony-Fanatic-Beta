@@ -1,9 +1,11 @@
-<?php require('../init.php');
-require('header.php');
-$product_lists=$products->get_products();?>
+<?php $app_require=array('form.list_products');
+require('../init.php');
+$list_products=new list_products;
+$list_products->process();
+require('header.php');?>
 <h1>Products</h1>
 <ol class="breadcrumb">
-	<li class="pull-right">
+	<li class="float-right">
 		<a class="btn btn-secondary" data-toggle="tooltip" href="tags" title="Tags"><i class="fa fa-fw fa-tags"></i></a>
 		<a class="btn btn-success" data-toggle="tooltip" href="add_product" title="Add Product"><i class="fa fa-fw fa-plus"></i></a>
 	</li>
@@ -11,30 +13,6 @@ $product_lists=$products->get_products();?>
 	<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
 	<li class="breadcrumb-item active">Products</li>
 </ol>
-<table class="table table-sm table-hover table-stiped">
-	<thead>
-		<tr>
-			<th>Brand</th>
-			<th>Name</th>
-			<th>Updated</th>
-			<th>Actions</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php if($product_lists['count']){
-			foreach($product_lists['data'] as $product){?>
-				<tr<?=!$product['status']?' class="table-danger"':''?>>
-					<td><?=$product['brand']?></td>
-					<td><?=$product['name']?></td>
-					<td><?=sql_datetime($product['updated'])?></td>
-					<td>
-						<a class="btn btn-sm btn-primary" href="product/<?=$product['id']?>">Edit</a>
-						<a class="btn btn-sm btn-secondary" href="../p/<?=$product['id']?>-<?=$product['slug']?>" target="_blank">View</a>
-					</td>
-				</tr>
-			<?php }
-		} ?>
-	</tbody>
-</table>
-<?php pagination($product_lists['count']);
+<?php $app->get_messages();
+$list_products->get_form();
 require('footer.php');

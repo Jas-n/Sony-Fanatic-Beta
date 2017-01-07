@@ -16,7 +16,7 @@
 			'required'		=>1,
 			'type'			=>'password'
 		));
-		parent::add_html('<p class="text-xs-center actions">');
+		parent::add_html('<p class="text-center actions">');
 			parent::add_button(array(
 				'class'	=>'btn-primary btn-login',
 				'name'	=>'login',
