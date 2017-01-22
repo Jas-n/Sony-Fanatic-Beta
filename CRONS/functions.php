@@ -29,8 +29,8 @@ function scan_errors($dir,$level=0){
 									$date
 								)
 							);
+							$lines++;
 						}
-						$lines++;
 					}
 					if($lines>0){
 						$error_files++;

@@ -3,9 +3,9 @@
 <file name="index.php" server="techversus.tech/techversus.tech/" local="131282066913386351" remote="131282066400000000" Dst="1" />
 <file name="error.php" server="techversus.tech/techversus.tech/" local="131270056230709466" remote="131211067800000000" Dst="1" />
 <file name="forgot.php" server="techversus.tech/techversus.tech/" local="131270056235830113" remote="131211067800000000" Dst="1" />
-<file name="header.php" server="techversus.tech/techversus.tech/" local="131282062357680260" remote="131282062200000000" Dst="1" />
+<file name="header.php" server="techversus.tech/techversus.tech/" local="131296011843487054" remote="131296011600000000" Dst="1" />
 <file name="logout.php" server="techversus.tech/techversus.tech/" local="131270056337432828" remote="131211067800000000" Dst="1" />
-<file name="product.php" server="techversus.tech/techversus.tech/" local="131282715180437040" remote="131282715000000000" Dst="1" />
+<file name="product.php" server="techversus.tech/techversus.tech/" local="131283825912444850" remote="131283825600000000" Dst="1" />
 <file name="user.php" server="techversus.tech/techversus.tech/" local="131270056488311713" remote="131241541200000000" Dst="1" />
 <file name="footer.php" server="techversus.tech/techversus.tech/" local="131282066041479903" remote="131282065800000000" Dst="1" />
 <file name="folding.json" server="techversus.tech/techversus.tech/" local="131277240000000000" remote="131277240000000000" Dst="1" />
@@ -18,4 +18,6 @@
 <file name="news_single.php" server="techversus.tech/techversus.tech/" local="131282069142860426" remote="131282068800000000" Dst="1" />
 <file name="news_list.php" server="techversus.tech/techversus.tech/" local="131282067342960113" remote="131282067000000000" Dst="1" />
 <file name="init.php" server="techversus.tech/techversus.tech/" local="131282798333260142" remote="131282797800000000" Dst="1" />
+<file name="categories.html" server="techversus.tech/techversus.tech/" local="131295833400000000" remote="131295833400000000" Dst="1" />
+<file name="category.php" server="techversus.tech/techversus.tech/" local="131296003937266258" remote="131296003800000000" Dst="1" />
 </dwsync>

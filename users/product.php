@@ -2,6 +2,7 @@
 	'form.product',
 	'js.lightbox',
 	'js.tinymce',
+	'lib.twitter',
 	'php.product'
 );
 require('../init.php');

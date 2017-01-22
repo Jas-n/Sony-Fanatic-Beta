@@ -1,7 +1,7 @@
 <?php require('../init.php');
 require('header.php');
 $count=$db->result_count("FROM `logs`");
-$logs=$this->query(
+$logs=$db->query(
 	'SELECT
 		`logs`.*,
 		CONCAT(`users`.`first_name`," ",`users`.`last_name`) as `name`
@@ -11,7 +11,7 @@ $logs=$this->query(
 	ORDER BY `date` DESC'.
 	SQL_LIMIT
 );?>
-<h1>Logs <small class="text-muted"><?=number_format($logs['count'])?></small></h1>
+<h1>Logs <small class="text-muted"><?=number_format($count)?></small></h1>
 <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="../">Home</a></li>
 	<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
@@ -29,8 +29,8 @@ $logs=$this->query(
 		</tr>
 	</thead>
 	<tbody>
-		<?php if($logs['logs']){
-			foreach($logs['logs'] as $log){
+		<?php if($logs){
+			foreach($logs as $log){
 				if($log['user_id']!==-1){
 					$name='<a href="user/'.$log['user_id'].'">'.$log['name'].'</a>';
 				}?>
@@ -47,5 +47,5 @@ $logs=$this->query(
 		<?php }?>
 	</tbody>
 </table>
-<?php pagination($logs['count']);
+<?php pagination($count);
 require('footer.php');

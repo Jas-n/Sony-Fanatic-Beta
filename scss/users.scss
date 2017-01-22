@@ -17,15 +17,15 @@ body{
 }
 /* Menu */
 nav{
+	$color:#999;
 	background:#444;
 	bottom:0;
-	color:#999;
+	color:$color;
 	overflow:hidden;
 	position:fixed;
 	top:0;
 	width:200px;
 	a{
-		color:inherit;
 		display:block;
 		padding:5px;
 		&:hover{
@@ -64,6 +64,9 @@ nav{
 				transform: rotate(90deg);
 			}
 		}
+	}
+	> ul a{
+		color:$color !important;
 	}
 	ul{
 		list-style: none;

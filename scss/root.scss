@@ -8,6 +8,30 @@ $nav-height:		$spacer*5;
 $nav2-height-small:	$spacer*3.5;
 $nav2-height:		$spacer*4;
 // Common
+body:not(#index):not(#product) main{
+	margin-top:1rem;
+}
+.cd-auto-hide-header+.cd-secondary-nav{
+	margin-top:$nav2-height-small;
+	@include media-breakpoint-up(lg) {
+		margin-top:$nav2-height;
+	}
+}
+@include media-breakpoint-up(sm) {
+	footer{
+		height:$footer-height;
+		position:absolute;
+		width:100%;
+	}
+	body{
+		&#index main{
+			padding-bottom:$footer-height;
+		}
+		&:not(#index) main{
+			padding-bottom:$footer-height+$spacer;
+		}
+	}
+}
 footer{
 	background:$gray-dark;
 	bottom:0;
@@ -22,22 +46,6 @@ footer{
 	p{
 		font-size:$spacer*.9;
 		margin-bottom:0;
-	}
-}
-.cd-auto-hide-header+.cd-secondary-nav{
-	margin-top:$nav2-height-small;
-	@include media-breakpoint-up(lg) {
-		margin-top:$nav2-height;
-	}
-}
-@include media-breakpoint-up(sm) {
-	footer{
-		height:$footer-height;
-		position:absolute;
-		width:100%;
-	}
-	main{
-		padding-bottom:$footer-height;
 	}
 }
 img.cover{
@@ -85,47 +93,102 @@ img.cover{
 	}
 }
 //// NAV
-.cd-auto-hide-header {
-	position: fixed;
-	z-index: 2;
-	top: 0;
-	left: 0;
-	width: 100%;
+.cd-auto-hide-header{
+	background-color: $gray-lightest;
 	height: $nav-height-small;
-	background-color:$gray-lightest;
-	@include clearfix;
-	/* Force Hardware Acceleration */
+	left: 0;
+	position:fixed;
+	top: 0;
+	// Force Hardware Acceleration
 	transform: translateZ(0);
-	will-change: transform;
 	transition: transform .5s;
-
+	width: 100%;
+	will-change: transform;
+	z-index: 2;
 	&.is-hidden {
 		transform: translateY(-100%);
 	}
-
+	a:hover{
+		text-decoration: none;
+	}
+	.logo,
+	nav{
+		padding:0 $spacer;
+	}
+	.logo{
+		float:left;
+		line-height:$nav-height-small/3;
+		padding:$nav-height-small/3 $spacer;
+		text-align: center;
+		width:200px;
+		@include media-breakpoint-up(lg) {
+			line-height:$nav-height/3;
+			padding:$nav-height/3 $spacer;
+		}
+	}
+	nav{
+		ul{
+			@include list-unstyled;
+		}
+	}
 	@include media-breakpoint-up(lg) {
 		height: $nav-height;
 	}
 }
-
-.cd-auto-hide-header .logo, 
-.cd-auto-hide-header .nav-trigger {
-	position: absolute;
-	top: 50%;
-    bottom: auto;
-    transform: translateY(-50%);
-}
-
-.cd-auto-hide-header .logo {
-	left: 5%;
-
-	a, img {
-		display: block;
+#cd-navigation{
+	$hover-bg:#f0f0f0;
+	float:right;
+	margin-bottom:0;
+	> li {
+		float:left;
+		&:hover{
+			background-color:$hover-bg;
+			> ul{
+				opacity:1;
+				visibility:visible;
+			}
+		}
+		a{
+			display:block;
+		}
+		> a{
+			height:$nav-height-small;
+			line-height:$nav-height-small;
+			padding:0 $spacer*3;
+			@include media-breakpoint-up(lg) {
+				height:$nav-height;
+				line-height:$nav-height;
+			}
+		}
+		> ul{
+			background:$hover-bg;
+			left:0;
+			opacity:0;
+			padding:$spacer*1.25;
+			position:absolute;
+			visibility: hidden;
+			width:100vw;
+			> li{
+				> a{
+					font-size:$spacer*1.25;
+					margin-bottom:$spacer;
+				}
+				> ul{
+					font-size:$spacer;
+					margin-left:$spacer;
+					a{
+						color:$gray-dark;
+						&:hover{
+							color:$brand-primary;
+						}
+					}
+				}
+			}
+		}
 	}
 }
-
 .cd-auto-hide-header .nav-trigger {
-	/* vertically align its content */
+	// vertically align its content
 	display: table;
 	height: 100%;
 	padding: 0 1em;
@@ -137,13 +200,13 @@ img.cover{
 	border-left: 1px solid $gray-lighter;
 
 	span {
-		/* vertically align inside parent element */
+		// vertically align inside parent element
 		display: table-cell;
 		vertical-align: middle;
 	}
 
 	em, em::after, em::before {
-		/* this is the menu icon */
+		// this is the menu icon
 		display: block;
 		position: relative;
 		height: 2px;
@@ -153,7 +216,7 @@ img.cover{
 	}
 
 	em {
-		/* this is the menu central line */
+		// this is the menu central line
 		margin: 6px auto 14px;
 		transition: background-color .2s;
 	}
@@ -166,12 +229,12 @@ img.cover{
 	}
 
 	em::before {
-		/* this is the menu icon top line */
+		// this is the menu icon top line
 		transform: translateY(-6px);
 	}
 
 	em::after {
-		/* this is the menu icon bottom line */
+		// this is the menu icon bottom line
 		transform: translateY(6px);
 	}
 
@@ -179,20 +242,25 @@ img.cover{
 		display: none;
 	}
 }
+/*.cd-auto-hide-header .logo {
+	a, img {
+		display: block;
+	}
+}
 
 .cd-auto-hide-header.nav-open .nav-trigger {
 	em {
-		/* transform menu icon into a 'X' icon */
+		// transform menu icon into a 'X' icon
 		background-color: rgba($gray-lightest, 0);
 	}
 
 	em::before {
-		/* rotate top line */
+		// rotate top line
 		transform: rotate(-45deg);
 	}
 
 	em::after {
-		/* rotate bottom line */
+		// rotate bottom line
 		transform: rotate(45deg);
 	}
 }
@@ -214,7 +282,7 @@ img.cover{
 		box-shadow: 0 14px 20px rgba(#000, .2);
 		@include list-unstyled;
 		a {
-			/* target primary-nav links */
+			// target primary-nav links
 			display: block;
 			height: 50px;
 			line-height: 50px;
@@ -231,14 +299,14 @@ img.cover{
 	}
 
 	@include media-breakpoint-up(lg) {
-		/* vertically align its content */
+		// vertically align its content
 		display: table;
 
 		> ul {
-			/* vertically align inside parent element */
+			// vertically align inside parent element
 			display: table-cell;
 			vertical-align: middle;
-			/* reset mobile style */
+			// reset mobile style
 			position: relative;
 			width: auto;
 			top: 0;
@@ -250,15 +318,11 @@ img.cover{
 			li {
 				display: inline-block;
 				float: left;
-				margin-right: 1.5em;
-
-				&:last-of-type {
-					margin-right: 0;
-				}
+				margin:0;
 			}
 
 			a {
-				/* reset mobile style */
+				// reset mobile style
 				height: auto;
 				line-height: normal;
 				padding: 0;
@@ -267,14 +331,12 @@ img.cover{
 		}
 	}
 }
-
 .nav-open .cd-primary-nav ul{
 	display:block;
 	@include media-breakpoint-up(lg) {
 		display: table-cell;
 	}
-}
-
+}*/
 /* -------------------------------- 
 
 2. Auto-Hiding Navigation - with Sub Nav

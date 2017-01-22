@@ -16,6 +16,7 @@
 					parent::add_html('</th>
 					<th>Brand</th>
 					<th>Name</th>
+					<th>Completion</th>
 					<th>Updated</th>
 					<th>Actions</th>
 				</tr>
@@ -34,6 +35,7 @@
 							parent::add_html('</td>
 							<td>'.$product['brand'].'</td>
 							<td>'.$product['name'].'</td>
+							<td>'.$product['completion'].'%</td>
 							<td>'.sql_datetime($product['updated']).'</td>
 							<td>
 								<a class="btn btn-sm btn-primary" href="product/'.$product['id'].'">Edit</a>
@@ -46,7 +48,7 @@
 		</table>
 		<div class="d-flex justify-content-between">'.
 			pagination($product_list['count'],0).
-			'<div>');
+			'<div class="ml-auto">');
 				parent::add_button(array(
 					'class'	=>'btn-success',
 					'name'	=>'enable',

@@ -1,6 +1,6 @@
 <?php class item_article extends form{
 	public function __construct($data=NULL){
-		global $article,$articles;
+		global $article,$articles,$bootstrap;
 		parent::__construct("name=".__CLASS__);
 		parent::add_html('<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#article" role="tab">Article</a></li>
@@ -56,7 +56,7 @@
 					)
 				));
 			parent::add_html('</div>
-			<div class="tab-pane" id="products" role="tabpanel">');
+			<div class="tab-pane" id="products" role="tabpanel">Populate what\'s on line '.__LINE__.$bootstrap->list_group([],array('id'=>'product_list'),true));
 				parent::add_fields(array(
 					array(
 						'class'			=>'ajax_product',

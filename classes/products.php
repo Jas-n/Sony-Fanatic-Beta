@@ -54,9 +54,11 @@
 	}
 	public function get_category_tree(){
 		global $db;
-		$categories=$db->query("SELECT * FROM `categories` ORDER BY `parent_id` ASC, `name` ASC");
-		$categories=array_combine(array_column($categories,'id'),$categories);
-		return tree($categories);
+		if($categories=$db->query("SELECT * FROM `categories` ORDER BY `parent_id` ASC, `name` ASC")){
+			$categories=array_combine(array_column($categories,'id'),$categories);
+			return tree($categories);
+		}
+		return false;
 	}
 	public function get_feature_categories(){
 		global $db;
@@ -287,7 +289,7 @@
 			".$where."
 			ORDER BY
 				`products`.`status` DESC,
-				`products`.`added` DESC".
+				`products`.`published` DESC".
 			$limit,
 			$options
 		)){
@@ -311,5 +313,25 @@
 			);
 		}
 		return false;
+	}
+	public function update_category_counts(){
+		if($categories=$this->get_category_tree()){
+			$categories=array(array(
+				'children'=>$categories
+			));
+			$this->_update_product_count($categories);
+		}
+	}
+	
+	private function _update_product_count($categories){
+		global $db;
+		foreach($categories as $id=>$category){
+			$count=$db->result_count("FROM `product_categories` WHERE `category`=?",$id);
+			if($category['children']){
+				$count+=$this->_update_product_count($category['children']);
+			}
+			$db->query("UPDATE `categories` SET `products`=? WHERE `id`=?",array($count,$id));
+		}
+		return $count;
 	}
 }

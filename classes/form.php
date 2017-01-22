@@ -1,18 +1,21 @@
-<?php # Version Bootstrap 3.29 - Bootstrap 4a5
-# Updated 30/11/2016 12:46
+<?php # Version Bootstrap 3.35 - Bootstrap 4a5
+# Updated 11/01/2017 14:58
 class form{
 	private	$args;
-	private	$has_file;
-	public	$field_count=1; # form_name is auto_prepended
-	public	$button_count=1;
-	public	$uploaded_files=0;
-	private	$has_required=false;
+	private	$has_date		=false;
+	private	$has_datetime	=false;
+	private	$has_file		=false;
+	public	$field_count	=1; # form_name is auto_prepended
+	public	$button_count	=1;
+	public	$uploaded_files	=0;
+	private	$has_required	=false;
 	private $session_data;	# Data carried over from an dev defined error
 	# bootsrap settings
 	protected	$label_width=2;
 	protected	$value_width;
 	# Inherit Methods
 	public function __construct($args){
+		global $app;
 		$this->button_count=0;
 		$this->field_count=0;
 		$this->args=$args;
@@ -26,39 +29,39 @@ class form{
 				$$key=$value;
 			}
 		}
-		if(!$name){
-			$err[]='A form name is required';
+		$this->value_width=12-$this->label_width;
+		if($hide_required_message==1){
+			$this->hide_required_message=1;
 		}else{
-			$this->value_width=12-$this->label_width;
-			if($hide_required_message==1){
-				$this->hide_required_message=1;
-			}else{
-				$this->hide_required_message=0;
-			}
-			$this->data=array(
-				'action'		=>$action,
-				'autocomplete'	=>strtolower($autocomplete),
-				'class'			=>$class,
-				'enctype'		=>$enctype,
-				'name'			=>$name,
-				'showinfo'		=>$showinfo
-			);
-			# Unset any other form data, the results are expired
-			if($_SESSION['form_data']){
-				foreach($_SESSION['form_data'] as $form=>$form_data){
-					if($form==$this->data['name']){
-						$this->session_data=$form_data;
-					}
-					unset($_SESSION['form_data'][$form]);
+			$this->hide_required_message=0;
+		}
+		$this->data=array(
+			'action'		=>$action,
+			'autocomplete'	=>strtolower($autocomplete),
+			'class'			=>$class,
+			'data'			=>$data,
+			'enctype'		=>$enctype,
+			'name'			=>$name,
+			'showinfo'		=>$showinfo
+		);
+		# Unset any other form data, the results are expired
+		if($_SESSION['form_data']){
+			foreach($_SESSION['form_data'] as $form=>$form_data){
+				if($form==$this->data['name']){
+					$this->session_data=$form_data;
 				}
+				unset($_SESSION['form_data'][$form]);
 			}
-			if(strpos($class,'form-horizontal')!==false){
-				$this->data['orientation']='horizontal';
-			}elseif(strpos($class,'form-inline')!==false){
-				$this->data['orientation']='inline';
-			}else{
-				$this->data['orientation']='stacked';
-			}
+		}
+		if(strpos($class,'form-horizontal')!==false){
+			$this->data['orientation']='horizontal';
+		}elseif(strpos($class,'form-inline')!==false){
+			$this->data['orientation']='inline';
+		}else{
+			$this->data['orientation']='stacked';
+		}
+		if($err){
+			$app->set_message('error',implode('<br>',$err));
 		}
 		return $this;
 	}
@@ -75,21 +78,22 @@ class form{
 		if($_POST['form_name']==$this->data['name']){
 			global $app;
 			if($_FILES){
-				if(is_array($_FILES[key($_FILES)]['error'])){
-					foreach($_FILES[key($_FILES)]['error'] as $error){
-						if($error===0){
-							$mimes=json_decode(file_get_contents(ROOT.'/libraries/mimetypes.json'),1);
-							$finfo=finfo_open(FILEINFO_MIME_TYPE);
+				foreach($_FILES as $field=>$files){
+					if(is_array($files['error'])){
+						foreach($files['error'] as $error){
+							if($error===0){
+								$mimes=json_decode(file_get_contents(ROOT.'/libraries/mimetypes.json'),1);
+								$finfo=finfo_open(FILEINFO_MIME_TYPE);
+								break;
+							}
+						}
+						if($finfo){
 							break;
 						}
-					}
-				}else{
-					foreach($_FILES as $file){
-						if($file['error']===0){
-							$mimes=json_decode(file_get_contents(ROOT.'/libraries/mimetypes.json'),1);
-							$finfo=finfo_open(FILEINFO_MIME_TYPE);
-							break;
-						}
+					}elseif($files['error']===0){
+						$mimes=json_decode(file_get_contents(ROOT.'/libraries/mimetypes.json'),1);
+						$finfo=finfo_open(FILEINFO_MIME_TYPE);
+						break;
 					}
 				}
 				foreach($_FILES as $name=>$file){
@@ -306,6 +310,21 @@ class form{
 			if($args['type']=='datetime'){
 				$args['type']='datetime-local';
 			}
+			if($args['type']=='date'){
+				if($this->has_date==false){
+					$app->add_to_head('<link rel="stylesheet" href="'.$app->cdn->datepicker->css.'">');
+					$app->add_to_foot('<script src="'.$app->cdn->datepicker->js.'"></script>');
+				}
+				$this->has_date=true;
+			}
+			if($args['type']=='datetime-local'){
+				if($this->has_datetime==false){
+					$app->add_to_head('<link rel="stylesheet" href="'.$app->cdn->datetimepicker->css.'">');
+					$app->add_to_foot('<script src="'.$app->cdn->moment.'"></script>');
+					$app->add_to_foot('<script src="'.$app->cdn->datetimepicker->js.'"></script>');
+				}
+				$this->has_datetime=true;
+			}
 			if($args['required'] && $args['type']=='static'){
 				unset($args['required']);
 			}
@@ -316,8 +335,8 @@ class form{
 				$this->data['files'][$this->data['name'].'_'.$args['name']]=explode(',',$args['accept']);
 				$this->has_file=true;
 			}
-			if($this->session_data[$args['name']]){
-				$args['value']=$this->session_data[$args['name']];
+			if($this->session_data){
+				$args['value']=$this->find_value($args['name'],$this->session_data);
 			}
 			# Add to $data
 			$this->data['fields'][]=$args;
@@ -394,11 +413,16 @@ class form{
 			$errors[]='Could not render form as it contains <strong>'.($this->field_count+$this->button_count).'</strong> fields, which is above the allowed by the server of <strong>'.ini_get('max_input_vars').'</strong>.';
 			$app->log_message(1,'Field count exceeds server limit.','The form <strong>'.$this->data['name'].'</strong> contains <strong>'.($this->field_count+$this->button_count).'</strong> fields, which is above the allowed by the server of <strong>'.ini_get('max_input_vars').'</strong>.');
 		}
+		if(!$this->data['name']){
+			$errors[]='A form name is required';
+		}elseif($this->data['data'] && in_array('form-id',array_keys($this->data['data']))){
+			$errors[]='Form data cannot include the key <strong>form-id</strong>';
+		}
 		if($errors){
 			if($return){
-				return '<div class="alert alert-danger"><p>'.implode('',$errors).'</p></div>';
+				return $app->show_message('error',implode('',$errors),1);
 			}else{
-				echo '<div class="alert alert-danger"><p>'.implode('',$errors).'</p></div>';
+				$app->show_message('error',implode('',$errors));
 				return;
 			}
 		}else{
@@ -496,7 +520,7 @@ class form{
 						$out.='> ';
 						break;
 					case 'captcha':
-						$out.='<fieldset class="form-group';
+						$out.='<div class="form-group';
 							if($field['wrapclass']){
 								$out.=' '.$field['wrapclass'];
 							}
@@ -505,11 +529,10 @@ class form{
 							}
 						$out.='">';
 							if($field['label']){
-								$out.='<label class="';
+								$out.='<label class="col-form-label';
 								if($this->data['orientation']=='horizontal'){
-									$out.='col-sm-'.$this->label_width.' ';
+									$out.=' col-sm-'.$this->label_width;
 								}
-								$out.='control-label';
 								if($field['labelclass']){
 									$out.=' '.$field['labelclass'];
 								}
@@ -520,7 +543,7 @@ class form{
 								$out.='</label>';
 							}
 							if($this->data['orientation']=='horizontal'){
-								$out.='<div class="col-sm- '.$this->value_width;
+								$out.='<div class="col-sm-'.$this->value_width;
 									if(!$field['label']){
 										$out.=' offset-sm-'.$this->label_width;
 									}
@@ -534,18 +557,18 @@ class form{
 							if($field['note']){
 								$out.='<p class="text-muted';
 								if($this->data['orientation']=='horizontal'){
-									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.=' offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
 								}
 								$out.='"><em>'.$field['note'].'</em></p>';
 							}
 							if($this->data['orientation']=='horizontal'){
 								$out.='</div>';
 							}
-						$out.='</fieldset> ';
+						$out.='</div> ';
 						break;
 					case 'checkbox':
 					case 'radio':
-						$out.='<fieldset class="form-group '.str_replace(array('[',']'),'',$field['name']).'_outer';
+						$out.='<div class="form-group '.str_replace(array('[',']'),'',$field['name']).'_outer';
 							if($field['required']){
 								$out.=' has-warning';
 							}
@@ -557,7 +580,7 @@ class form{
 							}
 						$out.='" id="'.$id.'_outer">';
 							if($field['label'] && $this->data['orientation']!='inline'){
-								$out.='<label class="mb-0';
+								$out.='<label class="mb-0 form-check-label';
 									if($this->data['orientation']=='horizontal'){
 										$out.=' col-sm-'.$this->label_width;
 									}
@@ -583,11 +606,11 @@ class form{
 								$out.=' mb-0';
 							}
 							$out.='">	
-								<label';
+								<label class="col-check-label';
 									if($field['labelclass']){
-										$out.=' class="'.$field['labelclass'].'"';
+										$out.=' '.$field['labelclass'].'';
 									}
-								$out.=' for="'.$id.'">
+								$out.='" for="'.$id.'">
 									<input';
 										if($field['autofocus']){
 											$out.=' autofocus';
@@ -680,7 +703,7 @@ class form{
 								}
 								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}
-						$out.='</fieldset> ';
+						$out.='</div> ';
 						break;
 					case 'color':
 					case 'date':
@@ -698,7 +721,7 @@ class form{
 					case 'text':
 					case 'url':
 					case 'week':
-						$out.=' <fieldset class="form-group '.str_replace(array('[',']'),'',$field['name']).'_outer';
+						$out.=' <div class="form-group '.str_replace(array('[',']'),'',$field['name']).'_outer';
 						if($field['required']){
 							$out.=' has-warning';
 						}
@@ -710,9 +733,9 @@ class form{
 						}
 						$out.='" id="'.$id.'_outer">';
 							if($field['label']){
-								$out.=' <label class="';
+								$out.=' <label class="col-form-label';
 								if($this->data['orientation']=='horizontal'){
-									$out.='col-sm-'.$this->label_width.' ';
+									$out.=' col-sm-'.$this->label_width.' ';
 								}
 								if($field['labelclass']){
 									$out.=' '.$field['labelclass'];
@@ -840,7 +863,7 @@ class form{
 								}
 								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}
-						$out.='</fieldset> ';
+						$out.='</div> ';
 						break;
 					case 'hidden':
 						$out.='<input class="'.$field['class'].'" ';
@@ -860,7 +883,7 @@ class form{
 						$out.=$field['html'];
 						break;
 					case 'select':
-						$out.=' <fieldset class="form-group '.str_replace(array('[',']'),'',$field['name']).'_outer';
+						$out.=' <div class="form-group '.str_replace(array('[',']'),'',$field['name']).'_outer';
 						if($field['required']){
 							$out.=' has-warning';
 						}
@@ -872,9 +895,9 @@ class form{
 						}
 						$out.='" id="'.$id.'_outer">';
 							if($field['label']){
-								$out.=' <label class="';
+								$out.=' <label class="col-form-label';
 								if($this->data['orientation']=='horizontal'){
-									$out.='col-sm-'.$this->label_width.' ';
+									$out.=' col-sm-'.$this->label_width.' ';
 								}
 								if($field['labelclass']){
 									$out.=' '.$field['labelclass'];
@@ -953,10 +976,10 @@ class form{
 								}
 								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}
-						$out.='</fieldset> ';
+						$out.='</div> ';
 						break;
 					case 'static':
-						$out.=' <fieldset class="form-group ';
+						$out.=' <div class="form-group ';
 						if($field['wrapclass']){
 							$out.=' '.$field['wrapclass'];
 						}
@@ -965,9 +988,9 @@ class form{
 						}
 						$out.='" id="'.$id.'_outer">';
 							if($field['label']){
-								$out.=' <label class="';
+								$out.=' <label class="col-form-label';
 								if($this->data['orientation']=='horizontal'){
-									$out.='col-sm-'.$this->label_width.' ';
+									$out.=' col-sm-'.$this->label_width.' ';
 								}
 								if($field['labelclass']){
 									$out.=' '.$field['labelclass'];
@@ -993,10 +1016,10 @@ class form{
 							if($this->data['orientation']=='horizontal'){
 								$out.='</div>';
 							}
-						$out.='</fieldset> ';
+						$out.='</div> ';
 						break;
 					case 'textarea':
-						$out.=' <fieldset class="form-group '.str_replace(array('[',']'),'',$field['name']).'_outer';
+						$out.=' <div class="form-group '.str_replace(array('[',']'),'',$field['name']).'_outer';
 						if($field['required']){
 							$out.=' has-warning';
 						}
@@ -1008,9 +1031,9 @@ class form{
 						}
 						$out.='" id="'.$id.'_outer">';
 							if($field['label']){
-								$out.=' <label class="';
+								$out.=' <label class="col-form-label';
 								if($this->data['orientation']=='horizontal'){
-									$out.='col-sm-'.$this->label_width.' ';
+									$out.=' col-sm-'.$this->label_width.' ';
 								}
 								if($field['labelclass']){
 									$out.=' '.$field['labelclass'];
@@ -1097,7 +1120,7 @@ class form{
 								}
 								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
 							}
-						$out.='</fieldset> ';
+						$out.='</div> ';
 						break;
 				}
 			}
@@ -1142,7 +1165,6 @@ class form{
 	public function colour_select($name,$value=NULL,$label=NULL,$rgba=NULL){
 		global $bootstrap;
 		if($bootstrap){
-			$colours=(array) $bootstrap->colours->colours;
 			$this->add_select(
 				array(
 					'class'	=>'colour_select" style="border-left:4px solid rgba('.$rgba.')',
@@ -1151,9 +1173,20 @@ class form{
 					'note'	=>'Set to <strong>Automatic</strong> to make this colour available elsewhere.',
 					'value'	=>$value,
 				),
-				array_combine(array_keys($colours),array_map('ucwords',array_keys($colours))),
+				array_combine(array_keys($bootstrap->colours),array_map('ucwords',array_keys($bootstrap->colours))),
 				'Automatic'
 			);
 		}
+	}
+	# Find value for re-populating data based on field type
+	public function find_value($name,$data){
+		if(is_array($data) && array_key_exists($name,$data)){
+			return $data[$name];
+		}
+		if($name && !is_array($name)){
+			parse_str($name,$name);
+		}
+		$key=key($name);
+		return $this->find_value(key($name[$key]),$data[$key]);
 	}
 }

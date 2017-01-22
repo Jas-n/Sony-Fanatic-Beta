@@ -89,6 +89,7 @@
 				);
 			}
 			$app->log_message(3,'Added Product','Added <strong>'.$results['data']['name'].'</strong> to products.');
+			$products->update_category_counts();
 			header('Location: ./products');
 			exit;
 		}

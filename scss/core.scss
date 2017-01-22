@@ -3,26 +3,30 @@
 @import "variables";
 @import "mixins";
 // BS 4a6
-a:not([href]):not([tabindex]):not([class*=-secondary]):not([class*=-link]){
-	color:#fff;
-}
-.form-control{
-	padding:5px .75rem;
-}
-input[type="color"]{
-	max-width:50px;
-	padding:.125rem .25rem;
-}
-.list-group,
-.list-group-item{
-	display:block;
-}
-.list-group-item{
-	break-inside:avoid-column;
-}
-select.form-control:not([size]):not([multiple]){
-	height:2rem;
-}
+	// Fix for button colours
+	a.btn:not([href]):not([tabindex]):not([class*=-secondary]):not([class*=-link]){
+		color:#fff;
+	}
+	// Fix for slider height
+	.carousel-item.active,
+	.carousel-item-next,
+	.carousel-item-prev{
+		display:block;
+	}
+	// Fix for colour size
+	input[type="color"]{
+		max-width:50px;
+		padding:.125rem .25rem;
+	}
+	// Fix for incorrect list-group rending of sub-items
+	.list-group,
+	.list-group-item{
+		display:block;
+	}
+	// Fix for tab wrapping
+	.nav-tabs{
+		flex-wrap:wrap;
+	}
 // Common
 .alert p:last-of-type{
 	margin-bottom:0;
@@ -56,14 +60,17 @@ b, dt, optgroup, strong, th{
 .carousel .carousel-thumbnails>*{
 	cursor: pointer;
 }
+.form-control{
+	padding:5px .75rem;
+}
 .hidden{
 	display:none !important;
 }
 html{
 	height:100%;
 }
-img{
-	max-width:100%;
+.list-group-item{
+	break-inside:avoid-column;
 }
 ol,ol ol ol ol{
 	list-style-type:decimal;
@@ -80,6 +87,9 @@ ol ol ol ol ol{
 }
 ol ol ol ol ol ol{
 	list-style-type:upper-roman;
+}
+select.form-control:not([size]):not([multiple]){
+	height:2rem;
 }
 .text-truncate:hover{
 	overflow:visible;

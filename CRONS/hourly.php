@@ -104,7 +104,38 @@ switch($hour){
 			}
 		}
 		break;
-	case '16':
+	case 8:
+		// calculate product completion based on amount of feature options assigned to a product compared to totals
+		if($db->result_count("FROM `feature_options` WHERE `added`>?",date('Y-m-d H:i:s',strtotime('-25 hours')))){
+			$products=$db->query("SELECT `id` FROM `products` WHERE `status`=1");
+			$options=$db->result_count("FROM `feature_options`");
+			foreach($products as $product){
+				$features=$db->get_value(
+					"SELECT COUNT(DISTINCT(`option_id`)) FROM
+					`products`
+					INNER JOIN `product_values`
+					ON `products`.`id`=`product_values`.`product`
+					INNER JOIN `feature_values`
+					ON `product_values`.`feature_value`=`feature_values`.`id`
+					WHERE `products`.`id`=?",
+					$product['id']
+				);
+				$db->query(
+					"UPDATE `products`
+					SET
+						`completion`=?,
+						`updated`=?
+					WHERE `id`=?",
+					array(
+						round($features/$options*100,2),
+						date('Y-m-d H:i:s'),
+						$product['id']
+					)
+				);
+			}
+		}
+		break;
+	case 16:
 		# Daily emails
 		if($noties=$db->query(
 			"SELECT

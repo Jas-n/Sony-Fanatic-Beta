@@ -1,6 +1,7 @@
 <?php $app_require=array(
 	'form.add_article',
 	'js.tinymce',
+	'lib.twitter',
 	'php.articles'
 );
 require('../init.php');

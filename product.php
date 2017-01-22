@@ -110,14 +110,14 @@ include('header.php');?>
 			<div class="carousel-inner" role="listbox">
 				<?php foreach($product->images['full'] as $i=>$image){ ?>
 					<div class="carousel-item<?=$i==0?' active':''?>">
-						<img src="<?=$image?>">
+						<img class="d-block img-fluid" src="<?=$image?>">
 					</div>
 				<?php } ?>
 			</div>
 			<div class="carousel-thumbnails">
 				<?php foreach($product->images['thumb'] as $i=>$image){ ?>
 					<div data-target="#latest_banner" data-slide-to="<?=$i?>"<?=$i==0?'class="active"':''?>>
-						<img src="<?=$image?>" width="75">
+						<img class="d-block img-fluid" src="<?=$image?>" width="75">
 					</div>
 				<?php } ?>
 			</div>

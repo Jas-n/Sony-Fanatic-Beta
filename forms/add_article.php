@@ -78,6 +78,7 @@
 			$results['data']=parent::unname($results['data']);
 			$results['files']=parent::unname($results['files']);
 			$id=$db->next_hex_id('products');
+			$slug=str_replace('&hellip;','',crop(slug($results['data']['title']),101));
 			$db->query(
 				"INSERT INTO `articles` (
 					`id`,		`type`,		`status`,	`title`,	`slug`,
@@ -88,7 +89,7 @@
 					$results['data']['type'],
 					$results['data']['status'],
 					$results['data']['title'],
-					str_replace('&hellip;','',crop(slug($results['data']['title']),101)),
+					$slug,
 				
 					$results['data']['excerpt'],
 					$results['data']['content'],
@@ -109,6 +110,22 @@
 				);
 			}
 			$app->log_message(3,'Added PArticle','Added <strong>'.$results['data']['title'].'</strong> to articles.');
+			if($results['data']['status']==2){
+				/*$twitter=new twitter();
+				$twitter->tweet('New Article: '.$results['data']['title'].'. Read now: '.SERVER_NAME.'n/'.$id.'-'.$slug);
+				$db->query(
+					"UPDATE `articles`
+					SET
+						`tweeted`=?,
+						`updated`=?
+					WHERE `id`=?",
+					array(
+						1,
+						DATE_TIME,
+						$id
+					)
+				);*/
+			}
 			header('Location: ./article/'.$id);
 			exit;
 		}

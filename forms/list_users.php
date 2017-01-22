@@ -49,34 +49,36 @@
 					}
 				}
 			parent::add_html('</tbody>
-		</table>'.
-		pagination($users['count'],0).
-		'<p class="text-center">');
-			parent::add_button(array(
-				'class'	=>'btn-info',
-				'name'	=>'reset',
-				'type'	=>'submit',
-				'value'	=>'Reset Password'
-			));
-			parent::add_button(array(
-				'class'	=>'btn-success',
-				'name'	=>'enable',
-				'type'	=>'submit',
-				'value'	=>'Enable'
-			));
-			parent::add_button(array(
-				'class'	=>'btn-warning',
-				'name'	=>'disable',
-				'type'	=>'submit',
-				'value'	=>'Disable'
-			));
-			parent::add_button(array(
-				'class'	=>'btn-danger delete',
-				'name'	=>'delete',
-				'type'	=>'submit',
-				'value'	=>'Delete'
-			));
-		parent::add_html('</p>');
+		</table>
+		<div class="d-flex justify-content-between">'.
+			pagination($users['count'],0).
+			'<div class="ml-auto">');
+				parent::add_button(array(
+					'class'	=>'btn-info',
+					'name'	=>'reset',
+					'type'	=>'submit',
+					'value'	=>'Reset Password'
+				));
+				parent::add_button(array(
+					'class'	=>'btn-success',
+					'name'	=>'enable',
+					'type'	=>'submit',
+					'value'	=>'Enable'
+				));
+				parent::add_button(array(
+					'class'	=>'btn-warning',
+					'name'	=>'disable',
+					'type'	=>'submit',
+					'value'	=>'Disable'
+				));
+				parent::add_button(array(
+					'class'	=>'btn-danger delete',
+					'name'	=>'delete',
+					'type'	=>'submit',
+					'value'	=>'Delete'
+				));
+			parent::add_html('</div>
+		</div>');
 	}
 	public function process(){
 		global $app,$db,$user;

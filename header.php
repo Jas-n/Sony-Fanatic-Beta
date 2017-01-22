@@ -11,7 +11,7 @@
     </head>
     <body id="<?=basename($_SERVER['PHP_SELF'],'.php')?>">
 		<header class="cd-auto-hide-header">
-			<div class="logo"><a href="/"><?=SITE_NAME?></a></div>
+			<a class="logo" href="/"><?=SITE_NAME?></a>
 			<nav class="cd-primary-nav">
 				<a href="#cd-navigation" class="nav-trigger">
 					<span>
@@ -20,12 +20,19 @@
 					</span>
 				</a> <!-- .nav-trigger -->
 				<ul id="cd-navigation">
-					<li><a href="/">Home</a></li>
+					<?php if(is_file(ROOT.'categories.html')){
+						include(ROOT.'categories.html');
+					} ?>
 					<li><a href="/news">News</a></li>
 					<?php if(!is_logged_in()){ ?>
 						<li><a href="/login">Login</a></li>
 					<?php }else{ ?>
-						<li><a href="/users">Account</a></li>
+						<li>
+							<a>Account</a>
+							<ul>
+								<li><a href="/logout">Logout</a></li>
+							</ul>
+						</li>
 					<?php } ?>
 				</ul>
 			</nav> <!-- .cd-primary-nav -->

@@ -1,11 +1,13 @@
 <?php class edit_product extends form{
+	private $brands;
 	public $product;
 	public function __construct($data=NULL){
 		global $bootstrap,$products;
 		$this->product=new product($_GET['id']);
 		$feature_categories=$products->get_feature_categories();
 		$feature_categories=array_combine(array_keys($feature_categories),array_column($feature_categories,'name'));
-		$brands=$products->get_brands();
+		$this->brands=$products->get_brands();
+		$brands=$this->brands;
 		$brands=$this->optioner(tree($brands),'brand');
 		$categories=$this->optioner($products->get_category_tree(),'name');
 		parent::__construct("name=".__CLASS__);
@@ -271,6 +273,7 @@
 					`name`=?,
 					`excerpt`=?,
 					`description`=?,
+					
 					`published`=?,
 					`updated`=?
 				WHERE `id`=?",
@@ -325,8 +328,28 @@
 					smart_resize_image($images['tmp_name'][$i],NULL,1920,1080,0,ROOT.$this->product->dir.$j.'_full.png',0,'png');
 				}
 			}
+			if($results['data']['status']==1 && $this->product->tweeted==0){
+				/*$twitter=new twitter();
+				if($media=glob(ROOT.$this->product->dir.'*_medium.png')){
+					$media=array_slice($media,0,4);
+				}
+				$twitter->tweet('New Product: '.$this->brands[$results['data']['brand']]['brand'].' '.$results['data']['name'].'. Compare now: '.SERVER_NAME.'p/'.$_GET['id'].'-'.$this->product->slug,$media);
+				$db->query(
+					"UPDATE `products`
+					SET
+						`tweeted`=?,
+						`updated`=?
+					WHERE `id`=?",
+					array(
+						1,
+						DATE_TIME,
+						$_GET['id']
+					)
+				);*/
+			}
 			$app->log_message(3,'Updated Product','Updated <strong>'.$results['data']['name'].'</strong>.');
 			$app->set_message('success','Updated <strong>'.$results['data']['name'].'</strong>.');
+			$products->update_category_counts();
 			$this->redirect();
 		}
 	}
