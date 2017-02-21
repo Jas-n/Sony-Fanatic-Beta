@@ -4,6 +4,9 @@ if(basename($_SERVER['PHP_SELF'])==basename(__FILE__)){
 	header('Location: /');
 	exit;
 }
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 # If the site is not in a root directory
 $document_root=__DIR__;
 define("ROOT",$document_root.'/');
@@ -54,6 +57,10 @@ $db=new database();
 # Define Settings
 foreach($db->query("SELECT `name`,`value` FROM `settings`") as $setting){
 	define(strtoupper($setting['name']),nl2br($setting['value']));
+}
+if(get_dir()!='api' && isset($_SERVER['REQUEST_METHOD']) && substr(SERVER_NAME,0,strpos(SERVER_NAME,':'))!=$_SERVER['REQUEST_SCHEME']){
+	header('Location: '.SERVER_NAME.substr($_SERVER['REQUEST_URI'],1));
+	exit;
 }
 define('SQL_LIMIT',' LIMIT '.(($_GET['page']?(($_GET['page']-1)*ITEMS_PER_PAGE):0).','.ITEMS_PER_PAGE).' ');
 $app=new app;

@@ -7,10 +7,10 @@
 		$this->category=$fv['category'];
 		$this->option=	$fv['option'];
 		$this->values=	$fv['values'];
-		parent::__construct("name=".__CLASS__);
+		parent::__construct("name=".__CLASS__.'&hide_required_message=1');
 		parent::add_html('<table class="'.$bootstrap->table->classes->table.'">
 			<thead>
-				<tr class="'.$bootstrap->table->classes->header.'">
+				<tr>
 					<th>');
 						parent::add_field(array(
 							'class'	=>'check_all',
@@ -46,7 +46,7 @@
 						</tr>');
 					}
 				}
-				parent::add_html('<tr class="thead-default">
+				parent::add_html('<tr class="bg-primary text-white">
 					<th class="text-center" colspan="2">Add Feature Category</th>
 				</tr>
 				<tr>

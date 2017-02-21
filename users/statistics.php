@@ -3,21 +3,19 @@
 	'php.statistics'
 );
 require('../init.php');
+$h1='Statistics';
+$breadcrumb=array(
+	'Management',
+	'Statistics'
+);
 include('header.php');?>
-<h1>Statistics</h1>
-<ol class="breadcrumb">
-	<li class="breadcrumb-item"><a href="../">Home</a></li>
-	<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
-	<li class="breadcrumb-item">Management</li>
-	<li class="breadcrumb-item active">Statistics</li>
-</ol>
 <div class="row">
 	<div class="col-md-6">
 		<div class="card">
 			<div class="card-header">Users<a class="btn btn-primary btn-sm float-right" href="./users" title="View Users">View</a></div>
 			<table class="<?=$bootstrap->table->classes->table?> table-fixed">
 				<thead>
-					<tr class="<?=$bootstrap->table->classes->header?>">
+					<tr>
 						<th></th>
 						<th>Count</th>
 						<th>Can Access</th>
@@ -42,7 +40,7 @@ include('header.php');?>
 					<?php } ?>
 				</tbody>
 				<tfoot>
-					<tr class="'.$bootstrap->table->classes->header.'">
+					<tr>
 						<th>Total</th>
 						<th><?=number_format($total)?></th>
 						<th><?=number_format($access)?></th>

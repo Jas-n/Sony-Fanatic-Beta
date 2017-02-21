@@ -8,7 +8,7 @@
 		parent::__construct("name=users");
 		parent::add_html('<table class="'.$bootstrap->table->classes->table.'">
 			<thead>
-				<tr class="'.$bootstrap->table->classes->header.'">
+				<tr>
 					<th>');
 						parent::add_field(array(
 							'class'	=>'check_all',
@@ -38,8 +38,8 @@
 								}
 							parent::add_html('</td>
 							<td><img class="avatar" src="'.$user->get_avatar($usr['id'],50).'" height="50"></td>
-							<td>'.$usr['title']." ".$usr['first_name']." ".$usr['initials']." ".$usr['last_name'].'</td>
-							<td>'.implode(',<br>',$usr['roles']).'</td>
+							<td>'.$usr['username'].'</td>
+							<td>'.print_pre($usr,1).'</td>
 							<td>');
 								if($usr['id']!=0){
 									parent::add_html('<a class="btn btn-primary btn-sm" href="user/'.$usr['id'].'">View</a> <a class="btn btn-secondary btn-sm" href="mailto:'.$usr['email'].'" title="Email '.$usr['first_name'].' '.$usr['last_name'].'">Email</a>');
@@ -50,9 +50,9 @@
 				}
 			parent::add_html('</tbody>
 		</table>
-		<div class="d-flex justify-content-between">'.
+		<div class="d-flex justify-content-around">'.
 			pagination($users['count'],0).
-			'<div class="ml-auto">');
+			'<div>');
 				parent::add_button(array(
 					'class'	=>'btn-info',
 					'name'	=>'reset',

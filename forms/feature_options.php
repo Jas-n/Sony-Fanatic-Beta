@@ -3,10 +3,10 @@
 		global $bootstrap,$products;
 		$this->feature_category=$products->get_feature_category($_GET['id']);
 		$feature_options=$products->get_feature_options($_GET['id']);
-		parent::__construct("name=".__CLASS__);
+		parent::__construct("name=".__CLASS__.'&hide_required_message=1');
 		parent::add_html('<table class="'.$bootstrap->table->classes->table.'">
 			<thead>
-				<tr class="'.$bootstrap->table->classes->header.'">
+				<tr">
 					<th>');
 						parent::add_field(array(
 							'class'	=>'check_all',
@@ -46,7 +46,7 @@
 						</tr>');
 					}
 				}
-				parent::add_html('<tr class="thead-default">
+				parent::add_html('<tr class="bg-primary text-white">
 					<th class="text-center" colspan="4">Add Feature Option</th>
 				</tr>
 				<tr>

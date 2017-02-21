@@ -28,8 +28,10 @@
 						<li><a href="/login">Login</a></li>
 					<?php }else{ ?>
 						<li>
-							<a>Account</a>
+							<a class="text-truncate"><?=$user->username?></a>
 							<ul>
+								<li><a href="/users">Account</a></li>
+								<li><a href="/u/<?=$user->username?>">Profile</a></li>
 								<li><a href="/logout">Logout</a></li>
 							</ul>
 						</li>

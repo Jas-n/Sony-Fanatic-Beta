@@ -73,7 +73,7 @@ include('header.php');?>
 		}?>
 		<table class="table table-sm table-fixed">
 			<thead>
-				<tr class="<?=$bootstrap->table->classes->header?>">
+				<tr>
 					<th>Category</th>
 					<th>Feature</th>
 					<th>Value</th>

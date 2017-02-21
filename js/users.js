@@ -1,8 +1,7 @@
-$(document).ready(function(e){
-	$('.has_children a').click(function(e){
-		if(!$(e.target).parents('.has_children.active').length){
-			$('nav .has_children').removeClass('active');
-		}
-		$(e.target.parentNode).toggleClass('active');
-	});
+$('.has_children a').click(function(){
+	$('nav .has_children').removeClass('active');
+	$(this.parentNode).addClass('active');
+});
+$('main').click(function(){
+	$('nav .has_children').removeClass('active');
 });

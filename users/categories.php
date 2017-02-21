@@ -4,14 +4,22 @@
 require('../init.php');
 $categories=new categories;
 $categories->process();
-require('header.php');?>
-<h1>Categories</h1>
-<ol class="breadcrumb">
-	<li class="breadcrumb-item"><a href="../">Home</a></li>
-	<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
-	<li class="breadcrumb-item">Products</li>
-	<li class="breadcrumb-item active">Categories</li>
-</ol>
-<?php $app->get_messages();
-$categories->get_form();
-require('footer.php');
+$h1='Categories';
+$breadcrumb=array(
+	'products'=>'Products'
+);
+if($category=$products->get_category($_GET['id'])){
+	$breadcrumb['categories']='Categories';
+	if($category['parent_id']){
+		$breadcrumb[]='&hellip;';
+	}
+	$breadcrumb[]=$category['name'];
+}else{
+	$breadcrumb[]='Categories';
+}
+require('header.php');
+$app->get_messages(); ?>
+<div class="card card-block">
+	<?php $categories->get_form(); ?>
+</div>
+<?php require('footer.php');

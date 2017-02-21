@@ -1,7 +1,7 @@
 <?php class add_article extends form{
 	public function __construct($data=NULL){
 		global $articles;
-		parent::__construct("name=".__CLASS__);
+		parent::__construct("name=".__CLASS__.'&hide_required_message=1');
 		parent::add_fields(array(
 			array(
 				'class'			=>'ajax_product',
@@ -111,7 +111,7 @@
 			}
 			$app->log_message(3,'Added PArticle','Added <strong>'.$results['data']['title'].'</strong> to articles.');
 			if($results['data']['status']==2){
-				/*$twitter=new twitter();
+				$twitter=new twitter();
 				$twitter->tweet('New Article: '.$results['data']['title'].'. Read now: '.SERVER_NAME.'n/'.$id.'-'.$slug);
 				$db->query(
 					"UPDATE `articles`
@@ -124,7 +124,7 @@
 						DATE_TIME,
 						$id
 					)
-				);*/
+				);
 			}
 			header('Location: ./article/'.$id);
 			exit;

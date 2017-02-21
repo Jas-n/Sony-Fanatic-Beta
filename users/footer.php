@@ -1,6 +1,3 @@
-					</div>
-				</div>
-			</div>
 		</main>
 		<div class="hidden" id="loading">
 			<svg class="loading_svg" width="40" height="40" viewbox="0 0 40 40">

@@ -5,7 +5,7 @@
 		parent::__construct("name=users");
 		parent::add_html('<table class="'.$bootstrap->table->classes->table.'">
 			<thead>
-				<tr class="'.$bootstrap->table->classes->header.'">
+				<tr>
 					<th>');
 						parent::add_field(array(
 							'class'	=>'check_all',
@@ -46,9 +46,9 @@
 				}
 			parent::add_html('</tbody>
 		</table>
-		<div class="d-flex justify-content-between">'.
+		<div class="d-flex justify-content-around">'.
 			pagination($product_list['count'],0).
-			'<div class="ml-auto">');
+			'<div>');
 				parent::add_button(array(
 					'class'	=>'btn-success',
 					'name'	=>'enable',

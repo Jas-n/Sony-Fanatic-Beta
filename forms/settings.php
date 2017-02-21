@@ -8,7 +8,7 @@
 			}
 			$settings[$temp['name']]=$temp['value'];
 		}
-		parent::__construct('name=settings');
+		parent::__construct('name=settings&hide_required_message=1');
 		parent::add_html('<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#api" role="tab">API</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#company">Company</a></li>

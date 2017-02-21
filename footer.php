@@ -11,6 +11,10 @@
 						<li><a href="contact">Contact</a></li>
 					</ul>
 				</div>
+				<div class="col social">
+					<a href="https://facebook.com/techversus" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+					<a href="https://twitter.com/tech_versus" target="_blank"><i class="fa fa-fw fa-twitter"></i></a>
+				</div>
 			</div>
 		</footer>
 		<script>

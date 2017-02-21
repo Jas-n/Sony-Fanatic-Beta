@@ -8,17 +8,20 @@
 require('../init.php');
 $edit_product=new edit_product();
 $edit_product->process();
+$h1=$edit_product->product->name;
+$breadcrumb=array(
+	'products'=>'Products',
+	$edit_product->product->name
+);
+$buttons=array(
+	array(
+		'icon'	=>'eye',
+		'link'	=>'../p/'.$edit_product->product->id.'-'.$edit_product->product->slug,
+		'target'=>'blank',
+		'title'	=>'View Product'
+	)
+);
 require('header.php');?>
-<h1><?=$edit_product->product->name?></h1>
-<ol class="breadcrumb">
-	<li class="float-right">
-		<a class="btn btn-info" data-toggle="tooltip" href="../p/<?=$edit_product->product->id?>-<?=$edit_product->product->slug?>" target="_blank" title="View Product"><i class="fa fa-fw fa-eye"></i></a>
-	</li>
-	<li class="breadcrumb-item"><a href="../">Home</a></li>
-	<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
-	<li class="breadcrumb-item"><a href="products">Products</a></li>
-	<li class="breadcrumb-item active"><?=$edit_product->product->name?></li>
-</ol>
 <div class="card card-block card-details">
 	<div class="row">
 		<div class="col-md-6">
@@ -30,6 +33,8 @@ require('header.php');?>
 		</div>
 	</div>
 </div>
-<?php $app->get_messages();
-$edit_product->get_form();
-require('footer.php');
+<?php $app->get_messages(); ?>
+<div class="card card-block">
+	<?php $edit_product->get_form(); ?>
+</div>
+<?php require('footer.php');

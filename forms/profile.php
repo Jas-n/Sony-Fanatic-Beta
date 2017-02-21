@@ -1,7 +1,7 @@
 <?php class profile extends form{
 	public function __construct(){
 		global $addresses,$user;
-		parent::__construct("name=profile&class=form-horizontal");
+		parent::__construct('name=profile&class=form-horizontal&hide_required_message=1');
 		$this->set_label_width(3);
 		parent::add_html('<div class="row">
 			<div class="col-md-6">');

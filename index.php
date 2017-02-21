@@ -37,7 +37,7 @@ if($latest_news){
 			<div class="carousel-inner" role="listbox">
 				<?php foreach($slider as $i=>$slide){?>
 					<div class="carousel-item<?=$i==0?' active':''?>">
-						<a href="<?=$slide['link']?>"><img src="http://placehold.it/1920x500"></a>
+						<a href="<?=$slide['link']?>"><img class="img-fluid" src="http://placehold.it/1920x500"></a>
 						<div class="carousel-caption">
 							<h3><a href="<?=$slide['link']?>"><?=$slide['title']?></a></h3>
 							<p class="text-truncate"><?=crop($slide['excerpt'],50)?></p>

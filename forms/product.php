@@ -10,7 +10,7 @@
 		$brands=$this->brands;
 		$brands=$this->optioner(tree($brands),'brand');
 		$categories=$this->optioner($products->get_category_tree(),'name');
-		parent::__construct("name=".__CLASS__);
+		parent::__construct("name=".__CLASS__.'&hide_required_message=1');
 		parent::add_html('<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#details" role="tab">Details</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#associations" role="tab">Associations</a></li>
@@ -106,7 +106,7 @@
 				</div>
 				<table class="'.$bootstrap->table->classes->table.'">
 					<thead>
-						<tr class="'.$bootstrap->table->classes->header.'">
+						<tr>
 							<th>Category</th>
 							<th>Feature</th>
 							<th>Value</th>
@@ -175,7 +175,7 @@
 			<div class="tab-pane" id="purchasing" role="tabpanel">
 				<table class="'.$bootstrap->table->classes->table.'">
 					<thead>
-						<tr class="'.$bootstrap->table->classes->header.'">
+						<tr>
 							<th>Title</th>
 							<th>Link</th>
 							<th>Actions</th>
@@ -214,7 +214,7 @@
 			<div class="tab-pane" id="articles" role="tabpanel">
 				<table class="'.$bootstrap->table->classes->table.'">
 					<thead>
-						<tr class="'.$bootstrap->table->classes->header.'">
+						<tr>
 							<th>Title</th>
 							<th>Actions</th>
 						</tr>
@@ -329,7 +329,7 @@
 				}
 			}
 			if($results['data']['status']==1 && $this->product->tweeted==0){
-				/*$twitter=new twitter();
+				$twitter=new twitter();
 				if($media=glob(ROOT.$this->product->dir.'*_medium.png')){
 					$media=array_slice($media,0,4);
 				}
@@ -345,7 +345,7 @@
 						DATE_TIME,
 						$_GET['id']
 					)
-				);*/
+				);
 			}
 			$app->log_message(3,'Updated Product','Updated <strong>'.$results['data']['name'].'</strong>.');
 			$app->set_message('success','Updated <strong>'.$results['data']['name'].'</strong>.');

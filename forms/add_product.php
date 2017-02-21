@@ -1,7 +1,7 @@
 <?php class add_product extends form{
 	public function __construct($data=NULL){
 		global $products;
-		parent::__construct("name=".__CLASS__);
+		parent::__construct("name=".__CLASS__.'&hide_required_message=1');
 		$brands=$products->get_brands();
 		$brands=$this->optioner(tree($brands),'brand');
 		$categories=$this->optioner($products->get_category_tree(),'name');

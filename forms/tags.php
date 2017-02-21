@@ -14,7 +14,7 @@
 		parent::__construct("name=".__CLASS__);
 		parent::add_html('<table class="'.$bootstrap->table->classes->table.' table-fixed">
 			<thead>
-				<tr class="'.$bootstrap->table->classes->header.'">
+				<tr>
 					<th>');
 						parent::add_field(array(
 							'class'	=>'check_all',

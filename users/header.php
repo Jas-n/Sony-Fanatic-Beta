@@ -10,61 +10,80 @@
 		<title><?=$app->page_title()?></title>
 		<base href="<?=SERVER_NAME?>users/">
     </head>
-    <body id="<?=strtolower(str_replace(' ','-','users-'.$page->slug))?>">
-   		<nav>
-   			<div class="nav_head">
-				<a href="../"><?=SITE_NAME?></a>
-			</div>
-			<ul>
-				<li><a href="./"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a></li>
+    <body id="<?=str_replace('/','_',$page->slug)?>">
+    	<nav>
+    		<ul>
+				<li><a href="../"><i class="fa fa-home"></i>Home</a></li>
+				<li><a href="./"><i class="fa fa-dashboard"></i>Dashboard</a></li>
 				<li class="has_children">
-					<a><i class="fa fa-fw fa-television"></i> Products</a>
+					<a><i class="fa fa-television"></i> Products</a>
 					<ul>
-						<li><a href="products"><i class="fa fa-fw fa-television"></i> Products</a></li>
-						<li><a href="add_product"><i class="fa fa-fw fa-plus"></i> Add</a></li>
-						<li><a href="brands"><i class="fa fa-fw fa-list"></i> Brands</a></li>
-						<li><a href="categories"><i class="fa fa-fw fa-th"></i> Categories</a></li>
-						<li><a href="feature_categories"><i class="fa fa-fw fa-list-ol"></i> Features</a></li>
-						<li><a href="tags"><i class="fa fa-fw fa-tags"></i> Tags</a></li>
+						<li><a href="products">Products</a></li>
+						<li><a href="add_product">Add</a></li>
+						<li><a href="brands">Brands</a></li>
+						<li><a href="categories">Categories</a></li>
+						<li><a href="feature_categories">Features</a></li>
+						<li><a href="tags">Tags</a></li>
 					</ul>
 				</li>
 				<li class="has_children">
-					<a><i class="fa fa-fw fa-newspaper-o"></i> Articles</a>
+					<a><i class="fa fa-newspaper-o"></i> Articles</a>
 					<ul>
-						<li><a href="articles"><i class="fa fa-fw fa-newspaper-o"></i> View</a></li>
-						<li><a href="add_article"><i class="fa fa-fw fa-pencil"></i> Add</a></li>
+						<li><a href="articles">View</a></li>
+						<li><a href="add_article">Add</a></li>
 					</ul>
 				</li>
 				<li class="has_children">
-					<a><span class="fa fa-fw fa-users"></span> Users</a>
+					<a><span class="fa fa-users"></span> Users</a>
 					<ul>
-						<li><a href="users"><i class="fa fa-fw fa-list"></i> View</a></li>
+						<li><a href="users">View</a></li>
 					</ul>
 				</li>
 				<li class="has_children">
-					<a><i class="fa fa-fw fa-wrench"></i> Management</a>
+					<a><i class="fa fa-wrench"></i> Management</a>
 					<ul>
-						<li><a href="logs"><i class="fa fa-fw fa-list"></i> Logs</a></li>
-						<li><a href="statistics"><i class="fa fa-fw fa-bar-chart"></i> Statistics</a></li>
+						<li><a href="logs">Logs</a></li>
+						<li><a href="statistics">Statistics</a></li>
 					</ul>
 				</li>
 				<li class="has_children">
-					<a><i class="fa fa-fw fa-cogs"></i> Administration</a>
+					<a><i class="fa fa-cogs"></i> Admin</a>
 					<ul>
-						<li><a href="settings"><i class="fa fa-fw fa-cogs"></i> Settings</a></li>
+						<li><a href="settings">Settings</a></li>
 					</ul>
 				</li>
-				<li class="has_children">
-					<a><i class="fa fa-fw fa-user"></i> <?=$user->first_name?></a>
-					<ul>
-						<li><a href="profile"><i class="fa fa-fw fa-user"></i> Profile</a></li>
-						<li><a href="../logout"><i class="fa fa-fw fa-sign-out"></i> Logout</a></li>
-					</ul>
-				</li>
-				<li><a href="test"><i class="fa fa-fw fa-exclamation-triangle"></i> Tests</a></li>
+				<li><a href="profile"><i class="fa fa-user"></i>Profile</a></li>
+				<li><a href="../logout"><i class="fa fa-sign-out"></i>Logout</a></li>
+				<li><a href="test"><i class="fa fa-exclamation-triangle"></i> Testing</a></li>
 			</ul>
 		</nav>
-		<div id="body">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-xl-10 offset-xl-1">
+		<header>
+			<h1><?=$h1.($small?' <small class="text-muted">'.$small.'</small>':'')?></h1>
+			<?php if($buttons){ ?>
+				<div class="actions">
+					<?php foreach($buttons as $button){ ?>
+						<a class="fa fa-<?=$button['icon']?>" data-placement="left" data-toggle="tooltip" href="<?=$button['link']?>"<?=$button['target']?' target="_'.$button['target'].'"':''?> title="<?=$button['title']?>"></a>
+					<?php } ?>
+				</div>
+			<?php } ?>
+			<ul class="breadcrumb">
+				<li class="breadcrumb-item"><a href="../">Home</a></li>
+				<li class="breadcrumb-item<?=$page->slug=='users/index'?' active':''?>"><a href="./">Dashboard</a></li>
+				<?php if($breadcrumb){
+					end($breadcrumb);
+					$last=key($breadcrumb);
+					foreach($breadcrumb as $link=>$title){?>
+						<li class="breadcrumb-item<?=$link==last?' active':''?>">
+							<?php if(!is_numeric($link)){ ?>
+								<a href="<?=$link?>">
+							<?php }
+							echo $title;
+							if(!is_numeric($link)){ ?>
+								</a>
+							<?php }?>
+						</li>
+					<?php }
+				} ?>
+			</ul>
+		</header>
+		<main class="container-fluid">

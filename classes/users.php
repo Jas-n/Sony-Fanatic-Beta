@@ -519,7 +519,7 @@
 		}
 		# Fields for user form
 		public function user_form_fields($form,$user=NULL){
-			$form->add_select(
+			/*$form->add_select(
 				array(
 					'label'		=>'Title',
 					'name'		=>'title',
@@ -528,7 +528,7 @@
 				),
 				json_decode(TITLES,1),
 				'Select&hellip;'
-			);
+			);*/
 			$form->add_fields(array(
 				array(
 					'label'			=>'First Name',

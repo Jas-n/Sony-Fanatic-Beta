@@ -10,18 +10,19 @@ if($_GET['id']){
 		exit;
 	}
 }
-require('header.php');?>
-<h1><?=$brand?$brand['brand']:'Brands'?></h1>
-<ol class="breadcrumb">
-	<li class="breadcrumb-item"><a href="../">Home</a></li>
-	<li class="breadcrumb-item"><a href="./">Dashboard</a></li>
-	<li class="breadcrumb-item"><a href="products">Products</a></li>
-	<li class="breadcrumb-item">Sorting</li>
-	<li class="breadcrumb-item<?=$brand?' active':''?>"><?=$brand?'<a href="brands">':''?>Brands<?=$brand?'</a>':''?></li>
-	<?php if($brand){ ?>
-		<li class="breadcrumb-item active"><?=$brand['brand']?></li>
-	<?php } ?>
-</ol>
-<?php $app->get_messages();
-$brands->get_form();
-require('footer.php');
+$h1=$brand?$brand['brand']:'Brands';
+$breadcrumb=array(
+	'products'=>'Products',
+);
+if($brand){
+	$breadcrumb['brands']='Brands';
+	$breadcrumb[]=$brand['brand'];
+}else{
+	$breadcrumb[]='Brands';
+}
+require('header.php');
+$app->get_messages(); ?>
+<div class="card card-block">
+	<?php $brands->get_form(); ?>
+</div>
+<?php require('footer.php');

@@ -51,6 +51,9 @@ b, dt, optgroup, strong, th{
 .card{
 	margin-bottom:$spacer;
 }
+.card-block{
+	display: block;
+}
 .card-details{
 	padding:$spacer;
 	p{
@@ -59,6 +62,10 @@ b, dt, optgroup, strong, th{
 }
 .carousel .carousel-thumbnails>*{
 	cursor: pointer;
+}
+.cols-2{
+	-moz-column-count:2;
+	     column-count:2;
 }
 .form-control{
 	padding:5px .75rem;
@@ -105,12 +112,22 @@ select.form-control:not([size]):not([multiple]){
 textarea{
 	resize:vertical;
 }
-table > thead > tr > th{
-	&[colspan]{
-		text-align:center;
+.table{
+	> thead > tr{
+		background:$brand-primary !important;
+		color:#fff;
+		th{
+			&[colspan]{
+				text-align:center;
+			}
+			&[rowspan]{
+				vertical-align:middle;
+			}
+		}
 	}
-	&[rowspan]{
-		vertical-align:middle;
+	th,
+	td{
+		padding:$spacer/2;
 	}
 }
 td p{margin-bottom:0.5rem}

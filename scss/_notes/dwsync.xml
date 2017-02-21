@@ -6,7 +6,7 @@
 <file name="core.scss" server="techversus.tech/techversus.tech/" local="131287361608627637" remote="131287361400000000" Dst="1" />
 <file name="index.scss" server="techversus.tech/techversus.tech/" local="131279520716541392" remote="131282691600000000" Dst="1" />
 <file name="product.scss" server="techversus.tech/techversus.tech/" local="131265715380884373" remote="131282691600000000" Dst="1" />
-<file name="root.scss" server="techversus.tech/techversus.tech/" local="131296010210066539" remote="131296009800000000" Dst="1" />
+<file name="root.scss" server="techversus.tech/techversus.tech/" local="131300242268875988" remote="131300242200000000" Dst="1" />
 <file name="users.scss" server="techversus.tech/techversus.tech/" local="131282979815754424" remote="131282979600000000" Dst="1" />
 <file name="versus.scss" server="techversus.tech/techversus.tech/" local="131277756980456453" remote="131282691600000000" Dst="1" />
 <file name="_alert.scss" server="techversus.tech/techversus.tech/" local="131281657120000000" remote="131282691600000000" Dst="1" />
@@ -45,4 +45,7 @@
 <file name="_type.scss" server="techversus.tech/techversus.tech/" local="131281657120000000" remote="131282691600000000" Dst="1" />
 <file name="_utilities.scss" server="techversus.tech/techversus.tech/" local="131281657120000000" remote="131282691600000000" Dst="1" />
 <file name="_variables.scss" server="techversus.tech/techversus.tech/" local="131281657120000000" remote="131282691600000000" Dst="1" />
+<file name="root.scss" server="217.172.141.167/httpdocs/" local="131309750602037423" remote="131309750400000000" Dst="1" />
+<file name="users.scss" server="217.172.141.167/httpdocs/" local="131321871242019910" remote="131321871000000000" Dst="1" />
+<file name="core.scss" server="217.172.141.167/httpdocs/" local="131321804723042577" remote="131321804400000000" Dst="1" />
 </dwsync>

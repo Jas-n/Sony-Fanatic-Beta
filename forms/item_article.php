@@ -1,7 +1,7 @@
 <?php class item_article extends form{
 	public function __construct($data=NULL){
 		global $article,$articles,$bootstrap;
-		parent::__construct("name=".__CLASS__);
+		parent::__construct("name=".__CLASS__.'&hide_required_message=1');
 		parent::add_html('<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#article" role="tab">Article</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#products" role="tab">Products</a></li>
@@ -116,6 +116,20 @@
 			if($results['data']['status']==2 && $article['published']=='0000-00-00 00:00:00'){
 				$sets[]='published';
 				$options[]=DATE_TIME;
+				$twitter=new twitter();
+				$twitter->tweet('New Article: '.$results['data']['title'].'. Read now: '.SERVER_NAME.'n/'.$id.'-'.$slug);
+				$db->query(
+					"UPDATE `articles`
+					SET
+						`tweeted`=?,
+						`updated`=?
+					WHERE `id`=?",
+					array(
+						1,
+						DATE_TIME,
+						$id
+					)
+				);
 			}
 			$options[]=$_GET['id'];
 			$db->query(

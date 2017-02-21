@@ -1,8 +1,8 @@
 <?php class twitter extends TwitterAPIExchange{
-	private $c_key="656ePm4iBr8xgO0lnBmZj5I1G";
-	private $c_sec="teldAEJnLMrHyVif5ocdZVDJebguYRQZ0O888hviU7y4GQcitB";
-	private $a_tok="41876338-Lo8u0e7gdNTkBJx2dZPyPNwoYFayQdZB9WUX1UIZY";
-	private $a_sec="QqMNU2ecG0syC4zfpSNwOFROdkLXthw0UNnsPLwB7U2ln";
+	private $c_key="ZJKwSVDMwyYyqBCIUmdXmGRff";
+	private $c_sec="11ejmGVziqhfMQ34JtZ07mXegPstkni0lF1vc2ujkjub4NIy9f";
+	private $a_tok="825727377573548032-bmPGRQwpbq9ZuldlVm575Ej2wXqAZtw";
+	private $a_sec="Xf5mb9HrFp9IqOQjOVy6TbFqgFIQIFrvH8bLI7XSgp1gr";
 	public function __construct(){
 		parent::__construct(array(
 			'consumer_key'=>$this->c_key,
