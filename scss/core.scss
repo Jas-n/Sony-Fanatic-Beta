@@ -236,7 +236,7 @@ img{
 }
 .table{
 	> thead > tr{
-		background:$brand-primary;
+		background:theme-color("primary");
 		color:#fff;
 		th{
 			&[colspan]{

@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="bootstrap.css" server="techversus.tech/httpdocs/" local="131494503970108556" remote="131496351000000000" Dst="2" />
-<file name="bootstrap.css.map" server="techversus.tech/httpdocs/" local="131494503985763632" remote="131496351000000000" Dst="2" />
-<file name="core.css" server="techversus.tech/httpdocs/" local="131496351388215370" remote="131496351000000000" Dst="2" />
-<file name="core.css.map" server="techversus.tech/httpdocs/" local="131496351388275364" remote="131496351000000000" Dst="2" />
+<file name="bootstrap.css" server="techversus.tech/httpdocs/" local="131494503970108556" remote="131498883000000000" Dst="2" />
+<file name="bootstrap.css.map" server="techversus.tech/httpdocs/" local="131494503985763632" remote="131498883000000000" Dst="2" />
+<file name="core.css" server="techversus.tech/httpdocs/" local="131498880992270633" remote="131498883000000000" Dst="2" />
+<file name="core.css.map" server="techversus.tech/httpdocs/" local="131498880992370649" remote="131498883000000000" Dst="2" />
 <file name="font-awesome.css" server="techversus.tech/httpdocs/" local="131496315467783288" remote="131496315000000000" Dst="2" />
 <file name="font-awesome.css.map" server="techversus.tech/httpdocs/" local="131496315473155208" remote="131496315000000000" Dst="2" />
-<file name="article.css" server="techversus.tech/httpdocs/" local="131494506699627070" remote="131496319800000000" Dst="2" />
-<file name="brand.css" server="techversus.tech/httpdocs/" local="131494506712628738" remote="131496319800000000" Dst="2" />
-<file name="brand.css.map" server="techversus.tech/httpdocs/" local="131494506712648753" remote="131496319800000000" Dst="2" />
-<file name="category.css" server="techversus.tech/httpdocs/" local="131494506699347036" remote="131496319800000000" Dst="2" />
-<file name="index.css" server="techversus.tech/httpdocs/" local="131494506706552959" remote="131496319800000000" Dst="2" />
-<file name="product.css" server="techversus.tech/httpdocs/" local="131496346043551678" remote="131496351000000000" Dst="2" />
-<file name="root.css" server="techversus.tech/httpdocs/" local="131496351382349600" remote="131496351000000000" Dst="2" />
-<file name="users.css" server="techversus.tech/httpdocs/" local="131496354752010181" remote="131496354000000000" Dst="2" />
-<file name="versus.css" server="techversus.tech/httpdocs/" local="131496346468334758" remote="131496351000000000" Dst="2" />
-<file name="users.css.map" server="techversus.tech/httpdocs/" local="131496354755310610" remote="131496354000000000" Dst="2" />
+<file name="article.css" server="techversus.tech/httpdocs/" local="131498882333660314" remote="131498883000000000" Dst="2" />
+<file name="brand.css" server="techversus.tech/httpdocs/" local="131498879498871480" remote="131498883000000000" Dst="2" />
+<file name="brand.css.map" server="techversus.tech/httpdocs/" local="131498879498891479" remote="131498883000000000" Dst="2" />
+<file name="category.css" server="techversus.tech/httpdocs/" local="131498882090790013" remote="131498883000000000" Dst="2" />
+<file name="index.css" server="techversus.tech/httpdocs/" local="131498882716564613" remote="131498883000000000" Dst="2" />
+<file name="product.css" server="techversus.tech/httpdocs/" local="131498882906313023" remote="131498883000000000" Dst="2" />
+<file name="root.css" server="techversus.tech/httpdocs/" local="131498881440788101" remote="131498883000000000" Dst="2" />
+<file name="users.css" server="techversus.tech/httpdocs/" local="131498880979253966" remote="131498883000000000" Dst="2" />
+<file name="versus.css" server="techversus.tech/httpdocs/" local="131498880946504765" remote="131498883000000000" Dst="2" />
+<file name="users.css.map" server="techversus.tech/httpdocs/" local="131498880982289353" remote="131498883000000000" Dst="2" />
+<file name="root.css.map" server="techversus.tech/httpdocs/" local="131498881442348313" remote="131498881200000000" Dst="2" />
+<file name="article.css.map" server="techversus.tech/httpdocs/" local="131498882333705305" remote="131498883000000000" Dst="2" />
+<file name="category.css.map" server="techversus.tech/httpdocs/" local="131498882090815012" remote="131498883000000000" Dst="2" />
+<file name="index.css.map" server="techversus.tech/httpdocs/" local="131498882716619604" remote="131498883000000000" Dst="2" />
+<file name="product.css.map" server="techversus.tech/httpdocs/" local="131498882906363030" remote="131498883000000000" Dst="2" />
 </dwsync>

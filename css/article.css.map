@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAMA,gBAAgB,CACf,aAAa,CCgIL,IAAI,CD/HZ,kBAAC,CACA,aAAa,CAAC,CAAC,CAGjB,eAAe,CACd,MAAM,CAAC,IAAI,CACX,KAAK,CAAC,IAAI,CACV,OAAO,CCwHC,IAAI,CDvHZ,iBAAC,CACA,KAAK,CAAC,OAAO,CAEd,iBAAC,CACA,aAAa,CAAC,CAAC",
+"sources": ["../scss/article.scss","../scss/_variables.scss"],
+"names": [],
+"file": "article.css"
+}

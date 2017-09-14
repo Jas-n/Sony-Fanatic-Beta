@@ -7,8 +7,8 @@
 $f_menu_width:200px;
 $m_menu_width:42px; */
 /* New Menu */
-$frame_colour:  darken($brand-primary,30%);
-$frame_colour_2:darken($brand-primary,27.5%);
+$frame_colour:  darken(theme-color("primary"),30%);
+$frame_colour_2:darken(theme-color("primary"),27.5%);
 $frame_size:    40px;
 $help_width:	300px;
 $menu_a:        #fff;
@@ -467,7 +467,7 @@ nav{
 		@media screen and (min-width: 992px){
 			&:hover{
 				color:$menu_a;
-				background-color: $brand-primary;
+				background-color: theme-color("primary");
 				text-decoration: none;
 			}
 		}
@@ -656,7 +656,7 @@ main.open_help{
 		display:block;
 		padding:5px;
 		&:hover{
-			background:$brand-primary;
+			background:theme-color("primary");
 			color:#fff;
 			text-decoration:none;
 		}
