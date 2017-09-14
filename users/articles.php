@@ -6,7 +6,7 @@ $breadcrumb=array(
 );
 require('header.php');
 $article_list=$articles->get_articles(-1);?>
-<div class="card card-block">
+<div class="card card-body">
 	<table class="<?=$bootstrap->table->classes->table?>">
 		<thead>
 			<tr>

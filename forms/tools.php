@@ -3,26 +3,24 @@
 		parent::__construct('name=tools');
 		parent::add_html('<div class="row">
 			<div class="col-md-4">
-				<div class="card">
-					<div class="card-block">
-						<h2>Test Email</h2>
-						<p>Send a test email to an address</p>');
-						parent::add_field(array(
-							'label'			=>'Email',
-							'name'			=>'test_email_to',
-							'placeholder'	=>'Email Address',
-							'required'		=>2,
-							'type'			=>'email'
+				<div class="card card-body">
+					<h2>Test Email</h2>
+					<p>Send a test email to an address</p>');
+					parent::add_field(array(
+						'label'			=>'Email',
+						'name'			=>'test_email_to',
+						'placeholder'	=>'Email Address',
+						'required'		=>2,
+						'type'			=>'email'
+					));
+					parent::add_html('<p class="actions">');
+						parent::add_button(array(
+							'class'	=>'btn-success btn-login',
+							'name'	=>'test_email',
+							'type'	=>'submit',
+							'value'	=>'Send'
 						));
-						parent::add_html('<p class="actions">');
-							parent::add_button(array(
-								'class'	=>'btn-success btn-login',
-								'name'	=>'test_email',
-								'type'	=>'submit',
-								'value'	=>'Send'
-							));
-						parent::add_html('</p>
-					</div>
+					parent::add_html('</p>
 				</div>
 			</div>
 		</div>');

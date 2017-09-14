@@ -1,9 +1,8 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
-        <meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<?php $app->get_css();
 		$app->get_head_js();
 		$app->get_icons();?>
@@ -20,7 +19,10 @@
 					</span>
 				</a> <!-- .nav-trigger -->
 				<ul id="cd-navigation">
-					<?php if(is_file(ROOT.'categories.html')){
+					<?php if(is_file(ROOT.'brands.html')){
+						include(ROOT.'brands.html');
+					}
+					if(is_file(ROOT.'categories.html')){
 						include(ROOT.'categories.html');
 					} ?>
 					<li><a href="/news">News</a></li>
@@ -49,8 +51,18 @@
 		if($page_nav){ ?>
 			<nav class="cd-secondary-nav">
 				<ul>
-					<?php foreach($page_nav as $i=>$nav_item){ ?>
-						<li><a<?=$i==0?' class="active"':''?> href="<?=$nav_item['link']?>" title="<?=$nav_item['name']?>"><?=$nav_item['name']?><?=$nav_item['count']?' <span class="badge badge-primary">'.$nav_item['count'].'</span>':''?></a></li>
+					<?php $first=true;
+					foreach($page_nav as $nav_item){
+						$classes=[];
+						if($first && $nav_item['link']){
+							$classes[]='active';
+							$first=false;
+						}
+						if($nav_item['class']){
+							$classes[]=trim($nav_item['class']);
+						}
+						$nav_item['title']=trim(strip_tags($nav_item['name']));?>
+						<li><a<?=($classes?' class="'.implode(' ',$classes).'"':'').($nav_item['link']?'  href="'.$nav_item['link'].'"':'')?> title="<?=$nav_item['title']?>"><?=$nav_item['name']?><?=$nav_item['count']?' <span class="badge badge-primary">'.$nav_item['count'].'</span>':''?></a></li>
 					<?php } ?>
 				</ul>
 			</nav>

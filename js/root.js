@@ -1,4 +1,73 @@
+var root={
+	compare:{},
+	init:function(){
+		'use strict';
+		var compare;
+		if(compare=sessionStorage.getItem('compare')){
+			root.compare=JSON.parse(compare);
+			for(var id in root.compare){
+				if(id==_GET.id){
+					$('.js-toggle-compare').append(' <i class="fa fa-check"></i>');
+					break;
+				}
+			}
+		}
+		root.build_compare();
+		$('.js-toggle-compare').click(function(e){
+			if(root.compare[_GET.id]===undefined){
+				root.compare[_GET.id]={
+					id:_GET.id,
+					slug:_GET.slug,
+					title:$('h1').text()
+				};
+				console.log(root.compare);
+				console.log(JSON.stringify(root.compare));
+				sessionStorage.setItem('compare',JSON.stringify(root.compare));
+				root.build_compare();
+				$('.js-toggle-compare').append(' <i class="fa fa-check"></i>');
+			}else{
+				delete root.compare[_GET.id];
+				sessionStorage.setItem('compare',root.compare);
+				root.build_compare();
+				$('.js-toggle-compare .fa-check').remove();
+			}
+		});
+	},
+	build_compare:function(){
+		var compares=Object.keys(root.compare).length;
+		var ids=[];
+		if(compares){
+			if(!$('.compare-link').length){
+				var menu='<li class="mega compare">'+
+					'<a class="compare-link" href="/vs/"></a>'+
+					'<ul>';
+						var i=0;
+						for(var id in root.compare){
+							if(compares-1<i){
+								break;
+							}else{
+								ids.push(id);
+								menu+='<li>'+
+									'<a href="/p/'+id+'-'+root.compare[id].slug+'" style="background-image:url(/uploads/p/'+str_split(id,1).join('/')+'/0_thumb.png)">'+
+										'<span class="title">'+root.compare[id].title+'</span>'+
+									'</a>'+
+								'</li>';
+							}
+							i++;
+						}
+					menu+='</ul>'+
+				'</li>';
+				$('#cd-navigation').prepend(menu);
+			}
+			$('.compare-link').attr('href','/vs/'+ids.join('/'));
+			$('.compare-link').html('Compare <span class="badge badge-info">'+compares+'</span>');
+		}else{
+			$('.compare-link').parent().remove();
+		}
+	}
+}
 $(document).ready(function(){
+	root.init();
 	var mainHeader = $('.cd-auto-hide-header'),
 		secondaryNavigation = $('.cd-secondary-nav'),
 		//this applies only if secondary nav is below intro section

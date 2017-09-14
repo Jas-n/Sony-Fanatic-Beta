@@ -1,5 +1,4 @@
-<?php # Version Bootstrap 3.35 - Bootstrap 4a5
-# Updated 11/01/2017 14:58
+<?php # 4.0.0 - 14/09/2017 19:23 - Bootstrap 4b1
 class form{
 	private	$args;
 	private	$has_date		=false;
@@ -46,11 +45,9 @@ class form{
 		);
 		# Unset any other form data, the results are expired
 		if($_SESSION['form_data']){
-			foreach($_SESSION['form_data'] as $form=>$form_data){
-				if($form==$this->data['name']){
-					$this->session_data=$form_data;
-				}
-				unset($_SESSION['form_data'][$form]);
+			if($_SESSION['form_data'][$this->data['name']]){
+				$this->session_data=$this->unname($_SESSION['form_data'][$this->data['name']]);
+				unset($_SESSION['form_data'][$this->data['name']]);
 			}
 		}
 		if(strpos($class,'form-horizontal')!==false){
@@ -222,8 +219,7 @@ class form{
 						}
 					}
 					if(!in_array($field['type'],array('select'))){
-						if($field['required']==1 && !in_array($field['type'],array('file','hidden'))
-						&& !isset($temp_name)){
+						if($field['required']==1 && !in_array($field['type'],array('file','hidden')) && !isset($temp_name)){
 							$app->set_message('error',"'{$field['label']}' is required, but has not been completed.");
 							$this->errors=true;
 						}
@@ -294,11 +290,11 @@ class form{
 		if(is_string($args)){
 			parse_str($args,$args);
 		}
-		if(!in_array($args['type'],array('checkbox','color','date','datetime','datetime-local','email','file','hidden','month','number','password','radio','range','search','tel','text','textarea','time','url','week','static'))){	# Static = Display text only
+		if(!in_array($args['type'],array('checkbox','color','date','datetime','datetime-local','email','file','hidden','month','number','password','radio','range','search','tel','text','textarea','time','url','week','static'))){# Static = Display text only
 			$app->set_message('error',"Type of `".$args['type']."` is not a valid HTML5 type. Field Data: ".print_pre($args,1));
 			$this->error=true;
 		}elseif(in_array($args['type'],array('button','image','reset','submit'))){
-			$app->set_message('error',"Type of `{$args['type']}` is not valid for this function, use $class->add_button() instead");
+			$app->set_message('error','Type of `'.$args['type'].' is not valid for this function, use $class->add_button() instead');
 			$this->error=true;
 		}elseif($args['type']!='static' && !$args['name']){
 			$app->set_message('error',"Non-static fields must include `name` data");
@@ -336,7 +332,9 @@ class form{
 				$this->has_file=true;
 			}
 			if($this->session_data){
-				$args['value']=$this->find_value($args['name'],$this->session_data);
+				if($val=$this->find_value($args['name'],$this->session_data)){
+					$args['value']=$val;
+				}
 			}
 			# Add to $data
 			$this->data['fields'][]=$args;
@@ -351,6 +349,7 @@ class form{
 		);
 	}
 	# Add option to select
+	# Updated 16/03/2017 17:18
 	private function add_options($data,$selected){
 		if(!is_array($selected)){
 			$temp=@json_decode($selected,1);
@@ -361,14 +360,16 @@ class form{
 			}
 		}
 		foreach($data as $key=>$d){
+			$key=addslashes($key);
 			if(is_array($d)){
 				$out.="<optgroup label='".ucwords($key)."'>";
 				foreach($d as $key2=>$options){
+					$key2=addslashes($key2);
 					$out.="<option";
 					if(is_array($selected) && in_array($key2,$selected)){
 						$out.=" selected";
 					}
-					$out.=" value='$key2'>$options</option>";
+					$out.=' value="'.$key2.'">'.$options.'</option>';
 				}
 				$out.="</optgroup>";
 			}else{
@@ -376,7 +377,7 @@ class form{
 				if(is_array($selected) && in_array($key,$selected)){
 					$out.=" selected";
 				}
-				$out.=" value='$key'>$d</option>";
+				$out.=' value="'.$key.'">'.$d.'</option>';
 			}
 		}
 		return $out;
@@ -545,7 +546,7 @@ class form{
 							if($this->data['orientation']=='horizontal'){
 								$out.='<div class="col-sm-'.$this->value_width;
 									if(!$field['label']){
-										$out.=' offset-sm-'.$this->label_width;
+										$out.=' ml-auto';
 									}
 								$out.='">';
 							}
@@ -555,11 +556,11 @@ class form{
 							}
 							$out.='" data-sitekey="'.RECAPTCHA_SITE_KEY.'"></div>';
 							if($field['note']){
-								$out.='<p class="text-muted';
+								$out.='<small class="form-text';
 								if($this->data['orientation']=='horizontal'){
-									$out.=' offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.=' ml-auto col-sm-'.$this->value_width.' ';
 								}
-								$out.='"><em>'.$field['note'].'</em></p>';
+								$out.='">'.$field['note'].'</small>';
 							}
 							if($this->data['orientation']=='horizontal'){
 								$out.='</div>';
@@ -599,7 +600,7 @@ class form{
 									$out.='<div class="col-sm-'.$this->value_width.'">';
 								}
 							}elseif($this->data['orientation']=='horizontal'){
-								$out.='<div class="offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.'">';
+								$out.='<div class="ml-auto col-sm-'.$this->value_width.'">';
 							}
 							$out.='<div class="'.strtolower($field['type']);
 							if($field['note']){
@@ -623,9 +624,6 @@ class form{
 												if($field['class']){
 													$out.=$field['class'];
 												}
-												if($field['required']){
-													$out.=' form-control-warning';
-												}
 											$out.='"';
 										}
 										if($field['data'] && is_array($field['data'])){
@@ -641,13 +639,13 @@ class form{
 										if($field['list']){
 											$out.=' list="'.$field['list'].'"';
 										}
-										if($field['max'] && in_array($field['type'],array('date','datetime','datetime-local','month','number','time','week'))){
+										if($field['max'] && in_array($field['type'],array('date','datetime-local','month','number','time','week'))){
 											$out.=' max="'.$field['max'].'"';
 										}
 										if($field['maxlength'] && in_array($field['type'],array('text','email','search','password','tel'))){
 											$out.=' maxlength="'.$field['maxlength'].'"';
 										}
-										if(isset($field['min']) && in_array($field['type'],array('date','datetime','datetime-local','month','number','time','week'))){
+										if(isset($field['min']) && in_array($field['type'],array('date','datetime-local','month','number','time','week'))){
 											$out.=' min="'.$field['min'].'"';
 										}
 										if($field['minlength'] && in_array($field['type'],array('text','email','search','password','tel'))){
@@ -672,7 +670,7 @@ class form{
 										if($field['spellcheck']){
 											$out.=' spellcheck="'.$field['spellcheck'].'"';
 										}
-										if($field['step'] && in_array($field['type'],array('date','datetime','datetime-local','month','number','time','week'))){
+										if($field['step'] && in_array($field['type'],array('date','datetime-local','month','number','time','week'))){
 											$out.=' step="'.$field['step'].'"';
 										}
 										if($field['tabindex']){
@@ -697,17 +695,16 @@ class form{
 								$out.='</div>';
 							}
 							if($field['note']){
-								$out.='<p class="';
+								$out.='<small class="form-text ';
 								if($this->data['orientation']=='horizontal'){
-									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='ml-auto col-sm-'.$this->value_width.' ';
 								}
-								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
+								$out.='">'.$field['note'].'</small>';
 							}
 						$out.='</div> ';
 						break;
 					case 'color':
 					case 'date':
-					case 'datetime':
 					case 'datetime-local':
 					case 'email':
 					case 'file':
@@ -750,7 +747,7 @@ class form{
 								$out.='<div class="';
 								if($this->data['orientation']=='horizontal'){
 									if(!$field['label']){
-										$out.='offset-sm-'.$this->label_width;
+										$out.='ml-auto';
 									}
 									$out.=' col-sm-'.$this->value_width;
 								}
@@ -798,13 +795,13 @@ class form{
 									$out.=' disabled';
 								}
 								$out.=' id="'.$ids[sizeof($ids)-1].'"';
-								if($field['max'] && in_array($field['type'],array('date','datetime','datetime-local','month','number','time','week'))){
+								if($field['max'] && in_array($field['type'],array('date','datetime-local','month','number','time','week'))){
 									$out.=' max="'.$field['max'].'"';
 								}
 								if($field['maxlength'] && in_array($field['type'],array('text','email','search','password','tel'))){
 									$out.=' maxlength="'.$field['maxlength'].'"';
 								}
-								if(isset($field['min']) && in_array($field['type'],array('date','datetime','datetime-local','month','number','time','week'))){
+								if(isset($field['min']) && in_array($field['type'],array('date','datetime-local','month','number','time','week'))){
 									$out.=' min="'.$field['min'].'"';
 								}
 								if($field['minlength'] && in_array($field['type'],array('text','email','search','password','tel'))){
@@ -832,7 +829,7 @@ class form{
 								if($field['spellcheck']){
 									$out.=' spellcheck="'.$field['spellcheck'].'"';
 								}
-								if($field['step'] && in_array($field['type'],array('date','datetime','datetime-local','month','number','time','week'))){
+								if($field['step'] && in_array($field['type'],array('date','datetime-local','month','number','time','week'))){
 									$out.=' step="'.$field['step'].'"';
 								}
 								if($field['tabindex']){
@@ -840,6 +837,9 @@ class form{
 								}
 								$out.=' type="'.$field['type'].'"';
 								if(isset($field['value'])){
+									if($field['type']=='datetime-local'){
+										$field['value']=iso_datetime($field['value'],1);
+									}
 									$out.=' value="'.$field['value'].'"';
 								}
 							$out.='>';
@@ -852,16 +852,19 @@ class form{
 							if($field['type']=='file'){
 								$out.='<p class="';
 								if($this->data['orientation']=='horizontal'){
-									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='ml-auto col-sm-'.$this->value_width.' ';
 								}
 								$out.='mb-0 text-muted"><em>Accepts: .'.implode(', .',explode(',',$field['accept'])).'</em></p>';
 							}
-							if($field['note']){
-								$out.='<p class="';
-								if($this->data['orientation']=='horizontal'){
-									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
-								}
-								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
+							if($field['note'] || $field['type']=='datetime-local'){
+								$out.='<small class="'.($this->data['orientation']=='horizontal'?'ml-auto col-sm-'.$this->value_width.' ':'').'form-text">';
+									if($field['note']){
+										$out.=$field['note'].($field['type']=='datetime-local'?'<br>':'');
+									}
+									if($field['type']=='datetime-local'){
+										$out.='Please ensure that a date and time has been specified.';
+									}
+								$out.='</small>';
 							}
 						$out.='</div> ';
 						break;
@@ -911,7 +914,7 @@ class form{
 							if($this->data['orientation']=='horizontal'){
 								$out.='<div class="';
 								if(!$field['label']){
-									$out.='offset-sm-'.$this->label_width;
+									$out.='ml-auto';
 								}
 								$out.=' col-sm-'.$this->value_width.'">';
 							}
@@ -965,16 +968,16 @@ class form{
 							if($field['multiple']==1){
 								$out.='<p class="';
 								if($this->data['orientation']=='horizontal'){
-									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='ml-auto col-sm-'.$this->value_width.' ';
 								}
 								$out.='mb-0 text-muted"><em><kbd>CTRL/CMD</kbd> + Click to select multiple items.</em></p>';
 							}
 							if($field['note']){
-								$out.='<p class="';
+								$out.='<small class="';
 								if($this->data['orientation']=='horizontal'){
-									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='ml-auto col-sm-'.$this->value_width.' ';
 								}
-								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
+								$out.='form-text">'.$field['note'].'</small>';
 							}
 						$out.='</div> ';
 						break;
@@ -1001,17 +1004,17 @@ class form{
 							if($this->data['orientation']=='horizontal'){
 								$out.='<div class="';
 								if(!$field['label']){
-									$out.='offset-sm-'.$this->label_width;
+									$out.='ml-auto';
 								}
 								$out.=' col-sm-'.$this->value_width.'">';
 							}
-							$out.='<p class="form-control-static">'.$field['prefield'].$field['value'].$field['postfield'].'</p>';
+							$out.='<p class="form-control-plaintext">'.$field['prefield'].$field['value'].$field['postfield'].'</p>';
 							if($field['note']){
-								$out.='<p class="';
+								$out.='<small class="';
 								if($this->data['orientation']=='horizontal'){
-									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='ml-auto col-sm-'.$this->value_width.' ';
 								}
-								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
+								$out.='form-text">'.$field['note'].'</small>';
 							}
 							if($this->data['orientation']=='horizontal'){
 								$out.='</div>';
@@ -1047,7 +1050,7 @@ class form{
 							if($this->data['orientation']=='horizontal'){
 								$out.='<div class="';
 								if(!$field['label']){
-									$out.='offset-sm-'.$this->label_width;
+									$out.='ml-auto';
 								}
 								$out.=' col-sm-'.$this->value_width.'">';
 							}
@@ -1114,11 +1117,11 @@ class form{
 								$out.='</div>';
 							}
 							if($field['note']){
-								$out.='<p class="';
+								$out.='<small class="';
 								if($this->data['orientation']=='horizontal'){
-									$out.='offset-sm-'.$this->label_width.' col-sm-'.$this->value_width.' ';
+									$out.='ml-auto col-sm-'.$this->value_width.' ';
 								}
-								$out.='mb-0 text-muted"><em>'.$field['note'].'</em></p>';
+								$out.='form-text">'.$field['note'].'</small>';
 							}
 						$out.='</div> ';
 						break;
@@ -1173,20 +1176,25 @@ class form{
 					'note'	=>'Set to <strong>Automatic</strong> to make this colour available elsewhere.',
 					'value'	=>$value,
 				),
-				array_combine(array_keys($bootstrap->colours),array_map('ucwords',array_keys($bootstrap->colours))),
+				array_combine(array_keys((array) $bootstrap->colours->colours),array_map('ucwords',array_keys((array) $bootstrap->colours->colours))),
 				'Automatic'
 			);
 		}
 	}
 	# Find value for re-populating data based on field type
 	public function find_value($name,$data){
-		if(is_array($data) && array_key_exists($name,$data)){
+		if(is_array($data) && !is_array($name) && array_key_exists($name,$data)){
 			return $data[$name];
-		}
-		if($name && !is_array($name)){
+		}elseif(is_array($name)){
+			$key=key($name);
+			if(!is_array($data[$key])){
+				return $data[$key];
+			}
+			return $this->find_value($name[$key],$data[$key]);
+		}elseif($name && $data){
 			parse_str($name,$name);
+			$key=key($name);
+			return $this->find_value($name[$key],$data[$key]);
 		}
-		$key=key($name);
-		return $this->find_value(key($name[$key]),$data[$key]);
 	}
 }

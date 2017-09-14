@@ -78,7 +78,7 @@
 		parent::add_html('</p>');
 	}
 	public function process(){
-		global $app,$db;
+		global $app,$db,$products;
 		if($_POST['form_name']==$this->data['name']){
 			$results=parent::process();
 			$results=parent::unname($results['data']);
@@ -115,6 +115,7 @@
 				$app->set_message('success','Deleted '.$db->rows_updated().' from feature values');
 				$app->log_message(2,'Deleted Feature Values','Deleted '.$db->rows_updated().' from feature values');
 			}
+			$products->update_completions();
 			$this->redirect();
 		}
 	}

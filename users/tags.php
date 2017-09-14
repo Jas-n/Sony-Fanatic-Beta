@@ -12,7 +12,7 @@ $breadcrumb=array(
 );
 require('header.php');
 $app->get_messages(); ?>
-<div class="card card-block">
+<div class="card card-body">
 	<?php $tags->get_form(); ?>
 </div>
 <?php require('footer.php');

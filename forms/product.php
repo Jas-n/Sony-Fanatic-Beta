@@ -4,8 +4,6 @@
 	public function __construct($data=NULL){
 		global $bootstrap,$products;
 		$this->product=new product($_GET['id']);
-		$feature_categories=$products->get_feature_categories();
-		$feature_categories=array_combine(array_keys($feature_categories),array_column($feature_categories,'name'));
 		$this->brands=$products->get_brands();
 		$brands=$this->brands;
 		$brands=$this->optioner(tree($brands),'brand');
@@ -73,7 +71,7 @@
 								'name'		=>'categories[]',
 								'multiple'	=>1,
 								'required'	=>1,
-								'value'		=>$this->product->categories
+								'value'		=>array_keys($this->product->categories)
 							),
 							$categories
 						);
@@ -87,7 +85,7 @@
 								'note'			=>'Start typing for list of matching tags.',
 								'placeholder'	=>'Tag',
 								'type'			=>'text',
-								'postfield'		=>"<i class='fa fa-refresh'></i>"
+								'postfield'		=>'<i class="fa fa-refresh"></i>'
 							),
 							array(
 								'class'		=>'ajax_tag_id',
@@ -117,7 +115,8 @@
 						if($this->product->features){
 							foreach($this->product->features as $feature){
 								parent::add_html('<tr>
-									<td>'.$feature['category'].'</td>	<td>'.$feature['feature'].'</td>
+									<td>'.$feature['category'].'</td>
+									<td>'.$feature['feature'].'</td>
 									<td>'.$feature['value'].'</td>
 									<td><a class="btn btn-sm btn-danger delete delete_value" data-id="'.$feature['id'].'"><i class="fa fa-times"></i></a></td>
 								</tr>');
@@ -125,31 +124,31 @@
 						}
 						parent::add_html('<tr class="new_row">
 							<td>');
-								parent::add_select(
-									array(
-										'name'=>'new_category'
-									),
-									$feature_categories,
-									'Select&hellip;'
-								);
+								parent::add_field(array(
+									'name'			=>'cfv_category',
+									'note'			=>'Start typing for list of matching categories.',
+									'placeholder'	=>'Category',
+									'type'			=>'text',
+									'postfield'		=>'<i class="fa fa-refresh"></i>'
+								));
 							parent::add_html('</td>
 							<td>');
-								parent::add_select(
-									array(
-										'name'=>'new_feature'
-									),
-									array(),
-									'Waiting&hellip;'
-								);
+								parent::add_field(array(
+									'name'			=>'cfv_feature',
+									'note'			=>'Start typing for list of matching features.',
+									'placeholder'	=>'Feature',
+									'type'			=>'text',
+									'postfield'		=>'<i class="fa fa-refresh"></i>'
+								));
 							parent::add_html('</td>
 							<td>');
-								parent::add_select(
-									array(
-										'name'=>'new_value'
-									),
-									array(),
-									'Waiting&hellip;'
-								);
+								parent::add_field(array(
+									'name'			=>'cfv_value',
+									'note'			=>'Start typing for list of matching values.',
+									'placeholder'	=>'Value',
+									'type'			=>'text',
+									'postfield'		=>'<i class="fa fa-refresh"></i>'
+								));
 							parent::add_html('</td>
 							<td></td>
 						</tr>
@@ -165,9 +164,9 @@
 					'type'		=>'file'
 				));
 				if($this->product->images['thumb']){
-					parent::add_html('<div class="product_images">');
+					parent::add_html('<div class="product_images row">');
 						foreach($this->product->images['thumb'] as $i=>$thumbnail){
-							parent::add_html('<a href="'.$this->product->images['full'][$i].'" target="_blank"><img class="img-thumbnail" src="'.$thumbnail.'"></a>');
+							parent::add_html('<a class="card card-body" href="'.$this->product->images['full'][$i].'" target="_blank"><img class="img-thumbnail" src="'.$thumbnail.'"></a>');
 						}
 					parent::add_html('</div>');
 				}
@@ -261,10 +260,12 @@
 	}
 	public function process(){
 		if($_POST['form_name']==$this->data['name']){
-			global $app,$db;
+			global $app,$db,$products;
 			$results=parent::process();
 			$results['data']=parent::unname($results['data']);
-			$results['files']=parent::unname($results['files']);
+			if($results['files']){
+				$results['files']=parent::unname($results['files']);
+			}
 			$db->query(
 				"UPDATE `products`
 				SET
@@ -349,7 +350,8 @@
 			}
 			$app->log_message(3,'Updated Product','Updated <strong>'.$results['data']['name'].'</strong>.');
 			$app->set_message('success','Updated <strong>'.$results['data']['name'].'</strong>.');
-			$products->update_category_counts();
+			$products->generate_menus();
+			$products->update_completions($_GET['id']);
 			$this->redirect();
 		}
 	}

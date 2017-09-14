@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAKA,gBAAgB,CACf,aAAa,CCsIH,IAAI,CDrId,kBAAC,CACA,aAAa,CAAC,CAAC,CAGjB,eAAe,CACd,MAAM,CAAC,IAAI,CACX,KAAK,CAAC,IAAI,CACV,OAAO,CC8HG,IAAI,CD7Hd,iBAAC,CACA,KAAK,CAAC,OAAO,CAEd,iBAAC,CACA,aAAa,CAAC,CAAC",
-"sources": ["../scss/article.scss","../scss/_variables.scss"],
-"names": [],
-"file": "article.css"
-}

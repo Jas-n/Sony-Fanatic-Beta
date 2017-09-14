@@ -55,10 +55,12 @@
 	}
 	public function process(){
 		if($_POST['form_name']==$this->data['name']){
-			global $app,$db;
+			global $app,$db,$products;
 			$results=parent::process();
 			$results['data']=parent::unname($results['data']);
-			$results['files']=parent::unname($results['files']);
+			if($results['files']){
+				$results['files']=parent::unname($results['files']);
+			}
 			$id=$db->next_hex_id('products','id');
 			$db->query(
 				"INSERT INTO `products` (
@@ -89,7 +91,7 @@
 				);
 			}
 			$app->log_message(3,'Added Product','Added <strong>'.$results['data']['name'].'</strong> to products.');
-			$products->update_category_counts();
+			$products->generate_menus();
 			header('Location: ./products');
 			exit;
 		}

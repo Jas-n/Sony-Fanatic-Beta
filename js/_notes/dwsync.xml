@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="tinymce.js" server="techversus.tech/techversus.tech/" local="131269966287303963" remote="131269966200000000" Dst="1" />
-<file name="core.js" server="techversus.tech/techversus.tech/" local="131282661210433588" remote="131282661000000000" Dst="1" />
-<file name="form.js" server="techversus.tech/techversus.tech/" local="131270056270844492" remote="131211068400000000" Dst="1" />
-<file name="index.php" server="techversus.tech/techversus.tech/" local="131270056271709600" remote="131211068400000000" Dst="1" />
-<file name="product.js" server="techversus.tech/techversus.tech/" local="131278610365433997" remote="131278609800000000" Dst="1" />
-<file name="bootstrap.min.js" server="techversus.tech/techversus.tech/" local="131283811944380695" remote="131283811800000000" Dst="1" />
-<file name="root.js" server="217.172.141.167/httpdocs/" local="131301971853382123" remote="131301971400000000" Dst="1" />
-<file name="users.js" server="217.172.141.167/httpdocs/" local="131312321908314404" remote="131312321400000000" Dst="1" />
+<file name="users.js" server="217.172.141.167/httpdocs/" local="131337419585273769" remote="131337419400000000" Dst="1" />
+<file name="core.js" server="techversus.tech/techversus.tech/" local="131457431683321042" remote="131457431400000000" Dst="2" />
+<file name="product.js" server="techversus.tech/techversus.tech/" local="131453955382237374" remote="131453955000000000" Dst="2" />
+<file name="root.js" server="techversus.tech/techversus.tech/" local="131458175595112294" remote="131458175400000000" Dst="2" />
+<file name="users.js" server="techversus.tech/httpdocs/" local="131498861969372000" remote="131498861400000000" Dst="2" />
 </dwsync>

@@ -92,9 +92,10 @@
 			global $article,$app,$db;
 			$results=parent::process();
 			$results['data']=parent::unname($results['data']);
-			$results['files']=parent::unname($results['files']);
+			if($results['files']){
+				$results['files']=parent::unname($results['files']);
+			}
 			$sets=array(
-				'product_id',
 				'type',
 				'status',
 				'title',
@@ -104,7 +105,6 @@
 				'updated'
 			);
 			$options=array(
-				$results['data']['product_id'],
 				$results['data']['type'],
 				$results['data']['status'],
 				$results['data']['title'],

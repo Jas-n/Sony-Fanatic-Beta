@@ -8,7 +8,7 @@ $h1='Profile';
 $breadcrumb[]='Profile';
 include('header.php');
 $app->get_messages(); ?>
-<div class="card card-block">
+<div class="card card-body">
 	<?php $profile->get_form(); ?>
 </div>
 <?php include('footer.php');

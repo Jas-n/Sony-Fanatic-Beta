@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="index.php" server="techversus.tech/techversus.tech/" local="131282066913386351" remote="131282066400000000" Dst="1" />
+<file name="index.php" server="techversus.tech/techversus.tech/" local="131458164633274364" remote="131458164600000000" Dst="2" />
 <file name="error.php" server="techversus.tech/techversus.tech/" local="131270056230709466" remote="131211067800000000" Dst="1" />
 <file name="forgot.php" server="techversus.tech/techversus.tech/" local="131270056235830113" remote="131211067800000000" Dst="1" />
-<file name="header.php" server="techversus.tech/techversus.tech/" local="131296011843487054" remote="131296011600000000" Dst="1" />
+<file name="header.php" server="techversus.tech/techversus.tech/" local="131453991171097936" remote="131453991000000000" Dst="2" />
 <file name="logout.php" server="techversus.tech/techversus.tech/" local="131270056337432828" remote="131211067800000000" Dst="1" />
-<file name="product.php" server="techversus.tech/techversus.tech/" local="131283825912444850" remote="131283825600000000" Dst="1" />
+<file name="product.php" server="techversus.tech/techversus.tech/" local="131453983545691610" remote="131453983200000000" Dst="2" />
 <file name="user.php" server="techversus.tech/techversus.tech/" local="131270056488311713" remote="131241541200000000" Dst="1" />
-<file name="footer.php" server="techversus.tech/techversus.tech/" local="131282066041479903" remote="131282065800000000" Dst="1" />
+<file name="footer.php" server="techversus.tech/techversus.tech/" local="131447064606082313" remote="131447064600000000" Dst="2" />
 <file name="folding.json" server="techversus.tech/techversus.tech/" local="131277240000000000" remote="131277240000000000" Dst="1" />
 <file name="googlef68701383082b8ab.html" server="techversus.tech/techversus.tech/" local="131277062721887234" remote="131277062400000000" Dst="1" />
 <file name=".htaccess" server="techversus.tech/techversus.tech/" local="131279503872630791" remote="131279503800000000" Dst="1" />
@@ -17,12 +17,20 @@
 <file name="news.php" server="techversus.tech/techversus.tech/" local="131280568765513166" remote="131280568200000000" Dst="1" />
 <file name="news_single.php" server="techversus.tech/techversus.tech/" local="131282069142860426" remote="131282068800000000" Dst="1" />
 <file name="news_list.php" server="techversus.tech/techversus.tech/" local="131282067342960113" remote="131282067000000000" Dst="1" />
-<file name="init.php" server="techversus.tech/techversus.tech/" local="131282798333260142" remote="131282797800000000" Dst="1" />
-<file name="categories.html" server="techversus.tech/techversus.tech/" local="131295833400000000" remote="131295833400000000" Dst="1" />
-<file name="category.php" server="techversus.tech/techversus.tech/" local="131296003937266258" remote="131296003800000000" Dst="1" />
+<file name="init.php" server="techversus.tech/techversus.tech/" local="131440279931604845" remote="131440279800000000" Dst="2" />
+<file name="categories.html" server="techversus.tech/techversus.tech/" local="131457408518896386" remote="131457408000000000" Dst="2" />
+<file name="category.php" server="techversus.tech/techversus.tech/" local="131457387791671145" remote="131457387600000000" Dst="2" />
 <file name="init.php" server="217.172.141.167/httpdocs/" local="131301868985502325" remote="131301868800000000" Dst="1" />
-<file name="index.php" server="217.172.141.167/httpdocs/" local="131309752694280716" remote="131309752200000000" Dst="1" />
+<file name="index.php" server="217.172.141.167/httpdocs/" local="131338046899167144" remote="131338046400000000" Dst="1" />
 <file name="footer.php" server="217.172.141.167/httpdocs/" local="131301886997430047" remote="131301886800000000" Dst="1" />
-<file name="header.php" server="217.172.141.167/httpdocs/" local="131301879164886341" remote="131301879000000000" Dst="1" />
-<file name="product.php" server="217.172.141.167/httpdocs/" local="131321877536545963" remote="131321877000000000" Dst="1" />
+<file name="header.php" server="217.172.141.167/httpdocs/" local="131337438075294902" remote="131337438000000000" Dst="1" />
+<file name="product.php" server="217.172.141.167/httpdocs/" local="131339129707073187" remote="131339129400000000" Dst="1" />
+<file name="brand.php" server="217.172.141.167/httpdocs/" local="131338131233778875" remote="131338131000000000" Dst="1" />
+<file name="brand.php" server="techversus.tech/techversus.tech/" local="131457380515655987" remote="131457380400000000" Dst="2" />
+<file name="header.php" server="techversus.tech/httpdocs/" local="131496306520610065" remote="131496306000000000" Dst="2" />
+<file name="init.php" server="techversus.tech/httpdocs/" local="131496317874645774" remote="131496317400000000" Dst="2" />
+<file name="product.php" server="techversus.tech/httpdocs/" local="131496313012318525" remote="131496312600000000" Dst="2" />
+<file name="forgot.php" server="techversus.tech/httpdocs/" local="131498860813778846" remote="131498860800000000" Dst="2" />
+<file name="login.php" server="techversus.tech/httpdocs/" local="131498867456168610" remote="131498867400000000" Dst="2" />
+<file name="news_list.php" server="techversus.tech/httpdocs/" local="131498861507266254" remote="131498861400000000" Dst="2" />
 </dwsync>

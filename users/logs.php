@@ -16,7 +16,7 @@ $logs=$db->query(
 	ORDER BY `date` DESC'.
 	SQL_LIMIT
 );?>
-<div class="card card-block">
+<div class="card card-body">
 	<table class="<?=$bootstrap->table->classes->table?>">
 		<thead>
 			<tr class="table-inverse">

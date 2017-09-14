@@ -1,4 +1,14 @@
 <?php class statistics{
+	public function products(){
+		global $db;
+		$stats=$db->get_row(
+			"SELECT
+				(SELECT COUNT(`id`) FROM `products` WHERE `status`=1) as `enabled`,
+				(SELECT COUNT(`id`) FROM `products`) as `total`"
+		);
+		$stats['ppd']=$stats['enabled']/(time()-strtotime('2017-01-01'))*60*60*24;
+		return $stats;
+	}
 	public function users(){
 		global $db,$user;
 		$active	=date('Y-m-d H:i:s',strtotime('-'.MONTH_LENGTH.' days'));

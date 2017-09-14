@@ -30,11 +30,9 @@ if(is_file(ROOT.'images/logo.png')){
 	);
 }
 include('header.php'); ?>
-<div class="card">
-	<div class="card-block">
-		<h1 class="h2">Reset Password</h1>
-		<?php $app->get_messages();
-		$forgot->get_form();?>
-	</div>
+<div class="card card-body">
+	<h1 class="h2">Reset Password</h1>
+	<?php $app->get_messages();
+	$forgot->get_form();?>
 </div>
 <?php include('footer.php');

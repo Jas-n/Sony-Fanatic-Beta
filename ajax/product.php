@@ -2,15 +2,17 @@
 if(
 	!$_POST || !$_POST['action']
 	|| !in_array($_POST['action'],array(
-		'add_tag','assign_tag','delete_link','delete_tag','delete_value',
-		'get_features','get_product','get_tags','get_values','save_value',
-		'update_catalogue'
+		'add_tag',		'assign_tag',	'delete_link',	'delete_tag',	'delete_value',
+		'get_categories','get_features','get_product',	'get_tags',		'get_values',
+		'save_value',	'update_catalogue'
 	))
 	|| ($_POST['action']=='add_tag' && (!$_POST['product'] || !$_POST['tag']))
 	|| ($_POST['action']=='assign_tag' && (!$_POST['product'] || !$_POST['tag']))
 	|| ($_POST['action']=='delete_link' && !$_POST['link'])
 	|| ($_POST['action']=='delete_tag' && !$_POST['tag'])
-	|| ($_POST['action']=='delete_value' && !$_POST['value'])
+	|| ($_POST['action']=='delete_value' && (!$_POST['product'] || !$_POST['value']))
+	|| ($_POST['action']=='get_categories' && !$_POST['term'])
+	
 	|| ($_POST['action']=='get_features' && !$_POST['category'])
 	|| ($_POST['action']=='get_product' && !$_POST['term'])
 	|| ($_POST['action']=='get_tags' && !$_POST['term'])
@@ -74,8 +76,12 @@ elseif($_POST['action']=='delete_tag'){
 }
 elseif($_POST['action']=='delete_value'){
 	$db->query("DELETE FROM `product_values` WHERE `id`=?",$_POST['value']);
+	$products->update_completions($_POST['product']);
 	echo json_encode(true);
 	exit;
+}
+elseif($_POST['action']=='get_categories'){
+	echo json_encode($products->get_feature_categories($_POST['term']));
 }
 elseif($_POST['action']=='get_features'){
 	echo json_encode($products->get_feature_category_options($_POST['category']));
@@ -189,6 +195,7 @@ elseif($_POST['action']=='save_value'){
 			)
 		);
 		echo json_encode($db->insert_id());
+		$products->update_completions($_POST['product']);
 	}else{
 		echo json_encode(false);
 	}

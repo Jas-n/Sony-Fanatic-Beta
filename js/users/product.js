@@ -203,61 +203,133 @@ $('#edit_product_tag').autocomplete({
 		});
 	}
 })
+$('#edit_product_cfv_category').autocomplete({
+	position:{
+		my:"left bottom",
+		at:"left top",
+	},
+	response:function(event,ui){
+		$(event.target.parentNode).find('.fa-refresh').removeClass('fa-spin');
+	},
+	search:function(event,ui){
+		$(event.target.parentNode).find('.fa-refresh').addClass('fa-spin');
+	},
+	select: function(event,ui){
+		if(ui.item.id==-1){
+			// Add new
+			$.ajax({
+				dataType:'json',
+				type:"POST",
+				url:'/ajax/product.php',
+				data:{
+					action:'add_categories',
+					category:event.target.value
+				},
+				success:function(data){
+					$(event.target).val('');
+				},
+				error:function(data){
+					console.log(data);
+				}
+			});
+		}else{
+			$.ajax({
+				dataType:'json',
+				type:"POST",
+				url:'/ajax/product.php',
+				data:{
+					action:'assign_category',
+					category:ui.item.id
+				},
+				success:function(data){
+					$(event.target).val('');
+				},
+				error:function(data){
+					console.log(data);
+				}
+			});
+		}
+		return false;
+	},
+	source:function(request,response){
+		$.ajax({
+			dataType:'json',
+			type:"POST",
+			url:'/ajax/product.php',
+			data:{
+				term:request.term,
+				action:'get_categories'
+			},
+			success:function(data){
+				console.log(data);
+				if(data.status && !data.data.length){
+					data.data.push({
+						id:-1,
+						tag:'Add "'+request.term+'"'
+					});
+				}
+				response(data.data);
+			},
+			error:function(data){
+				console.log(data);
+			}
+		});
+	}
+})
 .autocomplete( "instance" )._renderItem=function(ul,item){
 	return $("<li>").append("<a>"+item.tag+"</a>").appendTo(ul);
 };
 $(document).on('delete_confirm',function(e){
-	if(e.status){
-		if($(e.target).hasClass('delete_link')){
-			$.ajax({
-				context:e.target,
-				dataType:'json',
-				type:"POST",
-				url:'/ajax/product.php',
-				data:{
-					action:	'delete_link',
-					link:	e.target.dataset.id
-				},
-				success:function(data){
-					if(data){
-						$(this.parentNode.parentNode).remove();
-					}
+	if($(e.target).hasClass('delete_link')){
+		$.ajax({
+			context:e.target,
+			dataType:'json',
+			type:"POST",
+			url:'/ajax/product.php',
+			data:{
+				action:	'delete_link',
+				link:	e.target.dataset.id
+			},
+			success:function(data){
+				if(data){
+					$(this.parentNode.parentNode).remove();
 				}
-			});
-		}
-		else if($(e.target).hasClass('delete_tag')){
-			$.ajax({
-				context:e.target,
-				dataType:'json',
-				type:"POST",
-				url:'/ajax/product.php',
-				data:{
-					action:	'delete_tag',
-					tag:	e.target.dataset.id
-				},
-				success:function(data){
-					if(data){
-						$(this.parentNode).remove();
-					}
+			}
+		});
+	}
+	else if($(e.target).hasClass('delete_tag')){
+		$.ajax({
+			context:e.target,
+			dataType:'json',
+			type:"POST",
+			url:'/ajax/product.php',
+			data:{
+				action:	'delete_tag',
+				tag:	e.target.dataset.id
+			},
+			success:function(data){
+				if(data){
+					$(this.parentNode).remove();
 				}
-			});
-		}
-		else if($(e.target).hasClass('delete_value')){
-			$.ajax({
-				context:e.target,
-				dataType:'json',
-				type:"POST",
-				url:'/ajax/product.php',
-				data:{
-					action:	'delete_value',
-					value:	e.target.dataset.id
-				},
-				success:function(data){
-					if(data){
-						$(this.parentNode.parentNode).remove();
-					}
+			}
+		});
+	}
+	else if($(e.target).hasClass('delete_value')){
+		$.ajax({
+			context:e.target,
+			dataType:'json',
+			type:"POST",
+			url:'/ajax/product.php',
+			data:{
+				action:	'delete_value',
+				product:_GET.id,
+				value:	e.target.dataset.id
+			},
+			success:function(data){
+				if(data){
+					$(this.parentNode.parentNode).remove();
 				}
-			});
-		}
+			}
+		});
 	}
 });

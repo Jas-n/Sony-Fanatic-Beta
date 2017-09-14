@@ -22,7 +22,7 @@ $buttons=array(
 	)
 );
 require('header.php');?>
-<div class="card card-block card-details">
+<div class="card card-body card-details">
 	<div class="row">
 		<div class="col-md-6">
 			<p><strong class="tab-10">Brand</strong><?=$edit_product->product->brand?></p>
@@ -34,7 +34,7 @@ require('header.php');?>
 	</div>
 </div>
 <?php $app->get_messages(); ?>
-<div class="card card-block">
+<div class="card card-body">
 	<?php $edit_product->get_form(); ?>
 </div>
 <?php require('footer.php');

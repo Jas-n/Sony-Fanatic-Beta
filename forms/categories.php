@@ -111,43 +111,13 @@
 					$app->set_message('success','Updated '.sizeof($results['category']).' categories');
 					$app->log_message(3,'Updated Categories','Updated '.sizeof($results['category']).' categories');
 				}
-				$process_categories=true;
 			}elseif($results['delete'] && $results['check']){
 				$db->query("DELETE FROM `categories` WHERE `id` IN(".implode(',',$results['check']).")");
 				$app->set_message('success','Deleted '.$db->rows_updated().' from categories');
 				$app->log_message(2,'Deleted Categories','Deleted '.$db->rows_updated().' from categories');
-				$process_categories=true;
 			}
-			if($process_categories){
-				$products->update_category_counts();
-				 if($categories=$products->get_category_tree()){
-					$html='';
-					foreach($categories as $category){
-						$html.=$this->generate_child_menu($category);
-					}
-					if($html){
-						$html='<li class="mega"><a>Categories</a><ul>'.$html.'</ul></li>';
-					}
-					 file_put_contents(ROOT.'categories.html',$html);
-					$app->set_message('success','Regenerated category tree');
-				}
-			}
+			$products->generate_menus();
 			$this->redirect();
-		}
-	}
-	private function generate_child_menu($menu_item){
-		if($menu_item['products']){
-			$html='<li>
-				<a href="/c/'.$menu_item['id'].'-'.slug($menu_item['name']).'">'.$menu_item['name'].'</a>';
-				if($menu_item['children']){
-					$html.='<ul>';
-						foreach($menu_item['children'] as $child){
-							$html.=$this->generate_child_menu($child);
-						}
-					$html.='</ul>';
-				}
-			$html.='</li>';
-			return $html;
 		}
 	}
 }

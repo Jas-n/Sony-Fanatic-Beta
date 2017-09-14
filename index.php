@@ -27,42 +27,44 @@ if($latest_news){
 	'link'	=>'/n/'.$latest_comment['slug']
 );*/?>
 <div class="container-fluid">
-	<div class="row">
-		<div id="latest_banner" class="carousel slide" data-ride="carousel">
-			<ol class="carousel-indicators">
-				<?php foreach($slider as $i=>$slide){ ?>
-					<li data-target="#latest_banner" data-slide-to="<?=$i?>"<?=$i==0?' class="active"':''?>></li>
-				<?php } ?>
-			</ol>
-			<div class="carousel-inner" role="listbox">
-				<?php foreach($slider as $i=>$slide){?>
-					<div class="carousel-item<?=$i==0?' active':''?>">
-						<a href="<?=$slide['link']?>"><img class="img-fluid" src="http://placehold.it/1920x500"></a>
-						<div class="carousel-caption">
-							<h3><a href="<?=$slide['link']?>"><?=$slide['title']?></a></h3>
-							<p class="text-truncate"><?=crop($slide['excerpt'],50)?></p>
+	<?php if($slider){?>
+		<div class="row">
+			<div id="latest_banner" class="carousel slide" data-ride="carousel">
+				<ol class="carousel-indicators">
+					<?php foreach($slider as $i=>$slide){ ?>
+						<li data-target="#latest_banner" data-slide-to="<?=$i?>"<?=$i==0?' class="active"':''?>></li>
+					<?php } ?>
+				</ol>
+				<div class="carousel-inner" role="listbox">
+					<?php foreach($slider as $i=>$slide){?>
+						<div class="carousel-item<?=$i==0?' active':''?>">
+							<a href="<?=$slide['link']?>"><img class="img-fluid" src="http://placehold.it/1920x500"></a>
+							<div class="carousel-caption">
+								<h3><a href="<?=$slide['link']?>"><?=$slide['title']?></a></h3>
+								<p class="text-truncate"><?=crop($slide['excerpt'],50)?></p>
+							</div>
 						</div>
-					</div>
-				<?php } ?>
+					<?php } ?>
+				</div>
+				<a class="left carousel-control" href="#latest_banner" role="button" data-slide="prev">
+					<span class="icon-prev" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="right carousel-control" href="#latest_banner" role="button" data-slide="next">
+					<span class="icon-next" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
 			</div>
-			<a class="left carousel-control" href="#latest_banner" role="button" data-slide="prev">
-				<span class="icon-prev" aria-hidden="true"></span>
-				<span class="sr-only">Previous</span>
-			</a>
-			<a class="right carousel-control" href="#latest_banner" role="button" data-slide="next">
-				<span class="icon-next" aria-hidden="true"></span>
-				<span class="sr-only">Next</span>
-			</a>
 		</div>
-	</div>
+	<?php } ?>
 	<div class="row">
 		<?php if($latest_rows){
 			foreach($latest_rows as $latest_row){
-				foreach($latest_row as $latest_product){
-					$link='/p/'.$latest_product['id'].'-'.$latest_product['slug'];?>
-					<div class="col-12 col-sm-6 col-md-4 home_product" style="background-image:url(<?=$latest_product['images']['medium'][0]?>)">
-						<a class="meta" href="<?=$link?>">
-							<h2><?=$latest_product['brand'].' '.$latest_product['name']?></h2>
+				foreach($latest_row as $latest_product){?>
+					<div class="col-12 col-sm-6 col-md-4 product">
+						<a class="meta" href="<?=$latest_product['url']?>">
+							<img class="cover" src="<?=$latest_product['images']['medium'][0]?>" alt="<?=$latest_product['brand'].' '.$latest_product['name']?>">
+							<h3 class="title"><?=$latest_product['brand'].' '.$latest_product['name']?></h3>
 						</a>
 					</div>
 				<?php }

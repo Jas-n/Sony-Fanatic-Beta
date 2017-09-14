@@ -7,7 +7,7 @@ h1{
 	margin:$spacer 0;
 }
 .vs_banner{
-	border:2px solid $gray-lighter;
+	border:2px solid $gray-200;
 	height:25vw;
 	overflow:hidden;
 	margin:0 auto $spacer;
@@ -16,7 +16,7 @@ h1{
 		background-size:cover;
 		height:100%;
 		&:not(:last-child){
-			border-right:2px solid $gray-lighter;
+			border-right:2px solid $gray-200;
 		}
 		a{
 			bottom:0;

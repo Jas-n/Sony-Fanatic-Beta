@@ -1,21 +1,76 @@
 // Include Bootstrap default and override variables
 @import "custom";
+@import "functions";
 @import "variables";
 @import "mixins";
 $hover-bg:#f0f0f0;
-$footer-height:		$spacer*7;
+$footer-height:		$spacer*2;
 $nav-height-small:	$spacer*3.75;
 $nav-height:		$spacer*5;
 $nav2-height-small:	$spacer*3.5;
 $nav2-height:		$spacer*4;
 // Common
-body:not(#index):not(#product) main{
-	margin-top:1rem;
+body{
+	min-height:calc(100% - #{$nav-height-small});
+	position:relative;
+	overflow-x: hidden;
+	&:not(#index):not(#product) main{
+		padding:$spacer;
+	}
+}
+.category,
+.product{
+	@include aspect-ratio(16,9);
+	background-position: center;
+	background-size:cover;
+	border:2px solid #fff;
+	*{
+		margin-bottom:0;
+	}
+	a{
+		&:hover{
+			text-decoration: none;
+		}
+	}
+	img{
+		height:100%;
+	}
+	.meta{
+		bottom:0;
+		left:0;
+		position:absolute;
+		right:0;
+		top:0;
+	}
+	.title{
+		font-size: 1.5rem;
+	}
 }
 .cd-auto-hide-header+.cd-secondary-nav{
 	margin-top:$nav2-height-small;
 	@include media-breakpoint-up(lg) {
 		margin-top:$nav2-height;
+	}
+}
+.compare{
+	img{
+		height:125px;
+	}
+	li{
+		position: relative;
+	}
+	.title{
+		font-size:1rem;
+	}
+	ul{
+		justify-content:space-around;
+		a{
+			@include aspect-ratio(16,9);
+			background-position: center;
+			background-size: cover;
+			padding:0 !important;
+			width:150px;
+		}
 	}
 }
 @include media-breakpoint-up(sm) {
@@ -25,6 +80,7 @@ body:not(#index):not(#product) main{
 		width:100%;
 	}
 	body{
+		min-height:calc(100% - #{$nav-height});
 		&#index main{
 			padding-bottom:$footer-height;
 		}
@@ -34,10 +90,10 @@ body:not(#index):not(#product) main{
 	}
 }
 footer{
-	background:$gray-dark;
+	background:$gray-800;
 	bottom:0;
 	color:$gray-lightest;
-	padding:$spacer*1;
+	padding:$spacer/3;
 	a:hover{
 		color:$brand-primary;
 	}
@@ -93,6 +149,18 @@ img.cover{
 		}
 	}
 }
+main{
+	margin-top:$nav-height;
+}
+.title{
+	background:rgba($brand-primary,.75);
+	bottom:0;
+	color:#fff;
+	padding:5px 10px;
+	position:absolute;
+	right:0;
+	text-align:right;
+}
 //// NAV
 .cd-auto-hide-header{
 	background-color: $gray-lightest;
@@ -146,9 +214,9 @@ img.cover{
 	padding:$spacer/4 $spacer;
 	font-size: 1.2rem;
 	text-transform: uppercase;
-	color: $gray-dark;
+	color: $gray-800;
 	font-weight: bold;
-	border-left: 1px solid $gray-lighter;
+	border-left: 1px solid $gray-200;
 
 	span {
 		/* vertically align inside parent element */
@@ -162,7 +230,7 @@ img.cover{
 		position: relative;
 		height: 2px;
 		width: 22px;
-		background-color: $gray-dark;
+		background-color: $gray-800;
 		backface-visibility: hidden;
 	}
 
@@ -228,9 +296,9 @@ img.cover{
 			height: 50px;
 			line-height: 50px;
 			padding:0 $spacer;
-			color: $gray-dark;
+			color: $gray-800;
 			font-size:$spacer*1.5;
-			border-top: 1px solid $gray-lighter;
+			border-top: 1px solid $gray-200;
 
 			&:hover, &.active {
 				color: $brand-primary;
@@ -261,7 +329,7 @@ img.cover{
 					background-color:$hover-bg;
 					> ul{
 						background-color:$hover-bg;
-						display:block;
+						display:flex;
 					}
 				}
 				> a{
@@ -307,7 +375,7 @@ img.cover{
 	clear: both;
 	width: 100%;
 	height: $nav2-height-small;
-	background-color: $gray-dark;
+	background-color: $gray-800;
 	/* Force Hardware Acceleration */
 	transform: translateZ(0);
 	will-change: transform;
@@ -322,7 +390,7 @@ img.cover{
 		height: 100%;
 		width: 35px;
 		background: transparent;
-		background: linear-gradient(to left, $gray-dark, rgba($gray-dark, 0));
+		background: linear-gradient(to left, $gray-800, rgba($gray-800, 0));
 		pointer-events: none;
 		transition: opacity .2s;
 	}
@@ -357,7 +425,8 @@ img.cover{
 	}
 	a {
 		display: block;
-		color:$gray-lightest;
+		color:$gray-lightest !important;
+		cursor:pointer;
 		opacity: .6;
 		line-height: $nav2-height-small;
 		padding: 0 1em;
@@ -413,7 +482,7 @@ img.cover{
 		&.fixed {
 			top: $nav-height;
 			/* fixes a bug where nav and subnab move with a slight delay */
-			box-shadow: 0 -6px 0 $gray-dark;
+			box-shadow: 0 -6px 0 $gray-800;
 		}
 
 		&.slide-up {

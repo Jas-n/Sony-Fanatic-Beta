@@ -11,15 +11,15 @@ RewriteBase /
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule	^users/([A-Zaz0-9\-_]+)/([A-Za-z0-9\-_]+)?$	users/$1\.php?id=$2 [NC,L]
-RewriteRule	^n/([A-Z0-9]+)?$						news\.php?id=$1			[NC,L]
-RewriteRule	^n/([A-Z0-9]+)-([A-Zaz0-9\-_]+)/?$		news\.php?id=$1&slug=$2	[NC,L]
-RewriteRule	^b/([A-Za-z0-9\-_]+)/?$					brand\.php?slug=$1			[NC,L]
-RewriteRule	^c/([A-Za-z0-9\-_]+)/?$					category\.php?slug=$1		[NC,L]
-RewriteRule	^p/([A-Z0-9]+)?$						product\.php?id=$1			[NC,L]
+RewriteRule	^users/([A-Zaz0-9\-_]+)/([A-Za-z0-9\-_]+)?$	users/$1\.php?id=$2 	[NC,L]
+RewriteRule	^n/([A-Z0-9]+)-([A-Zaz0-9\-_]+)/?$		news\.php?id=$1&slug=$2		[NC,L]
+RewriteRule	^b/([A-Z0-9]+)-([A-Zaz0-9\-_]+)/?$		brand\.php?id=$1&slug=$2	[NC,L]
+RewriteRule	^c/([A-Z0-9]+)-([A-Zaz0-9\-_]+)/?$		category\.php?id=$1&slug=$2	[NC,L]
 RewriteRule	^p/([A-Z0-9]+)-([A-Zaz0-9\-_]+)/?$		product\.php?id=$1&slug=$2	[NC,L]
+RewriteRule	^p/([A-Z0-9]+)/?$						product\.php?id=$1			[NC,L]
 RewriteRule	^u/([A-Za-z0-9\-_]+)/?$					user\.php?username=$1		[NC,L]
 RewriteRule	^vs/([A-Z0-9/]+)/?$						versus\.php?products=$1		[NC,L]
+RewriteRule	^vs/?$									versus\.php					[NC,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

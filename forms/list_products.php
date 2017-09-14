@@ -146,6 +146,7 @@
 					$this->redirect(false,$results);
 				}
 			}
+			$products->generate_menus();
 			$this->redirect();
 		}
 	}

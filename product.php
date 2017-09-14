@@ -10,13 +10,17 @@ if(!$product->id){
 	header('Location: /');
 	exit;
 }
-if($product->banner){
-	$hero['image']=$product->banner;
+if($product->images['banner']){
+	$hero['image']=$product->images['banner'];
 	if($product->slogan){
 		$hero['content']='<p><em>'.$product->slogan.'</em></p>';
 	}
 }
 $page_nav=array(
+	array(
+		'class'=>'js-toggle-compare',
+		'name'=>'Compare'
+	),
 	array(
 		'link'=>'#about',
 		'name'=>'About'
@@ -46,6 +50,11 @@ $page_nav=array_merge($page_nav,array(
 ));
 include('header.php');?>
 <h1 class="mb-0"><?=$product->name?></h1>
+<?php if($product->categories){
+	foreach($product->categories as $category){ ?>
+		<a href="/c/<?=$category['slug']?>"><?=$category['name']?></a>
+	<?php }
+}?>
 <div class="btn-toolbar interactions" role="toolbar" aria-label="Interactions">
 	<?php if(is_logged_in()){ ?>
 		<div class="btn-group catalogue" role="group" aria-label="My Catalogue">
@@ -55,7 +64,7 @@ include('header.php');?>
 		</div>
 	<?php } ?>
 	<div class="btn-group social" role="group" aria-label="Social">
-		<button type="button" class="btn btn-sm btn-secondary facebook" data-toggle="tooltip" data-placement="top" title="<?=$product->facebooks?> Shares"><span class="fa fa-fw fa-facebook"></span></button>
+		<button type="button" class="btn btn-sm btn-secondary facebook" data-toggle="tooltip" data-placement="top" title="<?=$product->facebooks?> Shares"><?=$fa->icon('facebook',true)?><span class="fa fa-fw fa-facebook"></span></button>
 		<button type="button" class="btn btn-sm btn-secondary twitter" data-toggle="tooltip" data-placement="top" title="<?=$product->twitters?> Tweets"><span class="fa fa-fw fa-twitter"></span></button>
 		<button type="button" class="btn btn-sm btn-secondary email" data-toggle="tooltip" data-placement="top" title="<?=$product->emails?> Emails"><span class="fa fa-fw fa-envelope"></span></button>
 		<button type="button" class="btn btn-sm btn-secondary print" data-toggle="tooltip" data-placement="top" title="<?=$product->prints?> Prints"><span class="fa fa-fw fa-print"></span></button>

@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAKA,QAAQ,CACP,UAAU,CAAC,iBAAuB,CAClC,OAAO,CAAC,MAAM,CAEf,IAAI,CACH,UAAU,CAAC,oBAAoB,CAG/B,8BAAoB,CACnB,UAAU,CAAC,MAAM,CACjB,gCAAG,CACF,OAAO,CAAC,YAAY,CACpB,UAAU,CAAC,GAAG,CAIjB,qBAAuB,CACtB,aAAa,CAAC,CAAC",
-"sources": ["../scss/product.scss"],
-"names": [],
-"file": "product.css"
-}

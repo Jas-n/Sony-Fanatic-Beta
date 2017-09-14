@@ -5,7 +5,7 @@
 				$this->$key=$value;
 			}
 			if($this->images && !$this->banner){
-				$this->banner=$this->images['full'][0];
+				$this->banner=$this->image['full'];
 			}
 			return $this;
 		}

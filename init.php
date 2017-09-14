@@ -69,6 +69,7 @@ $user=new user();
 $page=new page();
 $products=new products;
 $bootstrap=new bootstrap;
+$fa=new font_awesome(true);
 if($app_require){
 	$app->require=$app_require;
 	$require=array_map('strtolower',$app->require);
